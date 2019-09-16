@@ -1,18 +1,11 @@
 import React from 'react';
 import { Container, Button } from 'semantic-ui-react';
 import { firebase } from './../../../../firebaseConfig';
-import store from './../../../../store';
-import { withRouter } from 'react-router-dom';
 
 class ProfileIndex extends React.Component {
 
   handleSignOutPress = async () => {
-    await firebase.auth().signOut().then( () => {
-      store.setState({
-        currentUser: {},
-      });
-      this.props.history.push('/auth/signin');
-    }).catch( (error) => {
+    await firebase.auth().signOut().catch( (error) => {
       alert(error.toString());
     });
   }
@@ -26,4 +19,4 @@ class ProfileIndex extends React.Component {
   }
 }
 
-export default withRouter(ProfileIndex);
+export default ProfileIndex;

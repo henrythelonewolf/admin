@@ -2,17 +2,15 @@ import React from 'react';
 import { Tab } from 'semantic-ui-react';
 
 import { firebase } from './../../../../firebaseConfig';
-import store from './../../../../store';
 import { getCurrentUser, snapshotToArray } from './../../../../Utils';
+import store from './../../../../store';
 
 export default class PendingOrders extends React.Component {
   constructor(props){
     super(props);
 
     this.state = {
-      pendingOrdered: [],
       tabItems: [],
-
       isEmpty: true,
       loading: false,
     };
@@ -24,6 +22,8 @@ export default class PendingOrders extends React.Component {
   initializer = async () => {
     getCurrentUser();
     const currentUser = store.getState().currentUser;
+    console.log(currentUser);
+    console.log(currentUser.uid);
     // uncomment below if in production
     this.setState({ loading: true });
     await firebase
@@ -42,19 +42,18 @@ export default class PendingOrders extends React.Component {
 
       let tabItems = [];
       pendingOrdered.map( (ordered) => {
-        tabItems.push(createTabItem(ordered));
+        return tabItems.push(createTabItem(ordered));
       });
-      this.setState({ tabItems });
 
-      if (pendingOrdered === null || pendingOrdered.length === 0) {
+      if (tabItems === null || tabItems.length === 0) {
         this._isMounted && this.setState({
-          pendingOrdered: [],
+          tabItems: [],
           isEmpty: true,
           loading: false,
         });
       } else {
         this._isMounted && this.setState({
-          pendingOrdered,
+          tabItems,
           isEmpty: false,
           loading: false,
         })
@@ -74,53 +73,53 @@ export default class PendingOrders extends React.Component {
   innerPane = (data) => {
     return (
       <Tab.Pane>
-        <h2 class="ui header">
-          <div class="sub header">Company</div>
+        <h2 className="ui header">
+          <div className="sub header">Company</div>
           {data.chosenCompany}
         </h2>
 
-        <h2 class="ui header">
-          <div class="sub header">Product</div>
+        <h2 className="ui header">
+          <div className="sub header">Product</div>
           {data.chosenProduct}
         </h2>
 
-        <h2 class="ui header">
-          <div class="sub header">Date</div>
+        <h2 className="ui header">
+          <div className="sub header">Date</div>
           {data.chosenDate}
         </h2>
 
-        <h2 class="ui header">
-          <div class="sub header">Quantity</div>
+        <h2 className="ui header">
+          <div className="sub header">Quantity</div>
           {data.quantity}
         </h2>
 
-        <h2 class="ui header">
-          <div class="sub header">Price</div>
+        <h2 className="ui header">
+          <div className="sub header">Price</div>
           {data.price}
         </h2>
 
-        <h2 class="ui header">
-          <div class="sub header">Terms</div>
+        <h2 className="ui header">
+          <div className="sub header">Terms</div>
           {data.terms}
         </h2>
 
-        <h2 class="ui header">
-          <div class="sub header">Remarks</div>
+        <h2 className="ui header">
+          <div className="sub header">Remarks</div>
           {data.remarks}
         </h2>
 
-        <h2 class="ui header">
-          <div class="sub header">Urgent</div>
+        <h2 className="ui header">
+          <div className="sub header">Urgent</div>
           {data.urgent ? 'Yes' : 'No'}
         </h2>
 
-        <h2 class="ui header">
-          <div class="sub header">Created at</div>
+        <h2 className="ui header">
+          <div className="sub header">Created at</div>
           {data.created_at}
         </h2>
 
-        <h2 class="ui header">
-          <div class="sub header">Updated at</div>
+        <h2 className="ui header">
+          <div className="sub header">Updated at</div>
           {data.updated_at}
         </h2>
       </Tab.Pane>
@@ -128,10 +127,10 @@ export default class PendingOrders extends React.Component {
   }
 
   render(){
-    const { tabItems } = this.state;
+    const { tabItems, loading } = this.state;
 
     return (
-      <Tab.Pane>
+      <Tab.Pane loading={loading ? true : false}>
         <Tab
         menu={{ fluid: true, vertical: true, tabular: true }}
         panes={tabItems}

@@ -8,7 +8,6 @@ import {
   Message,
 } from 'semantic-ui-react';
 import { firebase } from './../../firebaseConfig';
-import store from './../../store';
 
 export default class SignIn extends React.Component {
   state = {
@@ -31,17 +30,15 @@ export default class SignIn extends React.Component {
   handleSubmitAuth = async (evt) => {
     evt.preventDefault();
     const { email, password } = this.state;
+
     this.setState({ loading: true });
-    await firebase.auth().signInWithEmailAndPassword(email, password).then(
-    (user) => {
-      store.setState({ currentUser: user.user });
-      console.log(store.getState().currentUser);
+    await firebase.auth().signInWithEmailAndPassword(email, password).then( (user) => {
       this.setState({ loading: false });
-      this.props.history.push('/');
-    }).catch( (error) => {
+    })
+    .catch( (error) => {
       this.setState({ loading: false });
       alert(error.toString());
-    })
+    });
   }
 
   render(){

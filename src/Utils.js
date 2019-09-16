@@ -44,6 +44,7 @@ export function getCurrentUser(){
     const currentUser = firebase.auth().currentUser;
     store.setState({ currentUser });
     console.log('fetched user');
+    console.log(currentUser);
   }
 }
 

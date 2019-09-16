@@ -10,7 +10,7 @@ let formState = {
   chosenCompany: '',
 }
 
-// const listeners = [];
+const listeners = [];
 
 export default {
   // universal state
@@ -30,8 +30,8 @@ export default {
   },
 
   // on change listener
-  // onChange(newListener){
-  //   listeners.push(newListener);
-  //   return () => listeners.filter(listener => listener !== newListener);
-  // },
+  onChange(newListener){
+    listeners.push(newListener);
+    return () => listeners.filter(listener => listener !== newListener);
+  },
 };

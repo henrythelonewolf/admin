@@ -7,9 +7,8 @@ import DesktopContainer from './../../DesktopContainer';
 import MobileContainer from './../../MobileContainer';
 
 const getWidth = () => {
-  const isSSR = typeof window === 'undefined'
-
-  return isSSR ? Responsive.onlyTablet.minWidth : window.innerWidth
+  const isSSR = typeof window === 'undefined';
+  return isSSR ? Responsive.onlyTablet.minWidth : window.innerWidth;
 }
 
 DesktopContainer.propTypes = {
