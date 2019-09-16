@@ -7,16 +7,20 @@ import {
   Header,
   Message,
 } from 'semantic-ui-react';
+import { firebase } from './../../firebaseConfig';
+import store from './../../store';
 
 export default class SignIn extends React.Component {
   state = {
-    username: '',
+    email: '',
     password: '',
+
+    loading: false,
   }
 
-  handleChangeUsername = (evt) => {
-    const username = evt.target.value;
-    this.setState({ username });
+  handleChangeEmail = (evt) => {
+    const email = evt.target.value;
+    this.setState({ email });
   }
 
   handleChangePassword = (evt) => {
@@ -24,14 +28,24 @@ export default class SignIn extends React.Component {
     this.setState({ password });
   }
 
-  handleSubmitAuth = (evt) => {
-    const { username, password } = this.state;
-    alert(username+password)
+  handleSubmitAuth = async (evt) => {
     evt.preventDefault();
+    const { email, password } = this.state;
+    this.setState({ loading: true });
+    await firebase.auth().signInWithEmailAndPassword(email, password).then(
+    (user) => {
+      store.setState({ currentUser: user.user });
+      console.log(store.getState().currentUser);
+      this.setState({ loading: false });
+      this.props.history.push('/');
+    }).catch( (error) => {
+      this.setState({ loading: false });
+      alert(error.toString());
+    })
   }
 
   render(){
-    const { username, password } = this.state;
+    const { email, password, loading } = this.state;
 
     return (
       <Grid textAlign={'center'} style={{ height: '100vh' }} verticalAlign={'middle'}>
@@ -39,13 +53,13 @@ export default class SignIn extends React.Component {
           <Header as={'h2'} textAlign={'center'}>
             LCP Supplies Employee's Portal
           </Header>
-          <Form>
+          <Form loading={loading ? true : false}>
             <Segment>
             <Form.Input
             fluid
-            value={username}
-            placeholder={'Username'}
-            onChange={this.handleChangeUsername}
+            value={email}
+            placeholder={'Email'}
+            onChange={this.handleChangeEmail}
             />
             <Form.Input
             fluid

@@ -1,9 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Redirect,
+} from 'react-router-dom';
 
 import './index.css';
 import * as serviceWorker from './serviceWorker';
+import { firebase } from './firebaseConfig';
+import store from './store';
 
 import SignIn from './layouts/auths/SignIn';
 import DashboardContainer from './layouts/admins/components/dashboards/DashboardContainer';
@@ -12,16 +18,32 @@ import CreateContainer from './layouts/admins/components/creates/CreateContainer
 import ProfileContainer from './layouts/admins/components/profiles/ProfileContainer';
 
 const AppContainer = () => (
-  <BrowserRouter>
-    <Switch>
-      <Route exact path={'/auth/signin'} component={SignIn} />
-      <Route exact path={'/'} component={DashboardContainer} />
-      <Route exact path={'/orders'} component={OrdersContainer} />
-      <Route exact path={'/creates'} component={CreateContainer} />
-      <Route exact path={'/profiles'} component={ProfileContainer} />
-    </Switch>
-  </BrowserRouter>
+  <Router>
+    <Route exact path={'/auth/signin'} component={SignIn} />
+    <PrivateRoute exact path={'/'} component={DashboardContainer} />
+    <PrivateRoute exact path={'/orders'} component={OrdersContainer} />
+    <PrivateRoute exact path={'/creates'} component={CreateContainer} />
+    <PrivateRoute exact path={'/profiles'} component={ProfileContainer} />
+  </Router>
 )
+
+function PrivateRoute({ component: Component, ...rest }){
+  return (
+    <Route
+      {...rest}
+      render={ props => firebase.auth().currentUser || store.currentUser ? (
+        <Component {...props} />
+      ) : (
+        <Redirect
+        to={{
+          pathname: '/auth/signin',
+          state: { from: props.location }
+        }}
+        />
+      )}
+    />
+  )
+}
 
 ReactDOM.render(<AppContainer />, document.getElementById('root'));
 

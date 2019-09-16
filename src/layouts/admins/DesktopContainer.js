@@ -11,8 +11,8 @@ import { Link } from 'react-router-dom';
 export default class DesktopContainer extends React.Component {
   state = {}
 
-  hideFixedMenu = () => this.setState({ fixed: false })
-  showFixedMenu = () => this.setState({ fixed: true })
+  hideFixedMenu = () => this.setState({ fixed: false });
+  showFixedMenu = () => this.setState({ fixed: true });
 
   render() {
     const { children, getWidth } = this.props
