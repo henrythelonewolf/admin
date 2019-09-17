@@ -24,8 +24,8 @@ export default class ProfileIndex extends React.Component {
       },
       {
         id: 2,
-        name: 'Abu',
-        summary: 'created new orders',
+        name: 'Ali',
+        summary: 'changed order status from "Pending" to "Processed"',
         date: '3 days ago',
         description: 'Hi hihihi hihi hihihihihih hihihih hih hi hi hi hih hih',
       },
@@ -40,13 +40,13 @@ export default class ProfileIndex extends React.Component {
 
   renderEvents = (activity) => {
     return (
-      <Feed.Event>
+      <Feed.Event key={activity.id}>
         <Feed.Label>
           <Icon name='pencil' />
         </Feed.Label>
         <Feed.Content>
           <Feed.Summary>
-            <a>{activity.name}</a> {activity.summary}
+            {activity.name} {activity.summary}
             <Feed.Date>{activity.date}</Feed.Date>
           </Feed.Summary>
           <Feed.Extra text>
@@ -81,7 +81,7 @@ export default class ProfileIndex extends React.Component {
             </Feed>
 
             <Rail position='right'>
-              <Button onClick={this.handleSignOutPress}>Sign Out</Button>
+              <Button onClick={this.handleSignOutPress} fluid>Sign Out</Button>
             </Rail>
           </Segment>
         </Grid.Column>

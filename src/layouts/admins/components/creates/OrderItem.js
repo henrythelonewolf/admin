@@ -1,9 +1,10 @@
 import React from 'react';
-import { Card } from 'semantic-ui-react';
+import { Card, Button, Divider } from 'semantic-ui-react';
 
 export default class OrderItem extends React.Component {
   render(){
     const {
+      id,
       chosenCompany,
       chosenProduct,
       chosenDate,
@@ -12,11 +13,15 @@ export default class OrderItem extends React.Component {
       terms,
       remarks,
       urgent,
+      onPress,
     } = this.props;
 
     return (
       <Card fluid>
         <Card.Content>
+          <Card.Meta content={'ID'} />
+          <Card.Header content={id} />
+          <br />
           <Card.Meta content={'Company'} />
           <Card.Header content={chosenCompany} />
           <br />
@@ -40,6 +45,10 @@ export default class OrderItem extends React.Component {
           <br />
           <Card.Meta content={'Urgent'} />
           <Card.Header content={urgent ? 'Yes' : 'No'} />
+
+          <Divider />
+
+          <Button onClick={onPress} fluid>Edit</Button>
         </Card.Content>
       </Card>
     )

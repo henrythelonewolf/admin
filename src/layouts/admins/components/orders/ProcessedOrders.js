@@ -22,8 +22,7 @@ export default class PendingOrders extends React.Component {
   initializer = async () => {
     getCurrentUser();
     const currentUser = store.getState().currentUser;
-    console.log(currentUser);
-    console.log(currentUser.uid);
+
     // uncomment below if in production
     this.setState({ loading: true });
     await firebase
@@ -132,14 +131,20 @@ export default class PendingOrders extends React.Component {
   }
 
   render(){
-    const { tabItems, loading } = this.state;
+    const { tabItems, loading, isEmpty } = this.state;
 
     return (
       <Tab.Pane loading={loading ? true : false}>
+      {!isEmpty && (
         <Tab
         menu={{ fluid: true, vertical: true, tabular: true }}
         panes={tabItems}
         />
+      )}
+
+      {isEmpty && (
+        <p style={{ textAlign: 'center', height: 200, paddingTop: 90 }}>No orders yet</p>
+      )}
       </Tab.Pane>
     )
   }

@@ -6,7 +6,7 @@ export const newOrder = (attrs = {}) => {
   const order = {
     id: uuidv4(),
     chosenDate: attrs.chosenDate || 'Undefined',
-    chosenCompany: store.getFormState().chosenCompany,
+    chosenCompany: attrs.chosenCompany || 'Undefined',
     chosenProduct: attrs.chosenProduct || 'Undefined',
     quantity: attrs.quantity || 'Undefined',
     price: attrs.price || 'Undefined',

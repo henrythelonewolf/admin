@@ -1,65 +1,309 @@
 import React from 'react';
-import { Card, Form, Button } from 'semantic-ui-react';
+import {
+  Card,
+  Form,
+  Button,
+  Grid,
+  Divider
+} from 'semantic-ui-react';
+import { firebase } from './../../../../firebaseConfig';
 
 export default class OrderForm extends React.Component {
-  state = {
-    companies: [
-      { key: '1', text: 'Company A', value: 'Company A' },
-      { key: '2', text: 'Company B', value: 'Company B' },
-      { key: '3', text: 'Company C', value: 'Company C' },
-      { key: '4', text: 'Company D', value: 'Company D' },
-    ],
-    products: [
-      { key: '1', text: 'Product A', value: 'Product A' },
-      { key: '2', text: 'Product B', value: 'Product B' },
-      { key: '3', text: 'Product C', value: 'Product C' },
-      { key: '4', text: 'Product D', value: 'Product D' },
-    ],
+  constructor(props){
+    super(props);
+
+    const {
+      id,
+      chosenDate,
+      chosenCompany,
+      chosenProduct,
+      quantity,
+      price,
+      remarks,
+      terms,
+      status,
+      created_at,
+      urgent,
+    } = props;
+
+    this.state = {
+      companies: [],
+      products: [],
+
+      chosenDate: id ? chosenDate : '',
+      chosenCompany: id ? chosenCompany : '',
+      chosenProduct: id ? chosenProduct : '',
+      quantity: id ? quantity : '',
+      price: id ? price : '',
+      remarks: id ? remarks : '',
+      terms: id ? terms : '',
+      status: id ? status : 'Pending',
+      created_at: id ? created_at : '',
+      urgent: id ? urgent : false,
+    }
+
+    this._isMounted = false;
+  }
+
+  initializer = async () => {
+
+    function createArray(snapshot){
+      var itemArr = [];
+
+      snapshot.forEach( (child) => {
+        var item = {};
+        item.key = child.key;
+        item.text = child.val().title;
+        item.value = child.val().title;
+
+        itemArr.push(item);
+      })
+
+      return itemArr;
+    }
+
+    await firebase.database().ref('companies/').on('value', (snapshot) => {
+      const companies = createArray(snapshot);
+      this._isMounted && this.setState({
+        companies,
+      });
+    });
+
+    await firebase.database().ref('products/').on('value', (snapshot) => {
+      const products = createArray(snapshot);
+      this._isMounted && this.setState({
+        products,
+      });
+    });
+  }
+
+  componentDidMount(){
+    this._isMounted = true;
+    this._isMounted && this.initializer();
+  }
+
+  componentWillUnmount(){
+    this._isMounted = false;
+  }
+
+  handleChangeInput = (evt) => {
+    const name = evt.target.name;
+    const value = (evt.target.type === 'checkbox')
+    ? evt.target.checked
+    : evt.target.value;
+
+    this.setState({ [name]: value });
+  }
+
+  handleSelectCompany = (evt) => {
+    const value = evt.target.firstChild.textContent;
+    this.setState({ chosenCompany: value });
+  }
+
+  handleSelectProduct = (evt) => {
+    const value = evt.target.firstChild.textContent;
+    this.setState({ chosenProduct: value });
+  }
+
+  handleSubmitPress = (evt) => {
+    evt.preventDefault();
+    const { onFormSubmit, id } = this.props;
+    const {
+      chosenDate,
+      chosenCompany,
+      chosenProduct,
+      quantity,
+      price,
+      remarks,
+      terms,
+      status,
+      created_at,
+      urgent,
+    } = this.state;
+
+    onFormSubmit({
+      id,
+      chosenDate,
+      chosenCompany,
+      chosenProduct,
+      quantity,
+      price,
+      remarks,
+      terms,
+      status,
+      created_at,
+      urgent,
+    })
+  }
+
+  handleRemovePress = () => {
+    const { id, onRemovePress } = this.props;
+    onRemovePress(id);
+  }
+
+  handleClearPress = () => {
+    this.setState({
+      chosenCompany: '',
+      chosenProduct: '',
+      chosenDate: '',
+      quantity: '',
+      price: '',
+      terms: '',
+      remarks: '',
+      urgent: false,
+    })
   }
 
   render(){
-    const { companies, products } = this.state;
+    const {
+      companies,
+      products,
+      chosenCompany,
+      chosenProduct,
+      chosenDate,
+      quantity,
+      price,
+      terms,
+      remarks,
+      urgent,
+    } = this.state;
+    const { onFormClose, id } = this.props;
+
+    const submitText = id ? 'Update' : 'Create';
 
     return (
       <Card fluid>
         <Card.Content>
           <Form>
             <Form.Select
-            error={{ content: 'Please select company', pointing: 'below'}}
-            options={companies}
-            placeholder={'Choose company'}
+              label={'Company'}
+              error={ chosenCompany.length === 0 ?
+                { content: 'Please select company', pointing: 'below' } :
+                false
+              }
+              options={companies}
+              placeholder={'Choose company'}
+              value={chosenCompany}
+              onChange={this.handleSelectCompany}
+              required
             />
             <Form.Select
-            error={{ content: 'Please select product', pointing: 'below'}}
-            options={products}
-            placeholder={'Choose product'}
+              label={'Product'}
+              error={ chosenProduct.length === 0 ?
+                { content: 'Please select product', pointing: 'below' } :
+                false
+              }
+              options={products}
+              placeholder={'Choose product'}
+              value={chosenProduct}
+              onChange={this.handleSelectProduct}
+              required
             />
             <Form.Input
-            error={{ content: 'Please enter quantity', pointing: 'below'}}
-            placeholder={'Quantity'}
+              label={'Quantity'}
+              error={ quantity.length === 0 ?
+                { content: 'Please enter quantity', pointing: 'below' } :
+                false
+              }
+              placeholder={'Quantity'}
+              name={'quantity'}
+              value={quantity}
+              onChange={this.handleChangeInput}
+              required
             />
             <Form.Input
-            error={{ content: 'Please enter unit price', pointing: 'below'}}
-            placeholder={'Unit price'}
+              label={'Price'}
+              error={ price.length === 0 ?
+                { content: 'Please enter price', pointing: 'below' } :
+                false
+              }
+              placeholder={'Unit price'}
+              name={'price'}
+              value={price}
+              onChange={this.handleChangeInput}
+              required
             />
             <Form.Input
-            error={{ content: 'Please choose date', pointing: 'below'}}
-            placeholder={'Date'}
+              label={'Date'}
+              error={ chosenDate.length === 0 ?
+                { content: 'Please choose date', pointing: 'below' } :
+                false
+              }
+              placeholder={'Date'}
+              name={'chosenDate'}
+              value={chosenDate}
+              onChange={this.handleChangeInput}
+              required
             />
             <Form.Input
-            placeholder={'Terms'}
+              label={'Terms'}
+              placeholder={'Terms'}
+              name={'terms'}
+              value={terms}
+              onChange={this.handleChangeInput}
             />
             <Form.Input
-            placeholder={'Remarks'}
+              label={'Remarks'}
+              placeholder={'Remarks'}
+              name={'remarks'}
+              value={remarks}
+              onChange={this.handleChangeInput}
             />
-            <Form.Checkbox
-            label={'Urgent'}
-            />
+
+            <div className="field">
+              <div className="ui checkbox">
+                <input
+                id={'checkbox'}
+                name={'urgent'}
+                type="checkbox"
+                onChange={this.handleChangeInput}
+                checked={urgent}
+                />
+                <label htmlFor={'checkbox'}>Urgent</label>
+              </div>
+            </div>
+
+            {id && (
+              <>
+              <Divider />
+              <Grid>
+                <Grid.Row columns={2}>
+                  <Grid.Column>
+                    <Button
+                    fluid
+                    color={'red'}
+                    onClick={this.handleRemovePress}>Remove</Button>
+                  </Grid.Column>
+                  <Grid.Column>
+                    <Button
+                    fluid
+                    onClick={onFormClose}>Cancel</Button>
+                  </Grid.Column>
+                </Grid.Row>
+              </Grid>
+              </>
+            )}
+
+            <Divider />
+
             <Button
             type={'submit'}
             fluid
-            color={'green'}
-            >Create</Button>
+            primary
+            onClick={this.handleSubmitPress}
+            >{submitText}</Button>
+
+            {!id && (
+              <>
+                <Divider />
+
+                <Button
+                fluid
+                onClick={this.handleClearPress}
+                >Clear</Button>
+              </>
+            )}
+
           </Form>
         </Card.Content>
       </Card>
