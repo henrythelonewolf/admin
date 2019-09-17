@@ -30,7 +30,7 @@ export default class PendingOrders extends React.Component {
     .database()
     .ref('users/' + currentUser.uid + '/orders/')
     .on('value', (snapshot) => {
-      const pendingOrdered = snapshotToArray(snapshot).filter( (order) => order.status === 'Pending');
+      const filteredOrdered = snapshotToArray(snapshot).filter( (order) => order.status === 'Pending');
 
       const createTabItem = (tabItem) => {
         const item = {
@@ -41,7 +41,7 @@ export default class PendingOrders extends React.Component {
       }
 
       let tabItems = [];
-      pendingOrdered.map( (ordered) => {
+      filteredOrdered.map( (ordered) => {
         return tabItems.push(createTabItem(ordered));
       });
 
@@ -73,6 +73,11 @@ export default class PendingOrders extends React.Component {
   innerPane = (data) => {
     return (
       <Tab.Pane>
+        <h2 className="ui header">
+          <div className="sub header">Status</div>
+          {data.status}
+        </h2>
+
         <h2 className="ui header">
           <div className="sub header">Company</div>
           {data.chosenCompany}

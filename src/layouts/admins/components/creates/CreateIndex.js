@@ -6,6 +6,7 @@ import {
   Ref,
   Segment,
   Sticky,
+  Button,
 } from 'semantic-ui-react';
 
 import OrderForm from './OrderForm';
@@ -109,14 +110,19 @@ export default class CreateIndex extends React.Component {
           <Grid.Column>
             <Ref innerRef={this.contextRef}>
               <Segment>
-              {orders.map( (order) => this.renderOrders(order) )}
+                <Rail position='left'>
+                  <Sticky context={this.contextRef} offset={60}>
+                    <OrderForm />
+                  </Sticky>
+                </Rail>
 
-              <Rail position='left'>
-                <Sticky context={this.contextRef} offset={60}>
-                  <OrderForm />
-                </Sticky>
-              </Rail>
+                {orders.map( (order) => this.renderOrders(order) )}
 
+                <Rail position='right'>
+                  <Sticky context={this.contextRef} offset={60}>
+                    <Button>Submit All</Button>
+                  </Sticky>
+                </Rail>
               </Segment>
             </Ref>
           </Grid.Column>
