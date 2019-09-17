@@ -253,13 +253,13 @@ export default class OrderForm extends React.Component {
             <div className="field">
               <div className="ui checkbox">
                 <input
-                id={'checkbox'}
+                id={id ? id : 'checkbox'}
                 name={'urgent'}
                 type="checkbox"
                 onChange={this.handleChangeInput}
                 checked={urgent}
                 />
-                <label htmlFor={'checkbox'}>Urgent</label>
+                <label htmlFor={id ? id : 'checkbox'}>Urgent</label>
               </div>
             </div>
 
