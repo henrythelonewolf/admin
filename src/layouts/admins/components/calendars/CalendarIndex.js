@@ -11,30 +11,23 @@ import moment from 'moment';
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
 
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
+import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
 
 const localizer = momentLocalizer(moment);
 const DnDCalendar = withDragAndDrop(Calendar)
 
 export default class CalendarIndex extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      events: [
-        {
-          start: new Date(),
-          end: new Date(moment()),
-          title: "Some title"
-        }
-      ],
-    }
-
-    this.onEventDrop = this.onEventDrop.bind(this)
-    this.onEventResize = this.onEventResize.bind(this)
-    this.newEvent = this.newEvent.bind(this)
+  state = {
+    events: [
+      {
+        start: new Date(),
+        end: new Date(moment()),
+        title: "Some title"
+      }
+    ]
   }
 
-  onEventDrop({ event, start, end, isAllDay: droppedOnAllDaySlot }) {
+  onEventDrop = ({ event, start, end, isAllDay: droppedOnAllDaySlot }) => {
     const { events } = this.state;
 
     const idx = events.indexOf(event);
@@ -54,17 +47,17 @@ export default class CalendarIndex extends React.Component {
     this.setState({ events: nextEvents });
   };
 
-  onEventResize({ event, start, end }) {
+  onEventResize = ({ event, start, end }) => {
     const { events } = this.state;
 
     const nextEvents = events.map(existingEvent => {
-      return existingEvent.id == event.id ? { ...existingEvent, start, end } : existingEvent
+      return existingEvent.id === event.id ? { ...existingEvent, start, end } : existingEvent
     })
 
     this.setState({ events: nextEvents });
   }
 
-  newEvent(event) {
+  newEvent = (event) => {
 
   }
 
@@ -84,7 +77,7 @@ export default class CalendarIndex extends React.Component {
           onDragStart={console.log}
           defaultView={Views.MONTH}
           defaultDate={new Date()}
-          style={{ height: '70vh' }}
+          style={{ height: '70vh'}}
         />
       </Container>
     )
