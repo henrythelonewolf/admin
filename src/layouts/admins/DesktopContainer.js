@@ -46,6 +46,13 @@ export default class DesktopContainer extends React.Component {
 
                 <Menu.Item
                 as={Link}
+                to={'/calendars'}
+                active={currentLocation === '/calendars' ? true : false}
+                >Calendar
+                </Menu.Item>
+
+                <Menu.Item
+                as={Link}
                 to={'/orders'}
                 active={currentLocation === '/orders' ? true : false}
                 >Orders
@@ -64,6 +71,7 @@ export default class DesktopContainer extends React.Component {
                 active={currentLocation === '/profiles' ? true : false}
                 >Profile
                 </Menu.Item>
+
               </Container>
             </Menu>
           </Segment>

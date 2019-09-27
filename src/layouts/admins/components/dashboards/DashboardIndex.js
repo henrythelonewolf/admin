@@ -2,6 +2,7 @@ import React from 'react';
 import { Container, Statistic } from 'semantic-ui-react';
 
 export default class DashboardIndex extends React.Component {
+
   state = {
     statItems: [
       { key: '1', label: 'Pending', value: '5000' },

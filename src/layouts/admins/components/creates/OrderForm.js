@@ -177,10 +177,6 @@ export default class OrderForm extends React.Component {
           <Form>
             <Form.Select
               label={'Company'}
-              error={ chosenCompany.length === 0 ?
-                { content: 'Please select company', pointing: 'below' } :
-                false
-              }
               options={companies}
               placeholder={'Choose company'}
               value={chosenCompany}
@@ -189,10 +185,6 @@ export default class OrderForm extends React.Component {
             />
             <Form.Select
               label={'Product'}
-              error={ chosenProduct.length === 0 ?
-                { content: 'Please select product', pointing: 'below' } :
-                false
-              }
               options={products}
               placeholder={'Choose product'}
               value={chosenProduct}
@@ -201,10 +193,6 @@ export default class OrderForm extends React.Component {
             />
             <Form.Input
               label={'Quantity'}
-              error={ quantity.length === 0 ?
-                { content: 'Please enter quantity', pointing: 'below' } :
-                false
-              }
               placeholder={'Quantity'}
               name={'quantity'}
               value={quantity}
@@ -213,10 +201,6 @@ export default class OrderForm extends React.Component {
             />
             <Form.Input
               label={'Price'}
-              error={ price.length === 0 ?
-                { content: 'Please enter price', pointing: 'below' } :
-                false
-              }
               placeholder={'Unit price'}
               name={'price'}
               value={price}
@@ -225,10 +209,6 @@ export default class OrderForm extends React.Component {
             />
             <Form.Input
               label={'Date'}
-              error={ chosenDate.length === 0 ?
-                { content: 'Please choose date', pointing: 'below' } :
-                false
-              }
               placeholder={'Date'}
               name={'chosenDate'}
               value={chosenDate}

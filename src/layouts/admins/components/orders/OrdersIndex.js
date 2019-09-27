@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Tab } from 'semantic-ui-react';
+import { Container, Tab, Button } from 'semantic-ui-react';
 
 import PendingOrders from './PendingOrders';
 import ProcessedOrders from './ProcessedOrders';
@@ -14,10 +14,29 @@ export default class BoilerPlate extends React.Component {
       { menuItem: 'On-Hold Orders', render: () => <OnHoldOrders /> },
   ]
 
+  state = {
+    toggleView: false
+  }
+
   render(){
+    const { toggleView } = this.state;
+
     return (
       <Container>
+      {!toggleView && (
+        <>
+        <Button onClick={ () => this.setState({ toggleView: !toggleView})}>
+        List View
+        </Button>
         <Tab panes={this.mainPanes} />
+        </>
+      )}
+
+      {toggleView && (
+        <Button onClick={ () => this.setState({ toggleView: !toggleView})}>
+        Individual View
+        </Button>
+      )}
       </Container>
     )
   }

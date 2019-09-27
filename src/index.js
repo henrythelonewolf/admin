@@ -13,10 +13,12 @@ import { firebase } from './firebaseConfig';
 
 import Loading from './Loading';
 import SignIn from './layouts/auths/SignIn';
+
 import DashboardContainer from './layouts/admins/components/dashboards/DashboardContainer';
 import OrdersContainer from './layouts/admins/components/orders/OrdersContainer';
 import CreateContainer from './layouts/admins/components/creates/CreateContainer';
 import ProfileContainer from './layouts/admins/components/profiles/ProfileContainer';
+import CalendarContainer from './layouts/admins/components/calendars/CalendarContainer';
 
 function PrivateRoute ({component: Component, authed, ...rest}) {
   return (
@@ -72,6 +74,7 @@ export default class AppContainer extends Component {
           <PrivateRoute authed={this.state.authed} exact path='/orders' component={OrdersContainer} />
           <PrivateRoute authed={this.state.authed} exact path='/creates' component={CreateContainer} />
           <PrivateRoute authed={this.state.authed} exact path='/profiles' component={ProfileContainer} />
+          <PrivateRoute authed={this.state.authed} exact path='/calendars' component={CalendarContainer} />
           <Route render={() => <h3>No Match</h3>} />
         </Switch>
       </BrowserRouter>
