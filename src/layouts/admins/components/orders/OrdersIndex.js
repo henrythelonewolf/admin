@@ -24,8 +24,8 @@ export default class BoilerPlate extends React.Component {
     const { toggleView } = this.state;
 
     return (
-      <Container>
-      {!toggleView && (
+      <Container fluid>
+      {toggleView && (
         <>
         <Button onClick={ () => this.setState({ toggleView: !toggleView})}>
         List View
@@ -34,7 +34,7 @@ export default class BoilerPlate extends React.Component {
         </>
       )}
 
-      {toggleView && (
+      {!toggleView && (
         <>
         <Button onClick={ () => this.setState({ toggleView: !toggleView})}>
         Individual View

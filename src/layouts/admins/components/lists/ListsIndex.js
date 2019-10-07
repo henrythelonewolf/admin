@@ -183,9 +183,6 @@ export default class ListsIndex extends React.Component {
     const { rows, columns, filters, selectedIndexes } = this.state;
     const filteredRows = Data.Selectors.getRows({ rows, filters });
 
-    // set default column width
-    columns.map( col => ({ ...col, width: 100 }))
-
     return (
       <ReactDataGrid
         rowKey={'id'}
@@ -208,7 +205,6 @@ export default class ListsIndex extends React.Component {
         onClearFilters={ () => this.setState({ filters: {} })}
         getValidFilterValues={ columnKey => this.getValidFilterValues(rows, columnKey) }
 
-        minHeight={645}
       />
     )
   }
