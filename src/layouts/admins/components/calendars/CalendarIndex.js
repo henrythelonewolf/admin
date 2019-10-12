@@ -109,6 +109,7 @@ export default class CalendarIndex extends React.Component {
       <Container>
         <DnDCalendar
           selectable
+          
           events={events}
           onEventDrop={this.onEventDrop}
 
