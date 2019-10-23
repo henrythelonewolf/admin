@@ -1,6 +1,5 @@
 import React from 'react';
 import { Container } from 'semantic-ui-react';
-import uuidv4 from 'uuid/v4';
 import { firebase } from './../../../../firebaseConfig';
 import { getCurrentUser, snapshotToArray } from './../../../../Utils';
 import store from './../../../../store';
@@ -109,7 +108,7 @@ export default class CalendarIndex extends React.Component {
       <Container>
         <DnDCalendar
           selectable
-          
+
           events={events}
           onEventDrop={this.onEventDrop}
 

@@ -37,8 +37,6 @@ export default class DesktopContainer extends React.Component {
               size='large'
             >
               <Container>
-
-
                 <Menu.Item
                 as={Link}
                 to={'/calendars'}
@@ -46,37 +44,33 @@ export default class DesktopContainer extends React.Component {
                 >Calendar
                 </Menu.Item>
 
-                {/*
-                  <Menu.Item
-                  as={Link}
-                  to={'/'}
-                  active={currentLocation === '/' ? true : false}
-                  >Dashboard
-                  </Menu.Item>
-                  
-                  <Menu.Item
-                  as={Link}
-                  to={'/orders'}
-                  active={currentLocation === '/orders' ? true : false}
-                  >Orders
-                  </Menu.Item>
+                <Menu.Item
+                as={Link}
+                to={'/'}
+                active={currentLocation === '/' ? true : false}
+                >Dashboard
+                </Menu.Item>
 
-                  <Menu.Item
-                  as={Link}
-                  to={'/creates'}
-                  active={currentLocation === '/creates' ? true : false}
-                  >Create
-                  </Menu.Item>
+                <Menu.Item
+                as={Link}
+                to={'/orders'}
+                active={currentLocation === '/orders' ? true : false}
+                >Orders
+                </Menu.Item>
 
-                  <Menu.Item
-                  as={Link}
-                  to={'/profiles'}
-                  active={currentLocation === '/profiles' ? true : false}
-                  >Profile
-                  </Menu.Item>
-                  */}
+                <Menu.Item
+                as={Link}
+                to={'/creates'}
+                active={currentLocation === '/creates' ? true : false}
+                >Create
+                </Menu.Item>
 
-
+                <Menu.Item
+                as={Link}
+                to={'/profiles'}
+                active={currentLocation === '/profiles' ? true : false}
+                >Profile
+                </Menu.Item>
               </Container>
             </Menu>
           </Segment>

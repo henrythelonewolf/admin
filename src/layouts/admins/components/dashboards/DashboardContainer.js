@@ -4,7 +4,6 @@ import { Responsive } from 'semantic-ui-react';
 
 import DashboardIndex from './DashboardIndex';
 import DesktopContainer from './../../DesktopContainer';
-import MobileContainer from './../../MobileContainer';
 
 const getWidth = () => {
   const isSSR = typeof window === 'undefined';
@@ -15,14 +14,9 @@ DesktopContainer.propTypes = {
   children: PropTypes.node,
 }
 
-MobileContainer.propTypes = {
-  children: PropTypes.node,
-}
-
 const ResponsiveContainer = ({ children }) => (
   <div>
     <DesktopContainer getWidth={getWidth}>{children}</DesktopContainer>
-    <MobileContainer getWidth={getWidth}>{children}</MobileContainer>
   </div>
 )
 
