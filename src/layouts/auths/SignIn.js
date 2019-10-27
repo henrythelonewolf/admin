@@ -8,6 +8,7 @@ import {
   Message,
 } from 'semantic-ui-react';
 import { firebase } from './../../firebaseConfig';
+import { Link } from 'react-router-dom';
 
 export default class SignIn extends React.Component {
   state = {
@@ -73,7 +74,7 @@ export default class SignIn extends React.Component {
             </Segment>
           </Form>
           <Message>
-            Forgot password?
+            <Link to="/auth/forgotPassword">Forgot password?</Link>
           </Message>
         </Grid.Column>
       </Grid>

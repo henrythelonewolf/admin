@@ -13,6 +13,7 @@ import { firebase } from './firebaseConfig';
 
 import Loading from './Loading';
 import SignIn from './layouts/auths/SignIn';
+import ForgotPassword from './layouts/auths/ForgotPassword';
 
 import DashboardContainer from './layouts/admins/components/dashboards/DashboardContainer';
 import OrdersContainer from './layouts/admins/components/orders/OrdersContainer';
@@ -70,6 +71,8 @@ export default class AppContainer extends Component {
       <BrowserRouter>
         <Switch>
           <PublicRoute authed={this.state.authed} exact path='/auth/signin' component={SignIn} />
+          <PublicRoute authed={this.state.authed} exact path='/auth/forgotPassword' component={ForgotPassword} />
+          
           <PrivateRoute authed={this.state.authed} exact path='/' component={DashboardContainer} />
           <PrivateRoute authed={this.state.authed} exact path='/orders' component={OrdersContainer} />
           <PrivateRoute authed={this.state.authed} exact path='/creates' component={CreateContainer} />
