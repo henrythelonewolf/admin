@@ -1,24 +1,85 @@
 import React from 'react';
-import { Container, Statistic } from 'semantic-ui-react';
+import { Container, Grid, Card, CardContent, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
-export default class DashboardIndex extends React.Component {
+import Navbar from './../shared/Navbar';
 
-  state = {
-    statItems: [
-      { key: '1', label: 'Pending', value: '5000' },
-      { key: '2', label: 'Processed', value: '5000' },
-      { key: '3', label: 'Out For Delivery', value: '5000' },
-      { key: '4', label: 'On-Hold', value: '5000' },
-    ]
-  }
+export default function Dashboard(){
+  const classes = useStyles();
 
-  render(){
-    const { statItems } = this.state;
+  return (
+    <div className={classes.root}>
+      <Navbar />
 
-    return (
       <Container>
-        <Statistic.Group widths={'four'} items={statItems} />
+        <Grid container spacing={3}>
+
+          <Grid item xs={3}>
+           <Card>
+            <CardContent>
+              <Typography className={classes.title} color="textSecondary" gutterBottom>
+                Pending
+              </Typography>
+              <Typography className={classes.value}>
+                500
+              </Typography>
+            </CardContent>
+           </Card>
+          </Grid>
+
+          <Grid item xs={3}>
+           <Card>
+            <CardContent>
+              <Typography className={classes.title} color="textSecondary" gutterBottom>
+                Processing
+              </Typography>
+              <Typography className={classes.value}>
+                500
+              </Typography>
+            </CardContent>
+           </Card>
+          </Grid>
+
+          <Grid item xs={3}>
+           <Card>
+            <CardContent>
+              <Typography className={classes.title} color="textSecondary" gutterBottom>
+                Out-For-Delivery
+              </Typography>
+              <Typography className={classes.value}>
+                500
+              </Typography>
+            </CardContent>
+           </Card>
+          </Grid>
+
+          <Grid item xs={3}>
+           <Card>
+            <CardContent>
+              <Typography className={classes.title} color="textSecondary" gutterBottom>
+                On-Hold
+              </Typography>
+              <Typography className={classes.value}>
+                500
+              </Typography>
+            </CardContent>
+           </Card>
+          </Grid>
+
+        </Grid>
       </Container>
-    )
-  }
+    </div>
+  )
 }
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1,
+  },
+  title: {
+    fontSize: 20,
+  },
+  value: {
+    fontSize: 44,
+  },
+}));

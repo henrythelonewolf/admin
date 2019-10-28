@@ -15,10 +15,10 @@ import Loading from './Loading';
 import SignIn from './layouts/auths/SignIn';
 import ForgotPassword from './layouts/auths/ForgotPassword';
 
-import DashboardContainer from './layouts/admins/components/dashboards/DashboardContainer';
-import OrdersContainer from './layouts/admins/components/orders/OrdersContainer';
+import DashboardContainer from './layouts/admins/components/dashboards/DashboardIndex';
+import OrdersContainer from './layouts/admins/components/orders/OrdersIndex';
 import CreateContainer from './layouts/admins/components/creates/CreateContainer';
-import ProfileContainer from './layouts/admins/components/profiles/ProfileContainer';
+import ProfileContainer from './layouts/admins/components/profiles/ProfileIndex';
 import CalendarContainer from './layouts/admins/components/calendars/CalendarContainer';
 
 function PrivateRoute ({component: Component, authed, ...rest}) {
@@ -72,7 +72,7 @@ export default class AppContainer extends Component {
         <Switch>
           <PublicRoute authed={this.state.authed} exact path='/auth/signin' component={SignIn} />
           <PublicRoute authed={this.state.authed} exact path='/auth/forgotPassword' component={ForgotPassword} />
-          
+
           <PrivateRoute authed={this.state.authed} exact path='/' component={DashboardContainer} />
           <PrivateRoute authed={this.state.authed} exact path='/orders' component={OrdersContainer} />
           <PrivateRoute authed={this.state.authed} exact path='/creates' component={CreateContainer} />

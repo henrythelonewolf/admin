@@ -1,29 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 
+import { makeStyles } from '@material-ui/core/styles';
 import ListViewIndex from './listView/ListViewIndex';
 import DropdownViewIndex from './dropdownView/DropdownViewIndex';
 import DetailViewIndex from './detailView/DetailViewIndex';
 
-export default class OrdersIndex extends React.Component {
-  state = {
-    view: 'dropdown',
-  }
+import Navbar from './../shared/Navbar';
 
-  render(){
-    const { view } = this.state;
+export default function OrdersIndex(){
+  const classes = useStyles();
+  const [ view, setView ] = useState('dropdown');
 
-    if (view === 'list') {
-      return (
+  return (
+    <div className={classes.root}>
+      <Navbar />
+
+      {view === 'list' && (
         <ListViewIndex />
-      )
-    } else if (view === 'dropdown') {
-      return (
+      )}
+
+      {view === 'dropdown' && (
         <DropdownViewIndex />
-      )
-    } else if (view === 'detail') {
-      return (
+      )}
+
+      {view === 'detail' && (
         <DetailViewIndex />
-      )
-    }
-  }
+      )}
+    </div>
+  )
 }
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1,
+  },
+}));
