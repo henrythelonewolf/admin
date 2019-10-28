@@ -11,9 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-import { makeStyles } from '@material-ui/core/styles';
-import { green } from '@material-ui/core/colors';
-
+import { useStyles } from './Styles';
 import CheckIcon from '@material-ui/icons/Check';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
@@ -66,7 +64,6 @@ export default function ForgotPassword() {
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
-
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
@@ -81,14 +78,14 @@ export default function ForgotPassword() {
           justify="center"
           style={{ paddingTop: 100, paddingBottom: 100 }}
           >
-          <Avatar className={classes.avatar}>
-            <CheckIcon color={'green'} />
-          </Avatar>
-          <Typography component="h1" variant="h5" style={{ textAlign: 'center' }}>
-            Reset instruction sent!
-            <br />
-            Please check your email
-          </Typography>
+            <Avatar className={classes.avatar}>
+              <CheckIcon color={'green'} />
+            </Avatar>
+            <Typography component="h1" variant="h5" style={{ textAlign: 'center' }}>
+              Reset instruction sent!
+              <br />
+              Please check your email
+            </Typography>
           </Grid>
 
           <Grid
@@ -172,40 +169,3 @@ export default function ForgotPassword() {
     );
   }
 }
-
-const useStyles = makeStyles(theme => ({
-  '@global': {
-    body: {
-      backgroundColor: theme.palette.common.white,
-    },
-  },
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-  buttonProgress: {
-    color: green[500],
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    marginTop: -10,
-    marginLeft: -12,
-  },
-  wrapper: {
-    margin: theme.spacing(1),
-    position: 'relative',
-  },
-}));
