@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDataGrid from 'react-data-grid';
 import { Toolbar, Data } from 'react-data-grid-addons';
 
-export default class ListsIndex extends React.Component {
+export default class ListViewIndex extends React.Component {
   state = {
     columns: [
       {

@@ -32,13 +32,6 @@ export const createNewItem = (newItem) => {
   return item;
 }
 
-export function validateEmail(email){
-  if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)){
-    return true;
-  }
-  return false;
-}
-
 export function getCurrentUser(){
   if (Object.entries(store.getState().currentUser).length === 0) {
     const currentUser = firebase.auth().currentUser;

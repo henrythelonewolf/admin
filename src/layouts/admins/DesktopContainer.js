@@ -37,6 +37,21 @@ export default class DesktopContainer extends React.Component {
               size='large'
             >
               <Container>
+              <Menu.Item
+              as={Link}
+              to={'/orders'}
+              active={currentLocation === '/orders' ? true : false}
+              >Orders
+              </Menu.Item>
+
+              <Menu.Item
+              as={Link}
+              to={'/profiles'}
+              active={currentLocation === '/profiles' ? true : false}
+              >Profile
+              </Menu.Item>
+
+              {/*
                 <Menu.Item
                 as={Link}
                 to={'/calendars'}
@@ -51,12 +66,7 @@ export default class DesktopContainer extends React.Component {
                 >Dashboard
                 </Menu.Item>
 
-                <Menu.Item
-                as={Link}
-                to={'/orders'}
-                active={currentLocation === '/orders' ? true : false}
-                >Orders
-                </Menu.Item>
+
 
                 <Menu.Item
                 as={Link}
@@ -65,12 +75,9 @@ export default class DesktopContainer extends React.Component {
                 >Create
                 </Menu.Item>
 
-                <Menu.Item
-                as={Link}
-                to={'/profiles'}
-                active={currentLocation === '/profiles' ? true : false}
-                >Profile
-                </Menu.Item>
+
+                */}
+
               </Container>
             </Menu>
           </Segment>

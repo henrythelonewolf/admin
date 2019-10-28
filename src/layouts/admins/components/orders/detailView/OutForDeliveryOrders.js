@@ -1,9 +1,9 @@
 import React from 'react';
 import { Tab } from 'semantic-ui-react';
 
-import { firebase } from './../../../../firebaseConfig';
-import { getCurrentUser, snapshotToArray } from './../../../../Utils';
-import store from './../../../../store';
+import { firebase } from './../../../../../firebaseConfig';
+import { getCurrentUser, snapshotToArray } from './../../../../../Utils';
+import store from './../../../../../store';
 
 export default class PendingOrders extends React.Component {
   constructor(props){
@@ -29,7 +29,7 @@ export default class PendingOrders extends React.Component {
     .database()
     .ref('users/' + currentUser.uid + '/orders/')
     .on('value', (snapshot) => {
-      const filteredOrdered = snapshotToArray(snapshot).filter( (order) => order.status === 'On Hold');
+      const filteredOrdered = snapshotToArray(snapshot).filter( (order) => order.status === 'Out For Delivery');
 
       const createTabItem = (tabItem) => {
         const item = {

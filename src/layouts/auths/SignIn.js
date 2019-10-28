@@ -1,83 +1,171 @@
-import React from 'react';
-import {
-  Grid,
-  Form,
-  Button,
-  Segment,
-  Header,
-  Message,
-} from 'semantic-ui-react';
+import React, { useState } from 'react';
+
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import Link from '@material-ui/core/Link';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { green } from '@material-ui/core/colors';
+
 import { firebase } from './../../firebaseConfig';
-import { Link } from 'react-router-dom';
 
-export default class SignIn extends React.Component {
-  state = {
-    email: '',
-    password: '',
-
-    loading: false,
-  }
-
-  handleChangeEmail = (evt) => {
-    const email = evt.target.value;
-    this.setState({ email });
-  }
-
-  handleChangePassword = (evt) => {
-    const password = evt.target.value;
-    this.setState({ password });
-  }
-
-  handleSubmitAuth = async (evt) => {
-    evt.preventDefault();
-    const { email, password } = this.state;
-
-    this.setState({ loading: true });
-    await firebase.auth().signInWithEmailAndPassword(email, password).then( (user) => {
-      this.setState({ loading: false });
-    })
-    .catch( (error) => {
-      this.setState({ loading: false });
-      alert(error.toString());
-    });
-  }
-
-  render(){
-    const { email, password, loading } = this.state;
-
-    return (
-      <Grid textAlign={'center'} style={{ height: '100vh' }} verticalAlign={'middle'}>
-        <Grid.Column style={{ maxWidth: 450 }}>
-          <Header as={'h2'} textAlign={'center'}>
-            LCP Supplies Employee's Portal
-          </Header>
-          <Form loading={loading ? true : false}>
-            <Segment>
-            <Form.Input
-            fluid
-            value={email}
-            placeholder={'Email'}
-            onChange={this.handleChangeEmail}
-            />
-            <Form.Input
-            fluid
-            value={password}
-            placeholder={'Password'}
-            onChange={this.handleChangePassword}
-            />
-            <Button
-            color={'green'}
-            type="submit"
-            fluid
-            onClick={this.handleSubmitAuth}
-            >Sign In</Button>
-            </Segment>
-          </Form>
-          <Message>
-            <Link to="/auth/forgotPassword">Forgot password?</Link>
-          </Message>
-        </Grid.Column>
-      </Grid>
-    )
-  }
+function Copyright() {
+  return (
+    <Typography variant="body2" color="textSecondary" align="center">
+      {'Copyright © '}
+      LCP Supplies Sdn. Bhd.
+      {' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
 }
+
+export default function SignIn() {
+  const classes = useStyles();
+
+  const [ values, setValues ] = useState(0);
+  const [ loading, setLoading ] = useState(false);
+
+  const handleChange = name => event => {
+    setValues({ ...values, [name]: event.target.value });
+  };
+
+  const handleSubmit = async (evt) => {
+    evt.preventDefault();
+    const { email, password } = values;
+
+    if (email === undefined || password === undefined) {
+      alert('Invalid email address or password')
+    } else {
+      setLoading(true);
+      await firebase.auth().signInWithEmailAndPassword(email, password).then( (user) => {
+        setLoading(false);
+      })
+      .catch( (error) => {
+        setLoading(false);
+        alert(error.toString());
+      });
+    }
+  }
+
+  return (
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <LockOutlinedIcon />
+        </Avatar>
+
+        <Typography component="h1" variant="h5">
+          LCP Supplies Employee's Portal
+        </Typography>
+
+        <br /><br />
+        <Typography component="h1" variant="h5">
+          Sign in
+        </Typography>
+        <form className={classes.form} noValidate onSubmit={handleSubmit}>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            autoFocus
+            onChange={handleChange('email')}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+            onChange={handleChange('password')}
+          />
+
+          <div className={classes.wrapper}>
+          <Button
+            type="submit"
+            fullWidth
+            disabled={loading}
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+          >
+            Sign In
+          </Button>
+          {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+          </div>
+
+          <Grid
+            container
+            direction="column"
+            alignItems="center"
+            justify="center"
+          >
+            <Grid item xs>
+              <Link href="/auth/forgotPassword" variant="body2">
+                Forgot password?
+              </Link>
+            </Grid>
+          </Grid>
+        </form>
+      </div>
+      <Box mt={8}>
+        <Copyright />
+      </Box>
+    </Container>
+  );
+}
+
+const useStyles = makeStyles(theme => ({
+  '@global': {
+    body: {
+      backgroundColor: theme.palette.common.white,
+    },
+  },
+  paper: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+  buttonProgress: {
+    color: green[500],
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -10,
+    marginLeft: -12,
+  },
+  wrapper: {
+    margin: theme.spacing(1),
+    position: 'relative',
+  },
+}));

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Tab } from 'semantic-ui-react';
 
-import { firebase } from './../../../../firebaseConfig';
-import { getCurrentUser, snapshotToArray } from './../../../../Utils';
-import store from './../../../../store';
+import { firebase } from './../../../../../firebaseConfig';
+import { getCurrentUser, snapshotToArray } from './../../../../../Utils';
+import store from './../../../../../store';
 
 export default class PendingOrders extends React.Component {
   constructor(props){
