@@ -7,8 +7,27 @@ import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
+import 'date-fns';
+import DateFnsUtils from '@date-io/date-fns';
 
 import { firebase } from './../../../../firebaseConfig';
+
+const paddedValue = (value) => {
+  return (value < 10) ? ("0" + value.toString()) : value.toString()
+}
+
+const formattedDate = (chosenDate) => {
+  const d = new Date(chosenDate);
+  const year = d.getFullYear();
+  const month = paddedValue(d.getMonth() + 1);
+  const date = paddedValue(d.getDate());
+
+  return year + '-' + month + '-' + date;
+}
 
 export default class OrderForm extends React.Component {
   constructor(props){
@@ -32,7 +51,7 @@ export default class OrderForm extends React.Component {
       companies: [],
       products: [],
 
-      chosenDate: id ? chosenDate : '',
+      chosenDate: id ? chosenDate : formattedDate(new Date()),
       chosenCompany: id ? chosenCompany : '',
       chosenProduct: id ? chosenProduct : '',
       quantity: id ? quantity : '',
@@ -95,6 +114,10 @@ export default class OrderForm extends React.Component {
     : evt.target.value;
 
     this.setState({ [name]: value });
+  }
+
+  handleDateChange = (chosenDate) => {
+    this.setState({ chosenDate: formattedDate(chosenDate) });
   }
 
   handleSubmitPress = (evt) => {
@@ -172,7 +195,6 @@ export default class OrderForm extends React.Component {
               Company
             </InputLabel>
             <Select
-              labelId={'chosenCompany'}
               id={'chosenCompany'}
               name={'chosenCompany'}
               value={chosenCompany}
@@ -180,7 +202,12 @@ export default class OrderForm extends React.Component {
               labelWidth={60}
             >
             {companies.map( (company) => (
-              <MenuItem value={company.value}>{company.text}</MenuItem>
+              <MenuItem
+              key={company.key}
+              value={company.value}
+              >
+              {company.text}
+              </MenuItem>
             ) )}
             </Select>
           </FormControl>
@@ -190,7 +217,6 @@ export default class OrderForm extends React.Component {
               Product
             </InputLabel>
             <Select
-              labelId={'chosenProduct'}
               id={'chosenProduct'}
               name={'chosenProduct'}
               value={chosenProduct}
@@ -198,7 +224,12 @@ export default class OrderForm extends React.Component {
               labelWidth={60}
             >
             {products.map( (product) => (
-              <MenuItem value={product.value}>{product.text}</MenuItem>
+              <MenuItem
+              key={product.key}
+              value={product.value}
+              >
+              {product.text}
+              </MenuItem>
             ) )}
             </Select>
           </FormControl>
@@ -227,17 +258,21 @@ export default class OrderForm extends React.Component {
             value={price}
           />
 
-          <TextField
-            variant={'outlined'}
-            margin={'normal'}
-            required
-            fullWidth
-            id={'date'}
-            label={'Date'}
-            name={'chosenDate'}
-            onChange={this.handleChangeInput}
-            value={chosenDate}
-          />
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <KeyboardDatePicker
+              fullWidth
+              inputVariant={'outlined'}
+              format={'yyyy-MM-dd'}
+              margin={'normal'}
+              id={'chosenDate'}
+              label="Date"
+              value={chosenDate}
+              onChange={this.handleDateChange}
+              KeyboardButtonProps={{
+                'aria-label': 'change date',
+              }}
+            />
+          </MuiPickersUtilsProvider>
 
           <TextField
             variant={'outlined'}

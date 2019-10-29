@@ -8,12 +8,12 @@ const paddedValue = (value) => {
 const idGenerator = () => {
   // generate id: YYYYMMDDhhmmss
   const d = new Date();
-  let year = d.getFullYear();
-  let month = paddedValue(d.getMonth() + 1);
-  let date = paddedValue(d.getDate());
-  let hours = paddedValue(d.getHours());
-  let minutes = paddedValue(d.getMinutes());
-  let seconds = paddedValue(d.getSeconds());
+  const year = d.getFullYear();
+  const month = paddedValue(d.getMonth() + 1);
+  const date = paddedValue(d.getDate());
+  const hours = paddedValue(d.getHours());
+  const minutes = paddedValue(d.getMinutes());
+  const seconds = paddedValue(d.getSeconds());
 
   return year + month + date + hours + minutes + seconds;
 }

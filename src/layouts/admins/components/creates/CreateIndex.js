@@ -118,7 +118,6 @@ export default class CreateIndex extends React.Component {
             />
           </Grid>
           <Grid item xs={6}>
-            Waiting for Submission
             {orders.length === 0 && (
               <p style={{ textAlign: 'center' }}>No orders yet.</p>
             )}

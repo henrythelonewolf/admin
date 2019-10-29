@@ -6,6 +6,7 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import AddBoxIcon from '@material-ui/icons/AddBox';
+import CalendarIcon from '@material-ui/icons/CalendarToday';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 
@@ -16,6 +17,13 @@ export const mainListItems = (
         <DashboardIcon />
       </ListItemIcon>
       <ListItemText primary="Dashboard" />
+    </ListItem>
+
+    <ListItem button component={'a'} href={'/calendars'}>
+      <ListItemIcon>
+        <CalendarIcon />
+      </ListItemIcon>
+      <ListItemText primary="Calendar" />
     </ListItem>
 
     <ListItem button component={'a'} href={'/orders'}>

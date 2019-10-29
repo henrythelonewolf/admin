@@ -23,10 +23,10 @@ export default function OrderItem({
     return (
       <div>
         <Typography color="textSecondary" gutterBottom>
-          {title}
+          {title.toString()}
         </Typography>
         <Typography variant="h5" component="h2">
-          {value}
+          {value.toString()}
         </Typography>
         <br />
       </div>
