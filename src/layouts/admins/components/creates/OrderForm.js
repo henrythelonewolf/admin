@@ -1,11 +1,13 @@
 import React from 'react';
-import {
-  Card,
-  Form,
-  Button,
-  Grid,
-  Divider
-} from 'semantic-ui-react';
+import { Card, CardContent, Grid, Button } from '@material-ui/core';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import TextField from '@material-ui/core/TextField';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
+
 import { firebase } from './../../../../firebaseConfig';
 
 export default class OrderForm extends React.Component {
@@ -95,16 +97,6 @@ export default class OrderForm extends React.Component {
     this.setState({ [name]: value });
   }
 
-  handleSelectCompany = (evt) => {
-    const value = evt.target.firstChild.textContent;
-    this.setState({ chosenCompany: value });
-  }
-
-  handleSelectProduct = (evt) => {
-    const value = evt.target.firstChild.textContent;
-    this.setState({ chosenProduct: value });
-  }
-
   handleSubmitPress = (evt) => {
     evt.preventDefault();
     const { onFormSubmit, id } = this.props;
@@ -172,120 +164,165 @@ export default class OrderForm extends React.Component {
     const submitText = id ? 'Update' : 'Create';
 
     return (
-      <Card fluid>
-        <Card.Content>
-          <Form>
-            <Form.Select
-              label={'Company'}
-              options={companies}
-              placeholder={'Choose company'}
+      <Card>
+        <CardContent>
+
+          <FormControl fullWidth variant={'outlined'} margin={'normal'}>
+            <InputLabel id={'chosenCompany'}>
+              Company
+            </InputLabel>
+            <Select
+              labelId={'chosenCompany'}
+              id={'chosenCompany'}
+              name={'chosenCompany'}
               value={chosenCompany}
-              onChange={this.handleSelectCompany}
-              required
-            />
-            <Form.Select
-              label={'Product'}
-              options={products}
-              placeholder={'Choose product'}
+              onChange={this.handleChangeInput}
+              labelWidth={60}
+            >
+            {companies.map( (company) => (
+              <MenuItem value={company.value}>{company.text}</MenuItem>
+            ) )}
+            </Select>
+          </FormControl>
+
+          <FormControl fullWidth variant={'outlined'} margin={'normal'}>
+            <InputLabel id={'chosenProduct'}>
+              Product
+            </InputLabel>
+            <Select
+              labelId={'chosenProduct'}
+              id={'chosenProduct'}
+              name={'chosenProduct'}
               value={chosenProduct}
-              onChange={this.handleSelectProduct}
-              required
-            />
-            <Form.Input
-              label={'Quantity'}
-              placeholder={'Quantity'}
-              name={'quantity'}
-              value={quantity}
               onChange={this.handleChangeInput}
-              required
-            />
-            <Form.Input
-              label={'Price'}
-              placeholder={'Unit price'}
-              name={'price'}
-              value={price}
-              onChange={this.handleChangeInput}
-              required
-            />
-            <Form.Input
-              label={'Date'}
-              placeholder={'Date'}
-              name={'chosenDate'}
-              value={chosenDate}
-              onChange={this.handleChangeInput}
-              required
-            />
-            <Form.Input
-              label={'Terms'}
-              placeholder={'Terms'}
-              name={'terms'}
-              value={terms}
-              onChange={this.handleChangeInput}
-            />
-            <Form.Input
-              label={'Remarks'}
-              placeholder={'Remarks'}
-              name={'remarks'}
-              value={remarks}
-              onChange={this.handleChangeInput}
-            />
+              labelWidth={60}
+            >
+            {products.map( (product) => (
+              <MenuItem value={product.value}>{product.text}</MenuItem>
+            ) )}
+            </Select>
+          </FormControl>
 
-            <div className="field">
-              <div className="ui checkbox">
-                <input
-                id={id ? id : 'checkbox'}
-                name={'urgent'}
-                type="checkbox"
-                onChange={this.handleChangeInput}
+          <TextField
+            variant={'outlined'}
+            margin={'normal'}
+            required
+            fullWidth
+            id={'quantity'}
+            label={'Quantity'}
+            name={'quantity'}
+            onChange={this.handleChangeInput}
+            value={quantity}
+          />
+
+          <TextField
+            variant={'outlined'}
+            margin={'normal'}
+            required
+            fullWidth
+            id={'price'}
+            label={'Price'}
+            name={'price'}
+            onChange={this.handleChangeInput}
+            value={price}
+          />
+
+          <TextField
+            variant={'outlined'}
+            margin={'normal'}
+            required
+            fullWidth
+            id={'date'}
+            label={'Date'}
+            name={'chosenDate'}
+            onChange={this.handleChangeInput}
+            value={chosenDate}
+          />
+
+          <TextField
+            variant={'outlined'}
+            margin={'normal'}
+            fullWidth
+            id={'terms'}
+            label={'Terms'}
+            name={'terms'}
+            onChange={this.handleChangeInput}
+            value={terms}
+          />
+
+          <TextField
+            variant={'outlined'}
+            margin={'normal'}
+            fullWidth
+            id={'remarks'}
+            label={'Remarks'}
+            name={'remarks'}
+            onChange={this.handleChangeInput}
+            value={remarks}
+          />
+
+          <FormControlLabel
+            control={
+              <Switch
                 checked={urgent}
-                />
-                <label htmlFor={id ? id : 'checkbox'}>Urgent</label>
-              </div>
-            </div>
+                onChange={this.handleChangeInput}
+                name={'urgent'}
+                color={'primary'}
+              />
+            }
+            label={'Urgent?'}
+          />
 
-            {id && (
-              <>
-              <Divider />
-              <Grid>
-                <Grid.Row columns={2}>
-                  <Grid.Column>
-                    <Button
-                    fluid
-                    color={'red'}
-                    onClick={this.handleRemovePress}>Remove</Button>
-                  </Grid.Column>
-                  <Grid.Column>
-                    <Button
-                    fluid
-                    onClick={onFormClose}>Cancel</Button>
-                  </Grid.Column>
-                </Grid.Row>
+          <br />
+
+          {id && (
+            <div>
+            <br />
+              <Grid container spacing={2}>
+                <Grid item xs={6}>
+                  <Button
+                  fullWidth
+                  color={'secondary'}
+                  variant={'contained'}
+                  onClick={this.handleRemovePress}
+                  >
+                  Remove
+                  </Button>
+                </Grid>
+                <Grid item xs={6}>
+                  <Button
+                  fullWidth
+                  variant={'contained'}
+                  onClick={onFormClose}
+                  >
+                  Cancel
+                  </Button>
+                </Grid>
               </Grid>
-              </>
+              </div>
             )}
 
-            <Divider />
+            <br />
 
             <Button
-            type={'submit'}
-            fluid
-            primary
+            fullWidth
+            variant={'contained'}
+            color={'primary'}
             onClick={this.handleSubmitPress}
             >{submitText}</Button>
 
             {!id && (
-              <>
-                <Divider />
-
-                <Button
-                fluid
-                onClick={this.handleClearPress}
-                >Clear</Button>
-              </>
+              <div>
+              <br />
+              <Button
+              fullWidth
+              variant={'contained'}
+              onClick={this.handleClearPress}
+              >Clear</Button>
+              </div>
             )}
 
-          </Form>
-        </Card.Content>
+        </CardContent>
       </Card>
     )
   }

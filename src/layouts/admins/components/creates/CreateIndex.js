@@ -1,16 +1,5 @@
 import React from 'react';
-import {
-  Container,
-  Grid,
-  Rail,
-  Ref,
-  Segment,
-  Sticky,
-  Button,
-  Header,
-  Icon,
-  Divider,
-} from 'semantic-ui-react';
+import { Grid, Card, CardContent, Button } from '@material-ui/core';
 
 import EditableOrder from './EditableOrder';
 import OrderForm from './OrderForm';
@@ -122,47 +111,37 @@ export default class CreateIndex extends React.Component {
 
     return (
       <PageContainer name={'Create Order'}>
-        <Grid centered columns={2}>
-          <Grid.Column>
-            <Ref innerRef={this.contextRef}>
-              <Segment>
-                <Rail position='left'>
-                  <Sticky context={this.contextRef} offset={60}>
-                    <OrderForm
-                    onFormSubmit={this.handleCreateFormSubmit}
-                    />
-                  </Sticky>
-                </Rail>
+        <Grid container spacing={2}>
+          <Grid item xs={3}>
+            <OrderForm
+            onFormSubmit={this.handleCreateFormSubmit}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            Waiting for Submission
+            {orders.length === 0 && (
+              <p style={{ textAlign: 'center' }}>No orders yet.</p>
+            )}
 
-                <Header as={'h1'} textAlign={'center'}>Waiting for Submission</Header>
-                {orders.length === 0 && (
-                  <p style={{ textAlign: 'center' }}>No orders yet.</p>
-                )}
-                {orders.map( (order) => this.renderOrders(order) )}
-
-                {orders.length > 0 && (
-                  <Rail position='right'>
-                    <Sticky context={this.contextRef} offset={60}>
-                      <Segment>
-                        <Header as='h5' icon textAlign={'center'}>
-                          <Icon name='exclamation' circular />
-                          <Header.Content>You have {orders.length} orders waiting for submission</Header.Content>
-                        </Header>
-
-                        <Divider />
-
-                        <Button
-                        color={'green'}
-                        fluid
-                        onClick={this.handleSubmitAll}
-                        >Submit All</Button>
-                      </Segment>
-                    </Sticky>
-                  </Rail>
-                )}
-              </Segment>
-            </Ref>
-          </Grid.Column>
+            {orders.map( (order) => this.renderOrders(order) )}
+          </Grid>
+          <Grid item xs={3}>
+            {orders.length > 0 && (
+              <Card>
+                <CardContent>
+                You have {orders.length} orders waiting for submission
+                  <Button
+                    variant={'contained'}
+                    color={'primary'}
+                    fullWidth
+                    onClick={this.handleSubmitAll}
+                  >
+                  Submit All
+                  </Button>
+                </CardContent>
+              </Card>
+            )}
+          </Grid>
         </Grid>
       </PageContainer>
     )

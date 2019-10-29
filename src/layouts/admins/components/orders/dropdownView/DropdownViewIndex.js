@@ -31,9 +31,12 @@ import { generateRows, globalSalesValues, } from './generator';
 
 const sales = generateRows({ columnValues: globalSalesValues, length: 1000 });
 const availableFilterOperations = [
-    'equal', 'notEqual',
-    'greaterThan', 'greaterThanOrEqual',
-    'lessThan', 'lessThanOrEqual',
+    'equal',
+    'notEqual',
+    'greaterThan',
+    'greaterThanOrEqual',
+    'lessThan',
+    'lessThanOrEqual',
 ];
 const styles = ({ typography }) => createStyles({
     currency: {

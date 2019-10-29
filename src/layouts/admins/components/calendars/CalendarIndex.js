@@ -1,5 +1,4 @@
 import React from 'react';
-import { Container } from 'semantic-ui-react';
 import { firebase } from './../../../../firebaseConfig';
 import { getCurrentUser, snapshotToArray } from './../../../../Utils';
 import store from './../../../../store';

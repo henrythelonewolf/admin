@@ -1,56 +1,69 @@
 import React from 'react';
-import { Card, Button, Divider } from 'semantic-ui-react';
+import {
+  Card,
+  CardContent,
+  Button,
+  Typography,
+  Grid
+} from '@material-ui/core';
 
-export default class OrderItem extends React.Component {
-  render(){
-    const {
-      id,
-      chosenCompany,
-      chosenProduct,
-      chosenDate,
-      quantity,
-      price,
-      terms,
-      remarks,
-      urgent,
-      onPress,
-    } = this.props;
-
+export default function OrderItem({
+  id,
+  chosenCompany,
+  chosenProduct,
+  chosenDate,
+  quantity,
+  price,
+  terms,
+  remarks,
+  urgent,
+  onPress,
+}){
+  const Field = ({ title, value }) => {
     return (
-      <Card fluid>
-        <Card.Content>
-          <Card.Meta content={'ID'} />
-          <Card.Header content={id} />
-          <br />
-          <Card.Meta content={'Company'} />
-          <Card.Header content={chosenCompany} />
-          <br />
-          <Card.Meta content={'Product'} />
-          <Card.Header content={chosenProduct} />
-          <br />
-          <Card.Meta content={'Quantity'} />
-          <Card.Header content={quantity} />
-          <br />
-          <Card.Meta content={'Unit price'} />
-          <Card.Header content={price} />
-          <br />
-          <Card.Meta content={'Date'} />
-          <Card.Header content={chosenDate} />
-          <br />
-          <Card.Meta content={'Terms'} />
-          <Card.Header content={terms} />
-          <br />
-          <Card.Meta content={'Remarks'} />
-          <Card.Header content={remarks} />
-          <br />
-          <Card.Meta content={'Urgent'} />
-          <Card.Header content={urgent ? 'Yes' : 'No'} />
-
-          <Divider />
-
-          <Button onClick={onPress} fluid>Edit</Button>
-        </Card.Content>
-      </Card>
+      <div>
+        <Typography color="textSecondary" gutterBottom>
+          {title}
+        </Typography>
+        <Typography variant="h5" component="h2">
+          {value}
+        </Typography>
+        <br />
+      </div>
     )
   }
+
+  return (
+    <div>
+    <Card>
+      <CardContent>
+        <Grid container spacing={2}>
+          <Grid item xs={6}>
+            <Field title={'ID'} value={id} />
+            <Field title={'Company'} value={chosenCompany} />
+            <Field title={'Product'} value={chosenProduct} />
+            <Field title={'Quantity'} value={quantity} />
+            <Field title={'Unit price'} value={price} />
+          </Grid>
+          <Grid item xs={6}>
+            <Field title={'Date'} value={chosenDate} />
+            <Field title={'Terms'} value={terms} />
+            <Field title={'Remarks'} value={remarks} />
+            <Field title={'Urgent'} value={urgent ? 'Yes' : 'No'} />
+          </Grid>
+        </Grid>
+
+        <Button
+          onClick={onPress}
+          variant={'contained'}
+          color={'primary'}
+          fullWidth
+        >
+        Edit
+        </Button>
+      </CardContent>
+    </Card>
+    <br />
+    </div>
+  )
 }
