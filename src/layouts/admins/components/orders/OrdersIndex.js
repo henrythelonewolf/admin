@@ -5,16 +5,13 @@ import ListViewIndex from './listView/ListViewIndex';
 import DropdownViewIndex from './dropdownView/DropdownViewIndex';
 import DetailViewIndex from './detailView/DetailViewIndex';
 
-import Navbar from './../shared/Navbar';
+import PageContainer from './../shared/PageContainer';
 
 export default function OrdersIndex(){
-  const classes = useStyles();
   const [ view, setView ] = useState('dropdown');
 
   return (
-    <div className={classes.root}>
-      <Navbar />
-
+      <PageContainer name={'Orders'}>
       {view === 'list' && (
         <ListViewIndex />
       )}
@@ -26,12 +23,6 @@ export default function OrdersIndex(){
       {view === 'detail' && (
         <DetailViewIndex />
       )}
-    </div>
+      </PageContainer>
   )
 }
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1,
-  },
-}));

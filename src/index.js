@@ -17,9 +17,9 @@ import ForgotPassword from './layouts/auths/ForgotPassword';
 
 import DashboardContainer from './layouts/admins/components/dashboards/DashboardIndex';
 import OrdersContainer from './layouts/admins/components/orders/OrdersIndex';
-import CreateContainer from './layouts/admins/components/creates/CreateContainer';
+import CreateContainer from './layouts/admins/components/creates/CreateIndex';
 import ProfileContainer from './layouts/admins/components/profiles/ProfileIndex';
-import CalendarContainer from './layouts/admins/components/calendars/CalendarContainer';
+import CalendarContainer from './layouts/admins/components/calendars/CalendarIndex';
 
 function PrivateRoute ({component: Component, authed, ...rest}) {
   return (

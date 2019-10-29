@@ -4,6 +4,8 @@ import { firebase } from './../../../../firebaseConfig';
 import { getCurrentUser, snapshotToArray } from './../../../../Utils';
 import store from './../../../../store';
 
+import PageContainer from './../shared/PageContainer';
+
 // react big calendar import
 import {
   Calendar,
@@ -105,7 +107,7 @@ export default class CalendarIndex extends React.Component {
   render(){
     const { events } = this.state;
     return (
-      <Container>
+      <PageContainer name={'Calendar'}>
         <DnDCalendar
           selectable
 
@@ -118,7 +120,7 @@ export default class CalendarIndex extends React.Component {
 
           style={{ height: '65vh'}}
         />
-      </Container>
+      </PageContainer>
     )
   }
 }

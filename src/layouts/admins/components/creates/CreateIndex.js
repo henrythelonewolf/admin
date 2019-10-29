@@ -17,6 +17,8 @@ import OrderForm from './OrderForm';
 import { newOrder } from './../../../../Utils';
 import { firebase } from './../../../../firebaseConfig';
 
+import PageContainer from './../shared/PageContainer';
+
 export default class CreateIndex extends React.Component {
   state = {
     orders: [],
@@ -119,7 +121,7 @@ export default class CreateIndex extends React.Component {
     const { orders } = this.state;
 
     return (
-      <Container>
+      <PageContainer name={'Create Order'}>
         <Grid centered columns={2}>
           <Grid.Column>
             <Ref innerRef={this.contextRef}>
@@ -162,7 +164,7 @@ export default class CreateIndex extends React.Component {
             </Ref>
           </Grid.Column>
         </Grid>
-      </Container>
+      </PageContainer>
     )
   }
 }

@@ -1,10 +1,26 @@
-import uuidv4 from 'uuid/v4';
 import store from './store';
 import { firebase } from './firebaseConfig';
 
+const paddedValue = (value) => {
+  return (value < 10) ? ("0" + value.toString()) : value.toString()
+}
+
+const idGenerator = () => {
+  // generate id: YYYYMMDDhhmmss
+  const d = new Date();
+  let year = d.getFullYear();
+  let month = paddedValue(d.getMonth() + 1);
+  let date = paddedValue(d.getDate());
+  let hours = paddedValue(d.getHours());
+  let minutes = paddedValue(d.getMinutes());
+  let seconds = paddedValue(d.getSeconds());
+
+  return year + month + date + hours + minutes + seconds;
+}
+
 export const newOrder = (attrs = {}) => {
   const order = {
-    id: uuidv4(),
+    id: idGenerator(),
     chosenDate: attrs.chosenDate || 'Undefined',
     chosenCompany: attrs.chosenCompany || 'Undefined',
     chosenProduct: attrs.chosenProduct || 'Undefined',
@@ -23,7 +39,7 @@ export const newOrder = (attrs = {}) => {
 
 export const createNewItem = (newItem) => {
   const item = {
-    id: uuidv4(),
+    id: idGenerator(),
     title: newItem,
     created_at: new Date().toString(),
     updated_at: new Date().toString(),

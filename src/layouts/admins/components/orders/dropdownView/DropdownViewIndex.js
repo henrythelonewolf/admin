@@ -1,73 +1,164 @@
-import React, { useState } from 'react';
+import * as React from 'react';
 import Paper from '@material-ui/core/Paper';
-import Container from '@material-ui/core/Container';
-
+import Input from '@material-ui/core/Input';
+import { createStyles, withStyles } from '@material-ui/core/styles';
 import {
+  FilteringState,
+  GroupingState,
+  IntegratedFiltering,
+  IntegratedGrouping,
+  IntegratedPaging,
+  IntegratedSelection,
+  IntegratedSorting,
+  PagingState,
   SelectionState,
-  TreeDataState,
-  CustomTreeData,
+  SortingState,
+  DataTypeProvider,
 } from '@devexpress/dx-react-grid';
 import {
+  DragDropProvider,
   Grid,
+  GroupingPanel,
+  PagingPanel,
   Table,
+  TableFilterRow,
+  TableGroupRow,
   TableHeaderRow,
-  TableTreeColumn,
+  TableSelection,
+  Toolbar,
 } from '@devexpress/dx-react-grid-material-ui';
+import { generateRows, globalSalesValues, } from './generator';
 
-import {
-  generateRows,
-  defaultColumnValues,
-} from './generator';
-
-const getChildRows = (row, rootRows) => {
-  const childRows = rootRows.filter(r => r.parentId === (row ? row.id : null));
-  return childRows.length ? childRows : null;
+const sales = generateRows({ columnValues: globalSalesValues, length: 1000 });
+const availableFilterOperations = [
+    'equal', 'notEqual',
+    'greaterThan', 'greaterThanOrEqual',
+    'lessThan', 'lessThanOrEqual',
+];
+const styles = ({ typography }) => createStyles({
+    currency: {
+        fontWeight: typography.fontWeightMedium,
+    },
+    numericInput: {
+        fontSize: '14px',
+        width: '100%',
+    },
+});
+const getInputValue = (value) => (value === undefined ? '' : value);
+const getColor = (amount) => {
+    if (amount < 3000) {
+        return '#F44336';
+    }
+    if (amount < 5000) {
+        return '#FFC107';
+    }
+    if (amount < 8000) {
+        return '#FF5722';
+    }
+    return '#009688';
 };
+const CurrencyEditor = withStyles(styles)(({ onValueChange, classes, value }) => {
+    const handleChange = (event) => {
+        const { value: targetValue } = event.target;
+        if (targetValue.trim() === '') {
+            onValueChange(undefined);
+            return;
+        }
+        onValueChange(parseInt(targetValue, 10));
+    };
+    return (
+      React.createElement(
+        Input, {
+          type: "number",
+          classes: {
+            input: classes.numericInput,
+          },
+          fullWidth: true,
+          value: getInputValue(value),
+          inputProps: {
+            min: 0,
+            placeholder: 'Filter...',
+          },
+          onChange: handleChange
+        }
+      )
+    );
+});
+const CurrencyFormatter = withStyles(styles)(
+  ({ value, classes }) => React.createElement(
+    "i", {
+      className: classes.currency,
+      style: { color: getColor(value) }
+    },
+    "$", value)
+);
+const CurrencyTypeProvider = (props) => (
+  React.createElement(
+    DataTypeProvider, Object.assign({
+      formatterComponent: CurrencyFormatter,
+      editorComponent: CurrencyEditor,
+      availableFilterOperations: availableFilterOperations
+    }, props)
+  )
+);
 
 export default () => {
-  const [columns] = useState([
-    { name: 'name', title: 'Name' },
-    { name: 'gender', title: 'Gender' },
-    { name: 'city', title: 'City' },
-    { name: 'car', title: 'Car' },
+  const [columns] = React.useState([
+      { name: 'product', title: 'Product' },
+      { name: 'region', title: 'Region' },
+      { name: 'amount', title: 'Sale Amount' },
+      { name: 'saleDate', title: 'Sale Date' },
+      { name: 'customer', title: 'Customer' },
   ]);
-  const [data] = useState(generateRows({
-    columnValues: {
-      id: ({ index }) => index,
-      parentId: ({ index, random }) => (index > 0 ? Math.trunc((random() * index) / 2) : null),
-      ...defaultColumnValues,
-    },
-    length: 20,
-  }));
-  const [tableColumnExtensions] = useState([
-    { columnName: 'name', width: 300 },
-  ]);
-  const [defaultExpandedRowIds] = useState([0]);
+  const [rows] = React.useState(sales);
+  const [pageSizes] = React.useState([5, 10, 15]);
+  const [currencyColumns] = React.useState(['amount']);
 
   return (
-    <Container fixed>
     <Paper>
       <Grid
-        rows={data}
+        rows={rows}
         columns={columns}
       >
+        <FilteringState
+          defaultFilters={[{ columnName: 'saleDate', value: '2016-02' }]}
+        />
+        <SortingState
+          defaultSorting={[
+            { columnName: 'product', direction: 'asc' },
+            { columnName: 'saleDate', direction: 'asc' },
+          ]}
+        />
+
         <SelectionState />
-        <TreeDataState
-          defaultExpandedRowIds={defaultExpandedRowIds}
+
+        <GroupingState
+          defaultGrouping={[{ columnName: 'product' }]}
+          defaultExpandedGroups={['EnviroCare Max']}
         />
-        <CustomTreeData
-          getChildRows={getChildRows}
-        />
-        <Table
-          columnExtensions={tableColumnExtensions}
-        />
-        <TableHeaderRow />
-        <TableTreeColumn
-          for="name"
-          showSelectionControls
-        />
+        <PagingState />
+
+        <IntegratedGrouping />
+        <IntegratedFiltering />
+        <IntegratedSorting />
+        <IntegratedPaging />
+        <IntegratedSelection />
+
+        <CurrencyTypeProvider for={currencyColumns} />
+
+        <DragDropProvider />
+
+        <Table />
+        <TableSelection showSelectAll={true} />
+
+        <TableHeaderRow showSortingControls={true} />
+        <TableFilterRow showFilterSelector={true} />
+        <PagingPanel pageSizes={pageSizes} />
+
+        <TableGroupRow />
+        <Toolbar />
+        <GroupingPanel showSortingControls={true} />
       </Grid>
     </Paper>
-    </Container>
   );
 };

@@ -6,7 +6,7 @@ import Paper from '@material-ui/core/Paper';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 
-import Navbar from './../shared/Navbar';
+import PageContainer from './../shared/PageContainer';
 
 import { firebase } from './../../../../firebaseConfig';
 
@@ -20,10 +20,7 @@ export default function ProfileIndex() {
   }
 
   return (
-    <div className={classes.root}>
-    <Navbar />
-
-    <Container>
+    <PageContainer name={'Profile'}>
       <Grid container spacing={3}>
         <Grid item xs={3}>
           <Paper className={classes.paper}>
@@ -36,8 +33,7 @@ export default function ProfileIndex() {
           </Paper>
         </Grid>
       </Grid>
-    </Container>
-    </div>
+    </PageContainer>
   )
 }
 
@@ -46,8 +42,5 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(2),
     textAlign: 'center',
     color: theme.palette.text.secondary,
-  },
-  root: {
-    flexGrow: 1,
   },
 }));
