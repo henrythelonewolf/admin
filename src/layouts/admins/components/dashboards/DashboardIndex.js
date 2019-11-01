@@ -27,7 +27,7 @@ export default function DashboardIndex(){
           <Card>
             <CardContent>
             <Typography className={classes.title} color="textSecondary" gutterBottom>
-              Pending
+              Processing
             </Typography>
             <Typography variant="h3" component="h2">
               5000
@@ -40,7 +40,7 @@ export default function DashboardIndex(){
           <Card>
             <CardContent>
             <Typography className={classes.title} color="textSecondary" gutterBottom>
-              Pending
+              Out-For-Delivery
             </Typography>
             <Typography variant="h3" component="h2">
               5000
@@ -53,7 +53,7 @@ export default function DashboardIndex(){
           <Card>
             <CardContent>
             <Typography className={classes.title} color="textSecondary" gutterBottom>
-              Pending
+              On-Hold
             </Typography>
             <Typography variant="h3" component="h2">
               5000

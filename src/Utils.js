@@ -1,19 +1,15 @@
 import store from './store';
 import { firebase } from './firebaseConfig';
 
-const paddedValue = (value) => {
-  return (value < 10) ? ("0" + value.toString()) : value.toString()
-}
-
 const idGenerator = () => {
   // generate id: YYYYMMDDhhmmss
   const d = new Date();
-  const year = d.getFullYear();
-  const month = paddedValue(d.getMonth() + 1);
-  const date = paddedValue(d.getDate());
-  const hours = paddedValue(d.getHours());
-  const minutes = paddedValue(d.getMinutes());
-  const seconds = paddedValue(d.getSeconds());
+  const year = d.getFullYear().toString();
+  const month = (d.getMonth() + 1).toString().padStart(2, '0');
+  const date = d.getDate().toString().padStart(2, '0');
+  const hours = d.getHours().toString().padStart(2, '0');
+  const minutes = d.getMinutes().toString().padStart(2, '0');
+  const seconds = d.getSeconds().toString().padStart(2, '0');
 
   return year + month + date + hours + minutes + seconds;
 }

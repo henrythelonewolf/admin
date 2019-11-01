@@ -1,7 +1,5 @@
 import * as React from 'react';
 import Paper from '@material-ui/core/Paper';
-import Input from '@material-ui/core/Input';
-import { createStyles, withStyles } from '@material-ui/core/styles';
 import {
   FilteringState,
   GroupingState,
@@ -13,7 +11,6 @@ import {
   PagingState,
   SelectionState,
   SortingState,
-  DataTypeProvider,
 } from '@devexpress/dx-react-grid';
 import {
   DragDropProvider,
@@ -26,98 +23,137 @@ import {
   TableHeaderRow,
   TableSelection,
   Toolbar,
+  ColumnChooser,
+  TableColumnVisibility,
 } from '@devexpress/dx-react-grid-material-ui';
-import { generateRows, globalSalesValues, } from './generator';
 
 import PageContainer from './../shared/PageContainer';
 
-const sales = generateRows({ columnValues: globalSalesValues, length: 1000 });
-const availableFilterOperations = [
-    'equal',
-    'notEqual',
-    'greaterThan',
-    'greaterThanOrEqual',
-    'lessThan',
-    'lessThanOrEqual',
-];
-const styles = ({ typography }) => createStyles({
-    currency: {
-        fontWeight: typography.fontWeightMedium,
-    },
-    numericInput: {
-        fontSize: '14px',
-        width: '100%',
-    },
-});
-const getInputValue = (value) => (value === undefined ? '' : value);
-const getColor = (amount) => {
-    if (amount < 3000) {
-        return '#F44336';
-    }
-    if (amount < 5000) {
-        return '#FFC107';
-    }
-    if (amount < 8000) {
-        return '#FF5722';
-    }
-    return '#009688';
-};
-const CurrencyEditor = withStyles(styles)(({ onValueChange, classes, value }) => {
-    const handleChange = (event) => {
-        const { value: targetValue } = event.target;
-        if (targetValue.trim() === '') {
-            onValueChange(undefined);
-            return;
-        }
-        onValueChange(parseInt(targetValue, 10));
-    };
-    return (
-      React.createElement(
-        Input, {
-          type: "number",
-          classes: {
-            input: classes.numericInput,
-          },
-          fullWidth: true,
-          value: getInputValue(value),
-          inputProps: {
-            min: 0,
-            placeholder: 'Filter...',
-          },
-          onChange: handleChange
-        }
-      )
-    );
-});
-const CurrencyFormatter = withStyles(styles)(
-  ({ value, classes }) => React.createElement(
-    "i", {
-      className: classes.currency,
-      style: { color: getColor(value) }
-    },
-    "$", value)
-);
-const CurrencyTypeProvider = (props) => (
-  React.createElement(
-    DataTypeProvider, Object.assign({
-      formatterComponent: CurrencyFormatter,
-      editorComponent: CurrencyEditor,
-      availableFilterOperations: availableFilterOperations
-    }, props)
-  )
-);
-
 export default () => {
   const [columns] = React.useState([
-      { name: 'product', title: 'Product' },
-      { name: 'region', title: 'Region' },
-      { name: 'amount', title: 'Sale Amount' },
-      { name: 'saleDate', title: 'Sale Date' },
-      { name: 'customer', title: 'Customer' },
+      { name: 'id', title: 'ID' },
+      { name: 'chosenCompany', title: 'Company' },
+      { name: 'chosenProduct', title: 'Product' },
+      { name: 'chosenDate', title: 'Date' },
+      { name: 'price', title: 'Price' },
+      { name: 'quantity', title: 'Quantity' },
+      { name: 'remarks', title: 'Remarks' },
+      { name: 'terms', title: 'Terms' },
+      { name: 'status', title: 'Status' },
+      { name: 'urgency', title: 'Urgency' },
+      { name: 'created_at', title: 'Created at' },
+      { name: 'updated_at', title: 'Updated at' },
+      { name: 'type', title: 'Status Type' },
   ]);
-  const [rows] = React.useState(sales);
+  const data = [
+    {
+      id: '123456',
+      chosenCompany: 'Company A',
+      chosenProduct: 'Product A',
+      chosenDate: '2019-10-2',
+      price: '12.45',
+      quantity: '12',
+      remarks: 'Undefined',
+      terms: 'Undefined',
+      status: 'Pending',
+      urgency: 'Yes',
+      created_at: '2019-10-4',
+      updated_at: '2019-10-3',
+      type: 'Open',
+    },
+    {
+      id: '123456',
+      chosenCompany: 'Company A',
+      chosenProduct: 'Product A',
+      chosenDate: '2019-10-2',
+      price: '12.45',
+      quantity: '12',
+      remarks: 'Undefined',
+      terms: 'Undefined',
+      status: 'Processing',
+      urgency: 'Yes',
+      created_at: '2019-10-4',
+      updated_at: '2019-10-3',
+      type: 'Open',
+    },
+    {
+      id: '123456',
+      chosenCompany: 'Company A',
+      chosenProduct: 'Product A',
+      chosenDate: '2019-10-2',
+      price: '12.45',
+      quantity: '12',
+      remarks: 'Undefined',
+      terms: 'Undefined',
+      status: 'Out-For-Delivery',
+      urgency: 'Yes',
+      created_at: '2019-10-4',
+      updated_at: '2019-10-3',
+      type: 'Open',
+    },
+    {
+      id: '123456',
+      chosenCompany: 'Company A',
+      chosenProduct: 'Product A',
+      chosenDate: '2019-10-2',
+      price: '12.45',
+      quantity: '12',
+      remarks: 'Undefined',
+      terms: 'Undefined',
+      status: 'On-Hold',
+      urgency: 'Yes',
+      created_at: '2019-10-4',
+      updated_at: '2019-10-3',
+      type: 'Open',
+    },
+    {
+      id: '123456',
+      chosenCompany: 'Company A',
+      chosenProduct: 'Product A',
+      chosenDate: '2019-10-2',
+      price: '12.45',
+      quantity: '12',
+      remarks: 'Undefined',
+      terms: 'Undefined',
+      status: 'Rejected',
+      urgency: 'Yes',
+      created_at: '2019-10-4',
+      updated_at: '2019-10-3',
+      type: 'Closed',
+    },
+    {
+      id: '123456',
+      chosenCompany: 'Company A',
+      chosenProduct: 'Product A',
+      chosenDate: '2019-10-2',
+      price: '12.45',
+      quantity: '12',
+      remarks: 'Undefined',
+      terms: 'Undefined',
+      status: 'Delivered',
+      urgency: 'Yes',
+      created_at: '2019-10-4',
+      updated_at: '2019-10-3',
+      type: 'Closed',
+    },
+    {
+      id: '123456',
+      chosenCompany: 'Company A',
+      chosenProduct: 'Product A',
+      chosenDate: '2019-10-2',
+      price: '12.45',
+      quantity: '12',
+      remarks: 'Undefined',
+      terms: 'Undefined',
+      status: 'Canceled',
+      urgency: 'Yes',
+      created_at: '2019-10-4',
+      updated_at: '2019-10-3',
+      type: 'Closed',
+    },
+  ]
+  const [rows] = React.useState(data);
   const [pageSizes] = React.useState([5, 10, 15]);
-  const [currencyColumns] = React.useState(['amount']);
 
   return (
     <PageContainer name={'Orders'}>
@@ -126,21 +162,18 @@ export default () => {
         rows={rows}
         columns={columns}
       >
-        <FilteringState
-          defaultFilters={[{ columnName: 'saleDate', value: '2016-02' }]}
-        />
-        <SortingState
-          defaultSorting={[
-            { columnName: 'product', direction: 'asc' },
-            { columnName: 'saleDate', direction: 'asc' },
-          ]}
-        />
-
+      {console.log(rows)}
+      {console.log(columns)}
+        <FilteringState />
+        <SortingState />
         <SelectionState />
 
         <GroupingState
-          defaultGrouping={[{ columnName: 'product' }]}
-          defaultExpandedGroups={['EnviroCare Max']}
+          defaultGrouping={[
+            { columnName: 'type' },
+            { columnName: 'status' },
+          ]}
+          defaultExpandedGroups={['Open']}
         />
         <PagingState />
 
@@ -150,11 +183,10 @@ export default () => {
         <IntegratedPaging />
         <IntegratedSelection />
 
-        <CurrencyTypeProvider for={currencyColumns} />
-
         <DragDropProvider />
 
         <Table />
+        <TableColumnVisibility />
         <TableSelection showSelectAll={true} />
 
         <TableHeaderRow showSortingControls={true} />
@@ -163,6 +195,7 @@ export default () => {
 
         <TableGroupRow />
         <Toolbar />
+        <ColumnChooser />
         <GroupingPanel showSortingControls={true} />
       </Grid>
     </Paper>

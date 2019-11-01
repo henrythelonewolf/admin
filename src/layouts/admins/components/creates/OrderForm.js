@@ -16,15 +16,11 @@ import DateFnsUtils from '@date-io/date-fns';
 
 import { firebase } from './../../../../firebaseConfig';
 
-const paddedValue = (value) => {
-  return (value < 10) ? ("0" + value.toString()) : value.toString()
-}
-
 const formattedDate = (chosenDate) => {
   const d = new Date(chosenDate);
-  const year = d.getFullYear();
-  const month = paddedValue(d.getMonth() + 1);
-  const date = paddedValue(d.getDate());
+  const year = d.getFullYear().toString();
+  const month = (d.getMonth() + 1).toString().padStart(2, '0');
+  const date = d.getDate().toString().padStart(2, '0');
 
   return year + '-' + month + '-' + date;
 }
