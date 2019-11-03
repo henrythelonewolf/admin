@@ -7,7 +7,6 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import CalendarIcon from '@material-ui/icons/CalendarToday';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 
 export const mainListItems = (
@@ -38,13 +37,6 @@ export const mainListItems = (
         <AddBoxIcon />
       </ListItemIcon>
       <ListItemText primary="Create" />
-    </ListItem>
-
-    <ListItem button component={'a'} href={'/profiles'}>
-      <ListItemIcon>
-        <AccountCircleIcon />
-      </ListItemIcon>
-      <ListItemText primary="Profile" />
     </ListItem>
   </div>
 );

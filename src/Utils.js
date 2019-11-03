@@ -1,5 +1,6 @@
-import store from './store';
 import { firebase } from './firebaseConfig';
+
+const currentUser = firebase.auth().currentUser;
 
 const idGenerator = () => {
   // generate id: YYYYMMDDhhmmss
@@ -26,10 +27,18 @@ export const newOrder = (attrs = {}) => {
     terms: attrs.terms || 'Undefined',
     status: 'Pending',
     created_at: new Date().toString(),
-    updated_at: new Date().toString(),
-    urgent: attrs.urgent || false,
+    urgency: attrs.urgency || false,
+    histories: [
+      {
+        id: idGenerator(),
+        description: 'Order creation',
+        updated_by: '',
+        updated_at: new Date().toString(),
+      }
+    ],
+    type: 'Open',
+    assigned_to: attrs.assigned_to || '',
   }
-
   return order;
 };
 
@@ -44,15 +53,6 @@ export const createNewItem = (newItem) => {
   return item;
 }
 
-export function getCurrentUser(){
-  if (Object.entries(store.getState().currentUser).length === 0) {
-    const currentUser = firebase.auth().currentUser;
-    store.setState({ currentUser });
-    console.log('fetched user');
-    console.log(currentUser);
-  }
-}
-
 export function snapshotToArray(snapshot){
   var itemArr = [];
 
@@ -65,17 +65,5 @@ export function snapshotToArray(snapshot){
 
   var sortedCreatedAt = itemArr.sort((a,b) => (a.created_at < b.created_at) ? 1 : -1);
   // return array and reverse sort so that the latest will be on top
-  return sortedCreatedAt.sort((a,b) => (a.urgent === b.urgent) ? 0 : a.urgent ? -1 : 1);
-}
-
-export const badgeStatusColor = (status) => {
-  if (status === 'Pending') {
-    return 'orange';
-  }else if (status === 'Processed') {
-    return '#5cb85c';
-  }else if (status === 'Out For Delivery') {
-    return 'darkgrey';
-  }else if (status === 'On Hold') {
-    return 'black';
-  }
+  return sortedCreatedAt.sort((a,b) => (a.urgency === b.urgency) ? 0 : a.urgency ? -1 : 1);
 }

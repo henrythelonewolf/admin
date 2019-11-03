@@ -45,7 +45,8 @@ export default class EditableOrder extends React.Component {
         price,
         terms,
         remarks,
-        urgent,
+        urgency,
+        assigned_to,
       },
       onRemovePress,
     } = this.props;
@@ -60,7 +61,8 @@ export default class EditableOrder extends React.Component {
       price={price}
       terms={terms}
       remarks={remarks}
-      urgent={urgent}
+      urgency={urgency}
+      assigned_to={assigned_to}
       onFormClose={this.handleFormClose}
       onRemovePress={onRemovePress}
       onFormSubmit={this.handleSubmit}
@@ -75,7 +77,8 @@ export default class EditableOrder extends React.Component {
       price={price}
       terms={terms}
       remarks={remarks}
-      urgent={urgent}
+      urgency={urgency}
+      assigned_to={assigned_to}
       onPress={this.handleOnPress}
       onRemovePress={onRemovePress}
       />

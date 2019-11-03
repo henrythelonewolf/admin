@@ -40,7 +40,9 @@ export default class OrderForm extends React.Component {
       terms,
       status,
       created_at,
-      urgent,
+      urgency,
+      histories,
+      assigned_to,
     } = props;
 
     this.state = {
@@ -56,7 +58,9 @@ export default class OrderForm extends React.Component {
       terms: id ? terms : '',
       status: id ? status : 'Pending',
       created_at: id ? created_at : '',
-      urgent: id ? urgent : false,
+      urgency: id ? urgency : false,
+      histories: id ? histories : [],
+      assigned_to: id ? assigned_to : '',
     }
 
     this._isMounted = false;
@@ -108,7 +112,6 @@ export default class OrderForm extends React.Component {
     const value = (evt.target.type === 'checkbox')
     ? evt.target.checked
     : evt.target.value;
-
     this.setState({ [name]: value });
   }
 
@@ -129,7 +132,9 @@ export default class OrderForm extends React.Component {
       terms,
       status,
       created_at,
-      urgent,
+      urgency,
+      histories,
+      assigned_to,
     } = this.state;
 
     onFormSubmit({
@@ -143,7 +148,9 @@ export default class OrderForm extends React.Component {
       terms,
       status,
       created_at,
-      urgent,
+      urgency,
+      histories,
+      assigned_to,
     })
   }
 
@@ -156,12 +163,13 @@ export default class OrderForm extends React.Component {
     this.setState({
       chosenCompany: '',
       chosenProduct: '',
-      chosenDate: '',
+      chosenDate: new Date(),
       quantity: '',
       price: '',
       terms: '',
       remarks: '',
-      urgent: false,
+      urgency: false,
+      assigned_to: ''
     })
   }
 
@@ -176,7 +184,8 @@ export default class OrderForm extends React.Component {
       price,
       terms,
       remarks,
-      urgent,
+      urgency,
+      assigned_to,
     } = this.state;
     const { onFormClose, id } = this.props;
 
@@ -186,7 +195,12 @@ export default class OrderForm extends React.Component {
       <Card>
         <CardContent>
 
-          <FormControl fullWidth variant={'outlined'} margin={'normal'}>
+          <FormControl
+          fullWidth
+          variant={'outlined'}
+          margin={'normal'}
+          required
+          >
             <InputLabel id={'chosenCompany'}>
               Company
             </InputLabel>
@@ -208,7 +222,12 @@ export default class OrderForm extends React.Component {
             </Select>
           </FormControl>
 
-          <FormControl fullWidth variant={'outlined'} margin={'normal'}>
+          <FormControl
+          fullWidth
+          variant={'outlined'}
+          margin={'normal'}
+          required
+          >
             <InputLabel id={'chosenProduct'}>
               Product
             </InputLabel>
@@ -257,6 +276,7 @@ export default class OrderForm extends React.Component {
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <KeyboardDatePicker
               fullWidth
+              required
               inputVariant={'outlined'}
               format={'yyyy-MM-dd'}
               margin={'normal'}
@@ -269,6 +289,18 @@ export default class OrderForm extends React.Component {
               }}
             />
           </MuiPickersUtilsProvider>
+
+          <TextField
+            variant={'outlined'}
+            margin={'normal'}
+            required
+            fullWidth
+            id={'assigned_to'}
+            label={'Assigned to'}
+            name={'assigned_to'}
+            onChange={this.handleChangeInput}
+            value={assigned_to}
+          />
 
           <TextField
             variant={'outlined'}
@@ -295,9 +327,9 @@ export default class OrderForm extends React.Component {
           <FormControlLabel
             control={
               <Switch
-                checked={urgent}
+                checked={urgency}
                 onChange={this.handleChangeInput}
-                name={'urgent'}
+                name={'urgency'}
                 color={'primary'}
               />
             }

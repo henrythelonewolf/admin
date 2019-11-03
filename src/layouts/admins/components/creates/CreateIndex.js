@@ -53,7 +53,9 @@ export default class CreateIndex extends React.Component {
             price,
             remarks,
             terms,
-            urgent,
+            urgency,
+            histories,
+            assigned_to,
           } = attrs;
 
           return {
@@ -65,7 +67,9 @@ export default class CreateIndex extends React.Component {
             price,
             remarks,
             terms,
-            urgent,
+            urgency,
+            histories,
+            assigned_to,
           }
         }
 

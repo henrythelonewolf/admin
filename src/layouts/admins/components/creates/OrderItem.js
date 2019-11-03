@@ -4,7 +4,8 @@ import {
   CardContent,
   Button,
   Typography,
-  Grid
+  Grid,
+  Grow
 } from '@material-ui/core';
 
 export default function OrderItem({
@@ -16,7 +17,8 @@ export default function OrderItem({
   price,
   terms,
   remarks,
-  urgent,
+  urgency,
+  assigned_to,
   onPress,
 }){
   const Field = ({ title, value }) => {
@@ -35,6 +37,7 @@ export default function OrderItem({
 
   return (
     <div>
+    <Grow in={true} timeout={600}>
     <Card>
       <CardContent>
         <Grid container spacing={2}>
@@ -49,7 +52,8 @@ export default function OrderItem({
             <Field title={'Date'} value={chosenDate} />
             <Field title={'Terms'} value={terms} />
             <Field title={'Remarks'} value={remarks} />
-            <Field title={'Urgent'} value={urgent ? 'Yes' : 'No'} />
+            <Field title={'Urgent'} value={urgency} />
+            <Field title={'assigned_to'} value={assigned_to} />
           </Grid>
         </Grid>
 
@@ -63,6 +67,7 @@ export default function OrderItem({
         </Button>
       </CardContent>
     </Card>
+    </Grow>
     <br />
     </div>
   )
