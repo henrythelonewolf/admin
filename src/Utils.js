@@ -1,7 +1,3 @@
-import { firebase } from './firebaseConfig';
-
-const currentUser = firebase.auth().currentUser;
-
 const idGenerator = () => {
   // generate id: YYYYMMDDhhmmss
   const d = new Date();
