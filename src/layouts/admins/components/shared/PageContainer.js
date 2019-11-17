@@ -18,7 +18,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import { mainListItems, secondaryListItems } from './listItems';
+import { mainListItems } from './listItems';
+// import { secondaryListItems } from './listItems';
 
 function Copyright() {
   return (
@@ -117,29 +118,58 @@ const useStyles = makeStyles(theme => ({
 export default function PageContainer({ children, name }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const isMenuOpen = Boolean(anchorEl);
+
+  const [anchorNotificationEl, setAnchorNotificationEl] = React.useState(null);
+  const [anchorProfileEl, setAnchorProfileEl] = React.useState(null);
+
+  const isProfileMenuOpen = Boolean(anchorProfileEl);
+  const isNotificationMenuOpen = Boolean(anchorNotificationEl);
+
+  const handleProfileClose = () => {
+    setAnchorProfileEl(null);
+  };
+
+  const handleNotificationClose = () => {
+    setAnchorNotificationEl(null)
+  }
 
   const handleProfileMenuOpen = event => {
-    setAnchorEl(event.currentTarget);
+    setAnchorProfileEl(event.currentTarget);
   };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const menuId = 'primary-search-account-menu';
-  const renderMenu = (
+  const menuProfileId = 'profile-menu';
+  const renderProfileMenu = (
     <Menu
-      anchorEl={anchorEl}
+      anchorEl={anchorProfileEl}
       anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      id={menuId}
+      id={menuProfileId}
       keepMounted
       transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      open={isMenuOpen}
-      onClose={handleClose}
+      open={isProfileMenuOpen}
+      onClose={handleProfileClose}
     >
       <MenuItem component={'a'} href={'/profiles'}>My Profile</MenuItem>
+    </Menu>
+  );
+
+  const handleNotificationMenuOpen = event => {
+    setAnchorNotificationEl(event.currentTarget);
+  };
+  const menuNotificationId = 'notification-menu';
+  const renderNotificationMenu = (
+    <Menu
+      anchorEl={anchorNotificationEl}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      id={menuNotificationId}
+      keepMounted
+      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      open={isNotificationMenuOpen}
+      onClose={handleNotificationClose}
+    >
+      <MenuItem component={'a'} href={'#'}>Notification 1</MenuItem>
+      <MenuItem component={'a'} href={'#'}>Notification 2</MenuItem>
+      <MenuItem component={'a'} href={'#'}>Notification 3</MenuItem>
+      <MenuItem component={'a'} href={'#'}>Notification 4</MenuItem>
+      <MenuItem component={'a'} href={'#'}>Notification 5</MenuItem>
     </Menu>
   );
 
@@ -169,26 +199,36 @@ export default function PageContainer({ children, name }) {
             {name}
           </Typography>
 
-          <IconButton color="inherit">
+          <IconButton
+            edge="end"
+            aria-label="notification for current user"
+            aria-controls={menuNotificationId}
+            aria-haspopup="true"
+            onClick={handleNotificationMenuOpen}
+            color="inherit"
+          >
             <Badge badgeContent={4} color="secondary">
               <NotificationsIcon />
             </Badge>
           </IconButton>
 
           <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircleIcon />
-            </IconButton>
+            edge="end"
+            aria-label="account of current user"
+            aria-controls={menuProfileId}
+            aria-haspopup="true"
+            onClick={handleProfileMenuOpen}
+            color="inherit"
+          >
+            <AccountCircleIcon />
+          </IconButton>
 
         </Toolbar>
       </AppBar>
-      {renderMenu}
+      
+      {renderProfileMenu}
+      {renderNotificationMenu}
+
       <Drawer
         variant="permanent"
         classes={{
@@ -203,8 +243,8 @@ export default function PageContainer({ children, name }) {
         </div>
         <Divider />
         <List>{mainListItems}</List>
-        <Divider />
-        <List>{secondaryListItems}</List>
+        {/* <Divider /> */}
+        {/* <List>{secondaryListItems}</List> */}
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />

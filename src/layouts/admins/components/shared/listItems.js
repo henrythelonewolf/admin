@@ -2,12 +2,12 @@ import React from 'react';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import ListSubheader from '@material-ui/core/ListSubheader';
+// import ListSubheader from '@material-ui/core/ListSubheader';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import CalendarIcon from '@material-ui/icons/CalendarToday';
-import AssignmentIcon from '@material-ui/icons/Assignment';
+// import AssignmentIcon from '@material-ui/icons/Assignment';
 
 export const mainListItems = (
   <div>
@@ -41,16 +41,16 @@ export const mainListItems = (
   </div>
 );
 
-export const secondaryListItems = (
-  <div>
-    <ListSubheader inset>Saved reports</ListSubheader>
+// export const secondaryListItems = (
+//   <div>
+//     <ListSubheader inset>Saved reports</ListSubheader>
 
-    <ListItem button>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Current month" />
-    </ListItem>
+//     <ListItem button>
+//       <ListItemIcon>
+//         <AssignmentIcon />
+//       </ListItemIcon>
+//       <ListItemText primary="Current month" />
+//     </ListItem>
 
-  </div>
-);
+//   </div>
+// );

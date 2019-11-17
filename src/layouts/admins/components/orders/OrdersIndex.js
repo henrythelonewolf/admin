@@ -40,7 +40,7 @@ const RowDetail = ({ row }) => (
   </div>
 );
 
-export default () => {
+export default function OrdersIndex(){
   const [columns] = React.useState([
       { name: 'id', title: 'ID' },
       { name: 'chosenCompany', title: 'Company' },
