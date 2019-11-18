@@ -1,3 +1,5 @@
+import { firebase } from './firebaseConfig'
+
 const idGenerator = () => {
   // generate id: YYYYMMDDhhmmss
   const d = new Date();
@@ -28,7 +30,7 @@ export const newOrder = (attrs = {}) => {
       {
         id: idGenerator(),
         description: 'Order creation',
-        updated_by: '',
+        updated_by: firebase.auth().currentUser.uid,
         updated_at: new Date().toString(),
       }
     ],

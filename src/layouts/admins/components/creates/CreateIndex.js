@@ -86,10 +86,8 @@ export default class CreateIndex extends React.Component {
       return;
     }
 
-    const currentUser = firebase.auth().currentUser;
-
     orders.map( (order) => {
-      return firebase.database().ref('users/' + currentUser.uid + '/orders/' + order.id).set({
+      return firebase.database().ref('orders/' + order.id).set({
         ...order,
       });
     })
