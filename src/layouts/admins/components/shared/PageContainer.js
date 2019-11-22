@@ -19,7 +19,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { mainListItems } from './listItems';
-// import { secondaryListItems } from './listItems';
+import { secondaryListItems } from './listItems';
 
 function Copyright() {
   return (
@@ -243,8 +243,8 @@ export default function PageContainer({ children, name }) {
         </div>
         <Divider />
         <List>{mainListItems}</List>
-        {/* <Divider /> */}
-        {/* <List>{secondaryListItems}</List> */}
+        <Divider />
+        <List>{secondaryListItems}</List>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />

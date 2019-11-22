@@ -14,6 +14,8 @@ const idGenerator = () => {
 }
 
 export const newOrder = (attrs = {}) => {
+  const currentUserId = firebase.auth().currentUser.uid;
+  
   const order = {
     id: idGenerator(),
     chosenDate: attrs.chosenDate || 'Undefined',
@@ -30,7 +32,7 @@ export const newOrder = (attrs = {}) => {
       {
         id: idGenerator(),
         description: 'Order creation',
-        updated_by: firebase.auth().currentUser.uid,
+        updated_by: currentUserId,
         updated_at: new Date().toString(),
       }
     ],
@@ -64,4 +66,19 @@ export function snapshotToArray(snapshot){
   var sortedCreatedAt = itemArr.sort((a,b) => (a.created_at < b.created_at) ? 1 : -1);
   // return array and reverse sort so that the latest will be on top
   return sortedCreatedAt.sort((a,b) => (a.urgency === b.urgency) ? 0 : a.urgency ? -1 : 1);
+}
+
+export function createArray(snapshot){
+  var itemArr = [];
+
+  snapshot.forEach( (child) => {
+    var item = {};
+    item.key = child.key;
+    item.text = child.val().title;
+    item.value = child.val().title;
+
+    itemArr.push(item);
+  })
+
+  return itemArr;
 }

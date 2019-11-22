@@ -15,6 +15,7 @@ import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
 
 import { firebase } from './../../../../firebaseConfig';
+import { createArray } from './../../../../Utils';
 
 const formattedDate = (chosenDate) => {
   const d = new Date(chosenDate);
@@ -48,6 +49,7 @@ export default class OrderForm extends React.Component {
     this.state = {
       companies: [],
       products: [],
+      assignees: [],
 
       chosenDate: id ? chosenDate : formattedDate(new Date()),
       chosenCompany: id ? chosenCompany : '',
@@ -68,21 +70,6 @@ export default class OrderForm extends React.Component {
 
   initializer = async () => {
 
-    function createArray(snapshot){
-      var itemArr = [];
-
-      snapshot.forEach( (child) => {
-        var item = {};
-        item.key = child.key;
-        item.text = child.val().title;
-        item.value = child.val().title;
-
-        itemArr.push(item);
-      })
-
-      return itemArr;
-    }
-
     await firebase.database().ref('companies/').on('value', (snapshot) => {
       const companies = createArray(snapshot);
       this._isMounted && this.setState({
@@ -96,6 +83,13 @@ export default class OrderForm extends React.Component {
         products,
       });
     });
+
+    await firebase.database().ref('assignees/').on('value', (snapshot) => {
+      const assignees = createArray(snapshot);
+      this._isMounted && this.setState({
+        assignees,
+      })
+    })
   }
 
   componentDidMount(){
@@ -177,6 +171,7 @@ export default class OrderForm extends React.Component {
     const {
       companies,
       products,
+      assignees,
       chosenCompany,
       chosenProduct,
       chosenDate,
@@ -290,17 +285,32 @@ export default class OrderForm extends React.Component {
             />
           </MuiPickersUtilsProvider>
 
-          <TextField
-            variant={'outlined'}
-            margin={'normal'}
-            required
-            fullWidth
-            id={'assigned_to'}
-            label={'Assigned to'}
-            name={'assigned_to'}
-            onChange={this.handleChangeInput}
-            value={assigned_to}
-          />
+          <FormControl
+          fullWidth
+          variant={'outlined'}
+          margin={'normal'}
+          required
+          >
+            <InputLabel id={'assigned_to'}>
+              Assignee
+            </InputLabel>
+            <Select
+              id={'assigned_to'}
+              name={'assigned_to'}
+              value={assigned_to}
+              onChange={this.handleChangeInput}
+              labelWidth={60}
+            >
+            {assignees.map( (assignee) => (
+              <MenuItem
+              key={assignee.key}
+              value={assignee.value}
+              >
+              {assignee.text}
+              </MenuItem>
+            ) )}
+            </Select>
+          </FormControl>
 
           <TextField
             variant={'outlined'}

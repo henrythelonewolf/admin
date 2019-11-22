@@ -61,54 +61,54 @@ export default function OrdersIndex(){
 
   return (
     <PageContainer name={'Orders'}>
-    <Paper>
-      <Grid
-        rows={rows}
-        columns={columns}
-      >
-      {console.log(rows)}
-      {console.log(columns)}
-        <SearchState defaultValue={''} />
-        <FilteringState />
-        <SortingState />
-        <SelectionState />
+      <Paper>
+        <Grid
+          rows={rows}
+          columns={columns}
+        >
+        {console.log(rows)}
+        {console.log(columns)}
+          <SearchState defaultValue={''} />
+          <FilteringState />
+          <SortingState />
+          <SelectionState />
 
-        <GroupingState
-          defaultGrouping={[
-            { columnName: 'type' },
-            { columnName: 'status' },
-          ]}
-          defaultExpandedGroups={['Open']}
-        />
-        <PagingState />
+          <GroupingState
+            defaultGrouping={[
+              { columnName: 'type' },
+              { columnName: 'status' },
+            ]}
+            defaultExpandedGroups={['Open']}
+          />
+          <PagingState />
 
-        <IntegratedGrouping />
-        <IntegratedFiltering />
-        <IntegratedSorting />
-        <IntegratedPaging />
-        <IntegratedSelection />
+          <IntegratedGrouping />
+          <IntegratedFiltering />
+          <IntegratedSorting />
+          <IntegratedPaging />
+          <IntegratedSelection />
 
-        <DragDropProvider />
+          <DragDropProvider />
 
-        <RowDetailState />
-        <Table />
-        <TableColumnVisibility />
-        <TableSelection showSelectAll={true} />
+          <RowDetailState />
+          <Table />
+          <TableColumnVisibility />
+          <TableSelection showSelectAll={true} />
 
-        <TableHeaderRow showSortingControls={true} />
-        <TableRowDetail
-          contentComponent={RowDetail}
-        />
-        <TableFilterRow showFilterSelector={true} />
-        <PagingPanel pageSizes={pageSizes} />
+          <TableHeaderRow showSortingControls={true} />
+          <TableRowDetail
+            contentComponent={RowDetail}
+          />
+          <TableFilterRow showFilterSelector={true} />
+          <PagingPanel pageSizes={pageSizes} />
 
-        <TableGroupRow />
-        <Toolbar />
-        <SearchPanel />
-        <ColumnChooser />
-        <GroupingPanel showSortingControls={true} />
-      </Grid>
-    </Paper>
+          <TableGroupRow />
+          <Toolbar />
+          <SearchPanel />
+          <ColumnChooser />
+          <GroupingPanel showSortingControls={true} />
+        </Grid>
+      </Paper>
     </PageContainer>
   );
 };

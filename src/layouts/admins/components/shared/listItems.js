@@ -2,12 +2,12 @@ import React from 'react';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-// import ListSubheader from '@material-ui/core/ListSubheader';
+import ListSubheader from '@material-ui/core/ListSubheader';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import CalendarIcon from '@material-ui/icons/CalendarToday';
-// import AssignmentIcon from '@material-ui/icons/Assignment';
+import AssignmentIcon from '@material-ui/icons/Assignment';
 
 export const mainListItems = (
   <div>
@@ -41,16 +41,23 @@ export const mainListItems = (
   </div>
 );
 
-// export const secondaryListItems = (
-//   <div>
-//     <ListSubheader inset>Saved reports</ListSubheader>
+export const secondaryListItems = (
+  <div>
+    <ListSubheader inset>Manage</ListSubheader>
 
-//     <ListItem button>
-//       <ListItemIcon>
-//         <AssignmentIcon />
-//       </ListItemIcon>
-//       <ListItemText primary="Current month" />
-//     </ListItem>
+    <ListItem button component={'a'} href={'/companies'}>
+      <ListItemIcon>
+        <AssignmentIcon />
+      </ListItemIcon>
+      <ListItemText primary="Companies" />
+    </ListItem>
 
-//   </div>
-// );
+    <ListItem button component={'a'} href={'/products'}>
+      <ListItemIcon>
+        <AssignmentIcon />
+      </ListItemIcon>
+      <ListItemText primary="Products" />
+    </ListItem>
+
+  </div>
+);
