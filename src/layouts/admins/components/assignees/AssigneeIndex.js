@@ -30,13 +30,13 @@ import PageContainer from './../shared/PageContainer';
 
 const getRowId = row => row.id;
 
-export default function CompanyIndex(){
+export default function AssigneeIndex(){
   const [rowData, setRowData] = useState([]);
 
   async function fetchData(){
-    await firebase.database().ref('companies/').on('value', (snapshot) => {
-      const companies = snapshotToArray(snapshot);
-      setRowData(companies);
+    await firebase.database().ref('assignees/').on('value', (snapshot) => {
+      const assignees = snapshotToArray(snapshot);
+      setRowData(assignees);
     });
   };
 
@@ -87,11 +87,11 @@ export default function CompanyIndex(){
     setRowData(changedRows);
     
     // save to firebase
-    firebase.database().ref('companies/').set(changedRows);
+    firebase.database().ref('assignees/').set(changedRows);
   };
 
   return (
-    <PageContainer name={'Manage Companies'}>
+    <PageContainer name={'Manage Assignees'}>
       <Paper>
         <Grid
           rows={rowData}

@@ -18,6 +18,7 @@ import ProfileContainer from './layouts/admins/components/profiles/ProfileIndex'
 import CalendarContainer from './layouts/admins/components/calendars/CalendarIndex';
 import CompanyContainer from './layouts/admins/components/companies/CompanyIndex';
 import ProductContainer from './layouts/admins/components/products/ProductIndex';
+import AssigneeContainer from './layouts/admins/components/assignees/AssigneeIndex';
 
 function PrivateRoute ({component: Component, authed, ...rest}) {
   return (
@@ -79,6 +80,7 @@ export default class AppContainer extends Component {
 
           <PrivateRoute authed={this.state.authed} exact path='/companies' component={CompanyContainer} />
           <PrivateRoute authed={this.state.authed} exact path='/products' component={ProductContainer} />
+          <PrivateRoute authed={this.state.authed} exact path='/assignees' component={AssigneeContainer} />
 
           <Route render={() => <h3>No Match</h3>} />
         </Switch>

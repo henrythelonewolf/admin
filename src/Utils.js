@@ -45,7 +45,7 @@ export const newOrder = (attrs = {}) => {
 export const createNewItem = (newItem) => {
   const item = {
     id: idGenerator(),
-    title: newItem,
+    name: newItem,
     created_at: new Date().toString(),
     updated_at: new Date().toString(),
   }
