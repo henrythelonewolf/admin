@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { firebase } from './../../../../firebaseConfig';
 import { snapshotToArray } from './../../../../Utils';
-
+import PageContainer from './../shared/PageContainer';
 import Paper from '@material-ui/core/Paper';
+
 import {
   FilteringState,
   GroupingState,
@@ -33,7 +34,6 @@ import {
   SearchPanel,
   TableRowDetail,
 } from '@devexpress/dx-react-grid-material-ui';
-import PageContainer from './../shared/PageContainer';
 
 const RowDetail = ({ row }) => (
   <div>
