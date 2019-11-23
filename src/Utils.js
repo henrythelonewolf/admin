@@ -18,7 +18,7 @@ export const newOrder = (attrs = {}) => {
   
   const order = {
     id: idGenerator(),
-    chosenDate: attrs.chosenDate || 'Undefined',
+    chosenDeliveryDate: attrs.chosenDeliveryDate || 'Undefined',
     chosenCompany: attrs.chosenCompany || 'Undefined',
     chosenProduct: attrs.chosenProduct || 'Undefined',
     quantity: attrs.quantity || 'Undefined',

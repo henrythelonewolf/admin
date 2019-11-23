@@ -29,14 +29,14 @@ export const mainListItems = (
       <ListItemIcon>
         <ShoppingCartIcon />
       </ListItemIcon>
-      <ListItemText primary="Orders" />
+      <ListItemText primary="Order List" />
     </ListItem>
 
     <ListItem button component={'a'} href={'/creates'}>
       <ListItemIcon>
         <AddBoxIcon />
       </ListItemIcon>
-      <ListItemText primary="Create" />
+      <ListItemText primary="Create Order" />
     </ListItem>
   </div>
 );

@@ -12,7 +12,7 @@ export default function OrderItem({
   id,
   chosenCompany,
   chosenProduct,
-  chosenDate,
+  chosenDeliveryDate,
   quantity,
   price,
   terms,
@@ -49,7 +49,7 @@ export default function OrderItem({
             <Field title={'Unit price'} value={price} />
           </Grid>
           <Grid item xs={6}>
-            <Field title={'Date'} value={chosenDate} />
+            <Field title={'Date'} value={chosenDeliveryDate} />
             <Field title={'Terms'} value={terms} />
             <Field title={'Remarks'} value={remarks} />
             <Field title={'Urgent'} value={urgency} />

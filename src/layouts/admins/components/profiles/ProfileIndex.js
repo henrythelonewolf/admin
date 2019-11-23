@@ -19,7 +19,7 @@ export default function ProfileIndex() {
   }
 
   return (
-    <PageContainer name={'Profile'}>
+    <PageContainer name={'My Profile'}>
       <Grid container spacing={3}>
         <Grid item xs={3}>
           <Paper className={classes.paper}>

@@ -27,9 +27,10 @@ export default class CreateIndex extends React.Component {
     if (
       !order.chosenCompany ||
       !order.chosenProduct ||
-      !order.chosenDate ||
+      !order.chosenDeliveryDate ||
       !order.quantity ||
-      !order.price
+      !order.price ||
+      !order.assigned_to
     ) {
       alert('Error! Please check your form');
     }else {
@@ -48,7 +49,7 @@ export default class CreateIndex extends React.Component {
           const {
             chosenCompany,
             chosenProduct,
-            chosenDate,
+            chosenDeliveryDate,
             quantity,
             price,
             remarks,
@@ -62,7 +63,7 @@ export default class CreateIndex extends React.Component {
             ...order,
             chosenCompany,
             chosenProduct,
-            chosenDate,
+            chosenDeliveryDate,
             quantity,
             price,
             remarks,

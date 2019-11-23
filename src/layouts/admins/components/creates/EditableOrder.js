@@ -22,7 +22,7 @@ export default class EditableOrder extends React.Component {
     if (
       !order.chosenCompany ||
       !order.chosenProduct ||
-      !order.chosenDate ||
+      !order.chosenDeliveryDate ||
       !order.quantity ||
       !order.price
     ) {
@@ -40,7 +40,7 @@ export default class EditableOrder extends React.Component {
         id,
         chosenCompany,
         chosenProduct,
-        chosenDate,
+        chosenDeliveryDate,
         quantity,
         price,
         terms,
@@ -56,7 +56,7 @@ export default class EditableOrder extends React.Component {
       id={id}
       chosenCompany={chosenCompany}
       chosenProduct={chosenProduct}
-      chosenDate={chosenDate}
+      chosenDeliveryDate={chosenDeliveryDate}
       quantity={quantity}
       price={price}
       terms={terms}
@@ -72,7 +72,7 @@ export default class EditableOrder extends React.Component {
       id={id}
       chosenCompany={chosenCompany}
       chosenProduct={chosenProduct}
-      chosenDate={chosenDate}
+      chosenDeliveryDate={chosenDeliveryDate}
       quantity={quantity}
       price={price}
       terms={terms}

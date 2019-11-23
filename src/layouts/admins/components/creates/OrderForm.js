@@ -17,8 +17,8 @@ import DateFnsUtils from '@date-io/date-fns';
 import { firebase } from './../../../../firebaseConfig';
 import { snapshotToArray } from './../../../../Utils';
 
-const formattedDate = (chosenDate) => {
-  const d = new Date(chosenDate);
+const formattedDate = (chosenDeliveryDate) => {
+  const d = new Date(chosenDeliveryDate);
   const year = d.getFullYear().toString();
   const month = (d.getMonth() + 1).toString().padStart(2, '0');
   const date = d.getDate().toString().padStart(2, '0');
@@ -32,7 +32,7 @@ export default class OrderForm extends React.Component {
 
     const {
       id,
-      chosenDate,
+      chosenDeliveryDate,
       chosenCompany,
       chosenProduct,
       quantity,
@@ -51,7 +51,7 @@ export default class OrderForm extends React.Component {
       products: [],
       assignees: [],
 
-      chosenDate: id ? chosenDate : formattedDate(new Date()),
+      chosenDeliveryDate: id ? chosenDeliveryDate : formattedDate(new Date()),
       chosenCompany: id ? chosenCompany : '',
       chosenProduct: id ? chosenProduct : '',
       quantity: id ? quantity : '',
@@ -109,15 +109,15 @@ export default class OrderForm extends React.Component {
     this.setState({ [name]: value });
   }
 
-  handleDateChange = (chosenDate) => {
-    this.setState({ chosenDate: formattedDate(chosenDate) });
+  handleDateChange = (chosenDeliveryDate) => {
+    this.setState({ chosenDeliveryDate: formattedDate(chosenDeliveryDate) });
   }
 
   handleSubmitPress = (evt) => {
     evt.preventDefault();
     const { onFormSubmit, id } = this.props;
     const {
-      chosenDate,
+      chosenDeliveryDate,
       chosenCompany,
       chosenProduct,
       quantity,
@@ -133,7 +133,7 @@ export default class OrderForm extends React.Component {
 
     onFormSubmit({
       id,
-      chosenDate,
+      chosenDeliveryDate,
       chosenCompany,
       chosenProduct,
       quantity,
@@ -157,7 +157,7 @@ export default class OrderForm extends React.Component {
     this.setState({
       chosenCompany: '',
       chosenProduct: '',
-      chosenDate: new Date(),
+      chosenDeliveryDate: new Date(),
       quantity: '',
       price: '',
       terms: '',
@@ -174,7 +174,7 @@ export default class OrderForm extends React.Component {
       assignees,
       chosenCompany,
       chosenProduct,
-      chosenDate,
+      chosenDeliveryDate,
       quantity,
       price,
       terms,
@@ -276,9 +276,9 @@ export default class OrderForm extends React.Component {
               inputVariant={'outlined'}
               format={'yyyy-MM-dd'}
               margin={'normal'}
-              id={'chosenDate'}
-              label="Date"
-              value={chosenDate}
+              id={'chosenDeliveryDate'}
+              label="Delivery Date"
+              value={chosenDeliveryDate}
               onChange={this.handleDateChange}
               KeyboardButtonProps={{
                 'aria-label': 'change date',

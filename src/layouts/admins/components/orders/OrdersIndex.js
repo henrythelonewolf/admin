@@ -46,7 +46,7 @@ export default function OrdersIndex(){
       { name: 'id', title: 'ID' },
       { name: 'chosenCompany', title: 'Company' },
       { name: 'chosenProduct', title: 'Product' },
-      { name: 'chosenDate', title: 'Date' },
+      { name: 'chosenDeliveryDate', title: 'Delivery Date' },
       { name: 'price', title: 'Price' },
       { name: 'quantity', title: 'Quantity' },
       { name: 'remarks', title: 'Remarks' },
@@ -74,7 +74,7 @@ export default function OrdersIndex(){
   const [pageSizes] = useState([10, 15, 30]);
 
   return (
-    <PageContainer name={'Orders'}>
+    <PageContainer name={'Order List'}>
       <Paper>
         <Grid
           rows={rows}
