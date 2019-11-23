@@ -67,18 +67,3 @@ export function snapshotToArray(snapshot){
   // return array and reverse sort so that the latest will be on top
   return sortedCreatedAt.sort((a,b) => (a.urgency === b.urgency) ? 0 : a.urgency ? -1 : 1);
 }
-
-export function createArray(snapshot){
-  var itemArr = [];
-
-  snapshot.forEach( (child) => {
-    var item = {};
-    item.key = child.key;
-    item.text = child.val().title;
-    item.value = child.val().title;
-
-    itemArr.push(item);
-  })
-
-  return itemArr;
-}

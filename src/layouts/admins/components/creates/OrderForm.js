@@ -15,7 +15,7 @@ import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
 
 import { firebase } from './../../../../firebaseConfig';
-import { createArray } from './../../../../Utils';
+import { snapshotToArray } from './../../../../Utils';
 
 const formattedDate = (chosenDate) => {
   const d = new Date(chosenDate);
@@ -71,21 +71,21 @@ export default class OrderForm extends React.Component {
   initializer = async () => {
 
     await firebase.database().ref('companies/').on('value', (snapshot) => {
-      const companies = createArray(snapshot);
+      const companies = snapshotToArray(snapshot);
       this._isMounted && this.setState({
         companies,
       });
     });
 
     await firebase.database().ref('products/').on('value', (snapshot) => {
-      const products = createArray(snapshot);
+      const products = snapshotToArray(snapshot);
       this._isMounted && this.setState({
         products,
       });
     });
 
     await firebase.database().ref('assignees/').on('value', (snapshot) => {
-      const assignees = createArray(snapshot);
+      const assignees = snapshotToArray(snapshot);
       this._isMounted && this.setState({
         assignees,
       })
@@ -187,6 +187,7 @@ export default class OrderForm extends React.Component {
     const submitText = id ? 'Update' : 'Create';
 
     return (
+      <div>
       <Card>
         <CardContent>
 
@@ -208,10 +209,10 @@ export default class OrderForm extends React.Component {
             >
             {companies.map( (company) => (
               <MenuItem
-              key={company.key}
-              value={company.value}
+              key={company.name}
+              value={company.name}
               >
-              {company.text}
+              {company.name}
               </MenuItem>
             ) )}
             </Select>
@@ -235,10 +236,10 @@ export default class OrderForm extends React.Component {
             >
             {products.map( (product) => (
               <MenuItem
-              key={product.key}
-              value={product.value}
+              key={product.name}
+              value={product.name}
               >
-              {product.text}
+              {product.name}
               </MenuItem>
             ) )}
             </Select>
@@ -303,10 +304,10 @@ export default class OrderForm extends React.Component {
             >
             {assignees.map( (assignee) => (
               <MenuItem
-              key={assignee.key}
-              value={assignee.value}
+              key={assignee.name}
+              value={assignee.name}
               >
-              {assignee.text}
+              {assignee.name}
               </MenuItem>
             ) )}
             </Select>
@@ -397,6 +398,8 @@ export default class OrderForm extends React.Component {
 
         </CardContent>
       </Card>
+      <br />
+      </div>
     )
   }
 }

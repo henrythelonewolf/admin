@@ -1,4 +1,7 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
+import { firebase } from './../../../../firebaseConfig';
+import { snapshotToArray } from './../../../../Utils';
+
 import Paper from '@material-ui/core/Paper';
 import {
   FilteringState,
@@ -32,8 +35,6 @@ import {
 } from '@devexpress/dx-react-grid-material-ui';
 import PageContainer from './../shared/PageContainer';
 
-import { data } from './data';
-
 const RowDetail = ({ row }) => (
   <div>
     Details for
@@ -41,7 +42,7 @@ const RowDetail = ({ row }) => (
 );
 
 export default function OrdersIndex(){
-  const [columns] = React.useState([
+  const [columns] = useState([
       { name: 'id', title: 'ID' },
       { name: 'chosenCompany', title: 'Company' },
       { name: 'chosenProduct', title: 'Product' },
@@ -54,10 +55,23 @@ export default function OrdersIndex(){
       { name: 'urgency', title: 'Urgency' },
       { name: 'created_at', title: 'Created at' },
       { name: 'type', title: 'Status Type' },
+      { name: 'assigned_to', title: 'Assignee' },
   ]);
 
-  const [rows] = React.useState(data);
-  const [pageSizes] = React.useState([10, 15, 30]);
+  const [rows, setRows] = useState([]);
+
+  async function fetchData(){
+    await firebase.database().ref('orders/').on('value', (snapshot) => {
+      const orders = snapshotToArray(snapshot);
+      setRows(orders);
+    });
+  };
+
+  useEffect( () => {
+    fetchData();
+  }, []);
+
+  const [pageSizes] = useState([10, 15, 30]);
 
   return (
     <PageContainer name={'Orders'}>
