@@ -92,7 +92,10 @@ export default function OrdersIndex(){
               { columnName: 'type' },
               { columnName: 'status' },
             ]}
-            defaultExpandedGroups={['Open']}
+            defaultExpandedGroups={[
+              'Open', 
+              'Open|Pending'
+            ]}
           />
           <PagingState />
 

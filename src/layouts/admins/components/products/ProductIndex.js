@@ -78,7 +78,13 @@ export default function ProductIndex(){
       ];
     }
     if (changed) {
-      changedRows = rowData.map(row => (changed[row.id] ? { ...row, ...changed[row.id] } : row));
+      changedRows = rowData.map(row => (changed[row.id] 
+        ? { 
+          ...row, 
+          ...changed[row.id], 
+          updated_at: new Date().toString() 
+        } 
+        : row));
     }
     if (deleted) {
       const deletedSet = new Set(deleted);
