@@ -9,7 +9,17 @@ import {
 } from '@material-ui/core';
 
 export default function OrderItem({
-  order,
+  id,
+  chosenCompany,
+  chosenProduct,
+  chosenDeliveryDate,
+  quantity,
+  price,
+  terms,
+  remarks,
+  urgency,
+  assigned_to,
+
   onEditPress,
 }){
 
@@ -26,19 +36,6 @@ export default function OrderItem({
       </div>
     )
   }
-
-  const {
-    id,
-    chosenCompany,
-    chosenProduct,
-    chosenDeliveryDate,
-    quantity,
-    price,
-    terms,
-    remarks,
-    urgency,
-    assigned_to,
-  } = order;
 
   return (
     <div>

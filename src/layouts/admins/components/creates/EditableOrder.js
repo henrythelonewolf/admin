@@ -18,7 +18,6 @@ export default function EditableOrder({
   },
   onRemovePress,
   onFormSubmit,
-  order,
 }){
 
   const [isOpen, setIsOpen] = useState(false);
@@ -55,7 +54,17 @@ export default function EditableOrder({
     />
   } else {
     return <OrderItem
-      order={order}
+      id={id}
+      chosenCompany={chosenCompany}
+      chosenProduct={chosenProduct}
+      chosenDeliveryDate={chosenDeliveryDate}
+      quantity={quantity}
+      price={price}
+      terms={terms}
+      remarks={remarks}
+      urgency={urgency}
+      assigned_to={assigned_to}
+      
       onEditPress={handleOnEditPress}
     />
   }

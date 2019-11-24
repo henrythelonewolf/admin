@@ -34,7 +34,8 @@ export default function CreateIndex(){
   }
 
   const handleFormSubmit = (attrs) => {
-    setOrders(orders.map( (order) => {
+    const updatedOrders = orders.map( (order) => {
+      // if  existing order do update on changed field
       if (order.id === attrs.id) {
         const {
           chosenCompany,
@@ -45,7 +46,6 @@ export default function CreateIndex(){
           remarks,
           terms,
           urgency,
-          histories,
           assigned_to,
         } = attrs;
 
@@ -59,13 +59,15 @@ export default function CreateIndex(){
           remarks,
           terms,
           urgency,
-          histories,
           assigned_to,
         }
       }
 
+      // else return as it is
       return order;
-    }))
+    });
+
+    setOrders(updatedOrders);
   }
 
   const handleSubmitAll = () => {
