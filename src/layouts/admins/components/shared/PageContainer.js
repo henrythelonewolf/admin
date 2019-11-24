@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -117,10 +116,10 @@ const useStyles = makeStyles(theme => ({
 
 export default function PageContainer({ children, name }) {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = useState(true);
 
-  const [anchorNotificationEl, setAnchorNotificationEl] = React.useState(null);
-  const [anchorProfileEl, setAnchorProfileEl] = React.useState(null);
+  const [anchorNotificationEl, setAnchorNotificationEl] = useState(null);
+  const [anchorProfileEl, setAnchorProfileEl] = useState(null);
 
   const isProfileMenuOpen = Boolean(anchorProfileEl);
   const isNotificationMenuOpen = Boolean(anchorNotificationEl);
@@ -183,7 +182,6 @@ export default function PageContainer({ children, name }) {
 
   return (
     <div className={classes.root}>
-      <CssBaseline />
       <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
         <Toolbar className={classes.toolbar}>
           <IconButton
@@ -243,8 +241,10 @@ export default function PageContainer({ children, name }) {
         </div>
         <Divider />
         <List>{mainListItems}</List>
+
         <Divider />
         <List>{secondaryListItems}</List>
+
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
