@@ -15,21 +15,12 @@ import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
 
 import { firebase } from './../../../../firebaseConfig';
-import { snapshotToArray } from './../../../../Utils';
-
-const formattedDate = (chosenDeliveryDate) => {
-  const d = new Date(chosenDeliveryDate);
-  const year = d.getFullYear().toString();
-  const month = (d.getMonth() + 1).toString().padStart(2, '0');
-  const date = d.getDate().toString().padStart(2, '0');
-
-  return year + '-' + month + '-' + date;
-}
+import { snapshotToArray, formattedDate } from './../../../../Utils';
 
 export default class OrderForm extends React.Component {
   constructor(props){
     super(props);
-
+    
     const {
       id,
       chosenDeliveryDate,

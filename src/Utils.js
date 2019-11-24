@@ -13,12 +13,21 @@ const idGenerator = () => {
   return year + month + date + hours + minutes + seconds;
 }
 
+export function formattedDate(chosenDeliveryDate){
+  const d = new Date(chosenDeliveryDate);
+  const year = d.getFullYear().toString();
+  const month = (d.getMonth() + 1).toString().padStart(2, '0');
+  const date = d.getDate().toString().padStart(2, '0');
+
+  return year + '-' + month + '-' + date;
+}
+
 export const newOrder = (attrs = {}) => {
   const currentUserId = firebase.auth().currentUser.uid;
   
   const order = {
     id: idGenerator(),
-    chosenDeliveryDate: attrs.chosenDeliveryDate || 'Undefined',
+    chosenDeliveryDate: attrs.chosenDeliveryDate || formattedDate(new Date()),
     chosenCompany: attrs.chosenCompany || 'Undefined',
     chosenProduct: attrs.chosenProduct || 'Undefined',
     quantity: attrs.quantity || 'Undefined',

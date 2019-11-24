@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Grid, Card, CardContent, Button } from '@material-ui/core';
 
 import EditableOrder from './EditableOrder';
@@ -8,22 +8,17 @@ import { firebase } from './../../../../firebaseConfig';
 
 import PageContainer from './../shared/PageContainer';
 
-export default class CreateIndex extends React.Component {
-  state = {
-    orders: [],
-  }
+export default function CreateIndex(){
 
-  handleRemovePress = (orderId) => {
+  const [orders, setOrders] = useState([]);
+
+  const handleRemovePress = (orderId) => {
     // alert('Deleting order. Are you sure?');
-    const { orders } = this.state;
     const filtered = orders.filter( (order) => order.id !== orderId );
-
-    this.setState({ orders: filtered });
+    setOrders(filtered);
   }
 
-  handleCreateFormSubmit = (order) => {
-    const { orders } = this.state;
-
+  const handleCreateFormSubmit = (order) => {
     if (
       !order.chosenCompany ||
       !order.chosenProduct ||
@@ -34,54 +29,46 @@ export default class CreateIndex extends React.Component {
     ) {
       alert('Error! Please check your form');
     }else {
-      this.setState({
-        orders: [newOrder(order), ...orders]
-      });
+      setOrders([newOrder(order), ...orders]);
     }
   }
 
-  handleFormSubmit = (attrs) => {
-    const { orders } = this.state;
+  const handleFormSubmit = (attrs) => {
+    setOrders(orders.map( (order) => {
+      if (order.id === attrs.id) {
+        const {
+          chosenCompany,
+          chosenProduct,
+          chosenDeliveryDate,
+          quantity,
+          price,
+          remarks,
+          terms,
+          urgency,
+          histories,
+          assigned_to,
+        } = attrs;
 
-    this.setState({
-      orders: orders.map( (order) => {
-        if (order.id === attrs.id) {
-          const {
-            chosenCompany,
-            chosenProduct,
-            chosenDeliveryDate,
-            quantity,
-            price,
-            remarks,
-            terms,
-            urgency,
-            histories,
-            assigned_to,
-          } = attrs;
-
-          return {
-            ...order,
-            chosenCompany,
-            chosenProduct,
-            chosenDeliveryDate,
-            quantity,
-            price,
-            remarks,
-            terms,
-            urgency,
-            histories,
-            assigned_to,
-          }
+        return {
+          ...order,
+          chosenCompany,
+          chosenProduct,
+          chosenDeliveryDate,
+          quantity,
+          price,
+          remarks,
+          terms,
+          urgency,
+          histories,
+          assigned_to,
         }
+      }
 
-        return order;
-      })
-    })
+      return order;
+    }))
   }
 
-  handleSubmitAll = () => {
-    const { orders } = this.state;
-
+  const handleSubmitAll = () => {
     if (orders.length === 0) {
       alert('No entries yet.');
       return;
@@ -91,61 +78,55 @@ export default class CreateIndex extends React.Component {
       return firebase.database().ref('orders/' + order.id).set({
         ...order,
       });
-    })
+    });
 
-    this.setState({ orders: [] });
+    setOrders([]);
   }
 
-  renderOrders = ( order ) => {
+  const renderOrders = ( order ) => {
     return (
       <EditableOrder
-      key={order.id}
-      order={order}
-      onRemovePress={this.handleRemovePress}
-      onFormSubmit={this.handleFormSubmit}
+        key={order.id}
+        order={order}
+        onRemovePress={handleRemovePress}
+        onFormSubmit={handleFormSubmit}
       />
     )
   }
 
-  contextRef = React.createRef();
-
-  render(){
-    const { orders } = this.state;
-
-    return (
-      <PageContainer name={'Create Order'}>
-        <Grid container spacing={2}>
-          <Grid item xs={3}>
-            <OrderForm
-            onFormSubmit={this.handleCreateFormSubmit}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            {orders.length === 0 && (
-              <p style={{ textAlign: 'center' }}>No orders yet.</p>
-            )}
-
-            {orders.map( (order) => this.renderOrders(order) )}
-          </Grid>
-          <Grid item xs={3}>
-            {orders.length > 0 && (
-              <Card>
-                <CardContent>
-                You have {orders.length} orders waiting for submission
-                  <Button
-                    variant={'contained'}
-                    color={'primary'}
-                    fullWidth
-                    onClick={this.handleSubmitAll}
-                  >
-                  Submit All
-                  </Button>
-                </CardContent>
-              </Card>
-            )}
-          </Grid>
+  return (
+    <PageContainer name={'Create Order'}>
+      <Grid container spacing={2}>
+        <Grid item xs={3}>
+          <OrderForm
+          onFormSubmit={handleCreateFormSubmit}
+          />
         </Grid>
-      </PageContainer>
-    )
-  }
+        <Grid item xs={6}>
+          {orders.length === 0 && (
+            <p style={{ textAlign: 'center' }}>No orders yet.</p>
+          )}
+
+          {orders.map( (order) => renderOrders(order) )}
+        </Grid>
+        <Grid item xs={3}>
+          {orders.length > 0 && (
+            <Card>
+              <CardContent>
+              You have {orders.length} orders waiting for submission
+                <Button
+                  variant={'contained'}
+                  color={'primary'}
+                  fullWidth
+                  onClick={handleSubmitAll}
+                >
+                Submit All
+                </Button>
+              </CardContent>
+            </Card>
+          )}
+        </Grid>
+      </Grid>
+    </PageContainer>
+  )
 }

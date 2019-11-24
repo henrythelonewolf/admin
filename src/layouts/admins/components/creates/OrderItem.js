@@ -9,18 +9,10 @@ import {
 } from '@material-ui/core';
 
 export default function OrderItem({
-  id,
-  chosenCompany,
-  chosenProduct,
-  chosenDeliveryDate,
-  quantity,
-  price,
-  terms,
-  remarks,
-  urgency,
-  assigned_to,
-  onPress,
+  order,
+  onEditPress,
 }){
+
   const Field = ({ title, value }) => {
     return (
       <div>
@@ -34,6 +26,19 @@ export default function OrderItem({
       </div>
     )
   }
+
+  const {
+    id,
+    chosenCompany,
+    chosenProduct,
+    chosenDeliveryDate,
+    quantity,
+    price,
+    terms,
+    remarks,
+    urgency,
+    assigned_to,
+  } = order;
 
   return (
     <div>
@@ -58,7 +63,7 @@ export default function OrderItem({
         </Grid>
 
         <Button
-          onClick={onPress}
+          onClick={onEditPress}
           variant={'contained'}
           color={'primary'}
           fullWidth

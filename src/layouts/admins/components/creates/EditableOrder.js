@@ -1,58 +1,43 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import OrderForm from './OrderForm';
 import OrderItem from './OrderItem';
 
-export default class EditableOrder extends React.Component {
-  state = {
-    isOpen: false,
+export default function EditableOrder({
+  order: {
+    id,
+    chosenCompany,
+    chosenProduct,
+    chosenDeliveryDate,
+    quantity,
+    price,
+    terms,
+    remarks,
+    urgency,
+    assigned_to,
+  },
+  onRemovePress,
+  onFormSubmit,
+  order,
+}){
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleOnEditPress = () => {
+    setIsOpen(true);
   }
 
-  handleOnPress = () => {
-    this.setState({ isOpen: true });
+  const handleFormClose = () => {
+    setIsOpen(false);
   }
 
-  handleFormClose = () => {
-    this.setState({ isOpen: false });
+  const handleSubmit = (order) => {
+    onFormSubmit(order);
+    setIsOpen(false);
   }
 
-  handleSubmit = (order) => {
-    const { onFormSubmit } = this.props;
-
-    if (
-      !order.chosenCompany ||
-      !order.chosenProduct ||
-      !order.chosenDeliveryDate ||
-      !order.quantity ||
-      !order.price
-    ) {
-      alert('Error! Please check your form')
-    } else {
-      onFormSubmit(order);
-      this.setState({ isOpen: false });
-    }
-  }
-
-  render(){
-    const { isOpen } = this.state;
-    const {
-      order: {
-        id,
-        chosenCompany,
-        chosenProduct,
-        chosenDeliveryDate,
-        quantity,
-        price,
-        terms,
-        remarks,
-        urgency,
-        assigned_to,
-      },
-      onRemovePress,
-    } = this.props;
-
-    if (isOpen) {
-      return <OrderForm
+  if (isOpen) {
+    return <OrderForm
       id={id}
       chosenCompany={chosenCompany}
       chosenProduct={chosenProduct}
@@ -63,25 +48,15 @@ export default class EditableOrder extends React.Component {
       remarks={remarks}
       urgency={urgency}
       assigned_to={assigned_to}
-      onFormClose={this.handleFormClose}
+      
+      onFormClose={handleFormClose}
       onRemovePress={onRemovePress}
-      onFormSubmit={this.handleSubmit}
-      />
-    } else {
-      return <OrderItem
-      id={id}
-      chosenCompany={chosenCompany}
-      chosenProduct={chosenProduct}
-      chosenDeliveryDate={chosenDeliveryDate}
-      quantity={quantity}
-      price={price}
-      terms={terms}
-      remarks={remarks}
-      urgency={urgency}
-      assigned_to={assigned_to}
-      onPress={this.handleOnPress}
-      onRemovePress={onRemovePress}
-      />
-    }
+      onFormSubmit={handleSubmit}
+    />
+  } else {
+    return <OrderItem
+      order={order}
+      onEditPress={handleOnEditPress}
+    />
   }
 }

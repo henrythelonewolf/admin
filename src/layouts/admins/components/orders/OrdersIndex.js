@@ -80,8 +80,6 @@ export default function OrdersIndex(){
           rows={rows}
           columns={columns}
         >
-        {console.log(rows)}
-        {console.log(columns)}
           <SearchState defaultValue={''} />
           <FilteringState />
           <SortingState />
