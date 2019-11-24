@@ -7,10 +7,8 @@ import Paper from '@material-ui/core/Paper';
 import {
   IntegratedFiltering,
   IntegratedPaging,
-  // IntegratedSelection,
   IntegratedSorting,
   PagingState,
-  // SelectionState,
   SortingState,
   SearchState,
   EditingState,
@@ -20,7 +18,6 @@ import {
   PagingPanel,
   Table,
   TableHeaderRow,
-  // TableSelection,
   Toolbar,
   SearchPanel,
   TableEditRow,
@@ -48,6 +45,7 @@ export default function AssigneeIndex(){
     { name: 'name', title: 'Name'},
   ]);
   const [pageSizes] = useState([10, 15, 30]);
+  
   const [editingRowIds, setEditingRowIds] = useState([]);
   const [addedRows, setAddedRows] = useState([]);
   const [rowChanges, setRowChanges] = useState({});
@@ -106,7 +104,6 @@ export default function AssigneeIndex(){
         >
           <SearchState defaultValue={''} />
           <SortingState />
-          {/* <SelectionState /> */}
           <PagingState />
           <EditingState
             editingRowIds={editingRowIds}
@@ -124,10 +121,8 @@ export default function AssigneeIndex(){
           <IntegratedFiltering />
           <IntegratedSorting />
           <IntegratedPaging />
-          {/* <IntegratedSelection /> */}
 
           <Table />
-          {/* <TableSelection showSelectAll={true} /> */}
           <TableHeaderRow showSortingControls={true} />
           <TableEditRow />
           <TableEditColumn 

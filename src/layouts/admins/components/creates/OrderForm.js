@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardContent, Grid, Button } from '@material-ui/core';
-import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
+import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
@@ -173,9 +173,14 @@ export default class OrderForm extends React.Component {
       urgency,
       assigned_to,
     } = this.state;
-    const { onFormClose, id } = this.props;
+    const { onFormClose, id, massUpdateText } = this.props;
 
-    const submitText = id ? 'Update' : 'Create';
+    let submitText;
+    if (massUpdateText) {
+      submitText = massUpdateText;
+    } else {
+      submitText = id ? 'Update' : 'Create';
+    }
 
     return (
       <div>

@@ -3,6 +3,14 @@ import { firebase } from './../../../../firebaseConfig';
 import { snapshotToArray } from './../../../../Utils';
 import PageContainer from './../shared/PageContainer';
 import Paper from '@material-ui/core/Paper';
+import Divider from '@material-ui/core/Divider';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import OrderForm from './../creates/OrderForm';
 
 import {
   FilteringState,
@@ -16,7 +24,6 @@ import {
   SelectionState,
   SortingState,
   SearchState,
-  RowDetailState,
 } from '@devexpress/dx-react-grid';
 import {
   DragDropProvider,
@@ -32,14 +39,7 @@ import {
   ColumnChooser,
   TableColumnVisibility,
   SearchPanel,
-  TableRowDetail,
 } from '@devexpress/dx-react-grid-material-ui';
-
-const RowDetail = ({ row }) => (
-  <div>
-    Details for
-  </div>
-);
 
 export default function OrdersIndex(){
   const [columns] = useState([
@@ -73,9 +73,61 @@ export default function OrdersIndex(){
 
   const [pageSizes] = useState([10, 15, 30]);
 
+  const [selection, setSelection] = useState([]);
+  const [openDialog, setOpenDialog] = useState(false);
+
+  const handleOpenMassUpdate = () => {
+    setOpenDialog(true);
+  }
+
+  const handleCloseMassUpdate = () => {
+    setOpenDialog(false);
+  }
+
+  const handleMassUpdate = () => {
+    alert('updated')
+    setOpenDialog(false);
+  }
+
   return (
     <PageContainer name={'Order List'}>
       <Paper>
+        <div style={{ padding: 10 }}>
+          <Button 
+            variant={'contained'} 
+            color={'primary'} 
+            onClick={handleOpenMassUpdate}
+            disabled={selection.length === 0}
+          >
+            Mass Update
+          </Button>
+        </div>
+
+        <Dialog open={openDialog} onClose={handleCloseMassUpdate} aria-labelledby="form-dialog-title">
+          <DialogTitle id="form-dialog-title">Mass Update</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Updating ticket ID:
+              <br />
+              {selection}
+              <br />
+              Fill in the form below for mass updates.
+            </DialogContentText>
+
+            <OrderForm 
+              massUpdateText={'Mass Updates'} 
+              onFormSubmit={handleMassUpdate} 
+            />
+
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseMassUpdate} color="primary">
+              Cancel
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+        <Divider />
         <Grid
           rows={rows}
           columns={columns}
@@ -83,7 +135,10 @@ export default function OrdersIndex(){
           <SearchState defaultValue={''} />
           <FilteringState />
           <SortingState />
-          <SelectionState />
+          <SelectionState 
+            selection={selection}
+            onSelectionChange={setSelection}
+          />
 
           <GroupingState
             defaultGrouping={[
@@ -104,19 +159,12 @@ export default function OrdersIndex(){
           <IntegratedSelection />
 
           <DragDropProvider />
-
-          <RowDetailState />
           <Table />
           <TableColumnVisibility />
           <TableSelection showSelectAll={true} />
-
           <TableHeaderRow showSortingControls={true} />
-          <TableRowDetail
-            contentComponent={RowDetail}
-          />
           <TableFilterRow showFilterSelector={true} />
           <PagingPanel pageSizes={pageSizes} />
-
           <TableGroupRow />
           <Toolbar />
           <SearchPanel />
