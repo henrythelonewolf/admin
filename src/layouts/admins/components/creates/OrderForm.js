@@ -30,10 +30,7 @@ export default class OrderForm extends React.Component {
       price,
       remarks,
       terms,
-      status,
-      created_at,
       urgency,
-      histories,
       assigned_to,
     } = props;
 
@@ -42,17 +39,14 @@ export default class OrderForm extends React.Component {
       products: [],
       assignees: [],
 
-      chosenDeliveryDate: id ? chosenDeliveryDate : formattedDate(new Date()),
+      chosenDeliveryDate: id ? chosenDeliveryDate : null,
       chosenCompany: id ? chosenCompany : '',
       chosenProduct: id ? chosenProduct : '',
       quantity: id ? quantity : '',
       price: id ? price : '',
       remarks: id ? remarks : '',
       terms: id ? terms : '',
-      status: id ? status : 'Pending',
-      created_at: id ? created_at : '',
       urgency: id ? urgency : false,
-      histories: id ? histories : [],
       assigned_to: id ? assigned_to : '',
     }
 
@@ -115,10 +109,7 @@ export default class OrderForm extends React.Component {
       price,
       remarks,
       terms,
-      status,
-      created_at,
       urgency,
-      histories,
       assigned_to,
     } = this.state;
 
@@ -131,10 +122,7 @@ export default class OrderForm extends React.Component {
       price,
       remarks,
       terms,
-      status,
-      created_at,
       urgency,
-      histories,
       assigned_to,
     })
   }
@@ -148,7 +136,7 @@ export default class OrderForm extends React.Component {
     this.setState({
       chosenCompany: '',
       chosenProduct: '',
-      chosenDeliveryDate: new Date(),
+      chosenDeliveryDate: null,
       quantity: '',
       price: '',
       terms: '',

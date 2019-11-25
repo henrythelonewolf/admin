@@ -49,6 +49,11 @@ export default function CreateIndex(){
           assigned_to,
         } = attrs;
 
+        // convert boolean value to string
+        urgency.toString();
+        console.log(urgency);
+        
+
         return {
           ...order,
           chosenCompany,

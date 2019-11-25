@@ -36,7 +36,7 @@ export const newOrder = (attrs = {}) => {
     terms: attrs.terms || 'Undefined',
     status: 'Pending',
     created_at: new Date().toString(),
-    urgency: attrs.urgency || false,
+    urgency: attrs.urgency.toString() || 'false',
     histories: [
       {
         id: idGenerator(),
