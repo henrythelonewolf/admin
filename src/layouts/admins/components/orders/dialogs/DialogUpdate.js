@@ -93,10 +93,6 @@ export default function DialogUpdate({
     setChosenDeliveryDate(formattedDate(chosenDeliveryDate));
   }
 
-  const handleOnSubmitUpdate = (event) => {
-    event.preventDefault();
-  }
-
   const handleOnClear = () => {
     setChosenCompany('');
     setChosenProduct('');
@@ -107,6 +103,17 @@ export default function DialogUpdate({
     setQuantity('');
     setAssignedTo('');
     setUrgent(false);
+  }
+
+  const handleOnSubmitUpdate = (event) => {
+    event.preventDefault();
+    // firebase update code here
+    handleOnClear();
+  }
+
+  const handleOnClose = () => {
+    handleOnClear();
+    onClose();
   }
 
   return (
@@ -296,7 +303,7 @@ export default function DialogUpdate({
           <Button onClick={handleOnClear} color="primary">
             Clear
           </Button>
-          <Button onClick={onClose} color="primary">
+          <Button onClick={handleOnClose} color="primary">
             Cancel
           </Button>
         </DialogActions>

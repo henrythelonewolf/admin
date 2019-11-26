@@ -29,7 +29,8 @@ export default function DialogComplete({
             alert('Choose')
         } else {
             // firebase update status here
-            onClose()
+            setCloseAs('');
+            onClose();
         }
     }
 
