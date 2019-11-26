@@ -11,11 +11,11 @@ import { firebase } from './firebaseConfig';
 import Loading from './Loading';
 import SignIn from './layouts/auths/SignIn';
 import ForgotPassword from './layouts/auths/ForgotPassword';
-import DashboardContainer from './layouts/admins/components/dashboards/DashboardIndex';
+// import DashboardContainer from './layouts/admins/components/dashboards/DashboardIndex';
 import OrdersContainer from './layouts/admins/components/orders/OrdersIndex';
 import CreateContainer from './layouts/admins/components/creates/CreateIndex';
 import ProfileContainer from './layouts/admins/components/profiles/ProfileIndex';
-import CalendarContainer from './layouts/admins/components/calendars/CalendarIndex';
+// import CalendarContainer from './layouts/admins/components/calendars/CalendarIndex';
 import CompanyContainer from './layouts/admins/components/companies/CompanyIndex';
 import ProductContainer from './layouts/admins/components/products/ProductIndex';
 import AssigneeContainer from './layouts/admins/components/assignees/AssigneeIndex';
@@ -72,11 +72,11 @@ export default class AppContainer extends Component {
           <PublicRoute authed={this.state.authed} exact path='/auth/signin' component={SignIn} />
           <PublicRoute authed={this.state.authed} exact path='/auth/forgotPassword' component={ForgotPassword} />
 
-          <PrivateRoute authed={this.state.authed} exact path='/' component={DashboardContainer} />
+          <PrivateRoute authed={this.state.authed} exact path='/' component={OrdersContainer} />
           <PrivateRoute authed={this.state.authed} exact path='/orders' component={OrdersContainer} />
           <PrivateRoute authed={this.state.authed} exact path='/creates' component={CreateContainer} />
           <PrivateRoute authed={this.state.authed} exact path='/profiles' component={ProfileContainer} />
-          <PrivateRoute authed={this.state.authed} exact path='/calendars' component={CalendarContainer} />
+          {/* <PrivateRoute authed={this.state.authed} exact path='/calendars' component={CalendarContainer} /> */}
 
           <PrivateRoute authed={this.state.authed} exact path='/companies' component={CompanyContainer} />
           <PrivateRoute authed={this.state.authed} exact path='/products' component={ProductContainer} />

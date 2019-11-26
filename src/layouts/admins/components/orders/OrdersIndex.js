@@ -5,13 +5,6 @@ import PageContainer from './../shared/PageContainer';
 import Paper from '@material-ui/core/Paper';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import OrderForm from './../creates/OrderForm';
-import MassForm from './MassForm';
 
 import {
   FilteringState,
@@ -41,6 +34,9 @@ import {
   TableColumnVisibility,
   SearchPanel,
 } from '@devexpress/dx-react-grid-material-ui';
+
+import DialogUpdate from './dialogs/DialogUpdate';
+import DialogComplete from './dialogs/DialogComplete';
 
 export default function OrdersIndex(){
   const [columns] = useState([
@@ -75,19 +71,32 @@ export default function OrdersIndex(){
   const [pageSizes] = useState([10, 15, 30]);
 
   const [selection, setSelection] = useState([]);
-  const [openDialog, setOpenDialog] = useState(false);
 
-  const handleOpenMassUpdate = () => {
-    setOpenDialog(true);
+  const getRowId = row => row.id;
+  const handleSelectionChange = (selection) => {
+    setSelection(selection);
   }
 
-  const handleCloseMassUpdate = () => {
-    setOpenDialog(false);
+  const [openUpdate, setOpenUpdate] = useState(false);
+  const [openComplete, setOpenComplete] = useState(false);
+
+  const handleOpenUpdate = () => {
+    setOpenUpdate(true)
+  }
+  const handleOpenComplete = () => {
+    setOpenComplete(true)
   }
 
-  const handleMassUpdate = () => {
+  const handleOnCloseUpdate = () => {
+    setOpenUpdate(false)
+  }
+  const handleOnCloseComplete = () => {
+    setOpenComplete(false)
+  }
+
+  const handleUpdateSubmit = () => {
     alert('updated')
-    setOpenDialog(false);
+    setOpenUpdate(false)
   }
 
   return (
@@ -97,52 +106,52 @@ export default function OrdersIndex(){
           <Button 
             variant={'contained'} 
             color={'primary'} 
-            onClick={handleOpenMassUpdate}
+            onClick={handleOpenUpdate}
             disabled={selection.length === 0}
           >
-            Mass Update / CLose
+            Mass Update
+          </Button>
+
+          <span style={{ paddingRight: 10 }} />
+
+          <Button 
+            variant={'contained'} 
+            color={'primary'} 
+            onClick={handleOpenComplete}
+            disabled={selection.length === 0}
+          >
+            Mass Close
           </Button>
         </div>
 
-        <Dialog open={openDialog} onClose={handleCloseMassUpdate} aria-labelledby="form-dialog-title">
-          <DialogTitle id="form-dialog-title">Mass Update</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              Updating ticket ID:
-              <br />
-              {selection}
-              <br />
-              Fill in the form below for mass updates.
-            </DialogContentText>
-
-            {/* <OrderForm 
-              massUpdateText={'Mass Updates'} 
-              onFormSubmit={handleMassUpdate} 
-            /> */}
-
-            <MassForm 
-              onFormSubmit={handleMassUpdate}
-            />
-
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleCloseMassUpdate} color="primary">
-              Cancel
-            </Button>
-          </DialogActions>
-        </Dialog>
+        <DialogUpdate 
+          selection={selection}
+          open={openUpdate} 
+          onClose={handleOnCloseUpdate} 
+          onFormSubmit={handleUpdateSubmit} 
+        />
+        <DialogComplete 
+          selection={selection}
+          open={openComplete} 
+          onClose={handleOnCloseComplete} 
+        />
 
         <Divider />
         <Grid
           rows={rows}
           columns={columns}
+          getRowId={getRowId}
         >
           <SearchState defaultValue={''} />
           <FilteringState />
-          <SortingState />
+          <SortingState 
+            defaultSorting={[
+              { columnName: 'urgent', direction: 'desc' }
+            ]}
+          />
           <SelectionState 
             selection={selection}
-            onSelectionChange={setSelection}
+            onSelectionChange={handleSelectionChange}
           />
 
           <GroupingState

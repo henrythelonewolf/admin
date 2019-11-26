@@ -3,15 +3,15 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
-import DashboardIcon from '@material-ui/icons/Dashboard';
+// import DashboardIcon from '@material-ui/icons/Dashboard';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import AddBoxIcon from '@material-ui/icons/AddBox';
-import CalendarIcon from '@material-ui/icons/CalendarToday';
+// import CalendarIcon from '@material-ui/icons/CalendarToday';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 
 export const mainListItems = (
   <div>
-    <ListItem button component={'a'} href={'/'}>
+    {/* <ListItem button component={'a'} href={'/'}>
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
@@ -23,7 +23,7 @@ export const mainListItems = (
         <CalendarIcon />
       </ListItemIcon>
       <ListItemText primary="Calendar" />
-    </ListItem>
+    </ListItem> */}
 
     <ListItem button component={'a'} href={'/orders'}>
       <ListItemIcon>

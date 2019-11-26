@@ -49,11 +49,6 @@ export default function CreateIndex(){
           assigned_to,
         } = attrs;
 
-        // convert boolean value to string
-        urgent.toString();
-        console.log(urgent);
-        
-
         return {
           ...order,
           chosenCompany,
@@ -82,9 +77,7 @@ export default function CreateIndex(){
     }
 
     orders.map( (order) => {
-      return firebase.database().ref('orders/' + order.id).set({
-        ...order,
-      });
+      return firebase.database().ref('orders/' + order.id).set({...order});
     });
 
     setOrders([]);

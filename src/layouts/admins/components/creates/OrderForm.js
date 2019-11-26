@@ -113,6 +113,8 @@ export default class OrderForm extends React.Component {
       assigned_to,
     } = this.state;
 
+    urgent.toString();
+
     onFormSubmit({
       id,
       chosenDeliveryDate,
@@ -161,14 +163,9 @@ export default class OrderForm extends React.Component {
       urgent,
       assigned_to,
     } = this.state;
-    const { onFormClose, id, massUpdateText } = this.props;
+    const { onFormClose, id } = this.props;
 
-    let submitText;
-    if (massUpdateText) {
-      submitText = massUpdateText;
-    } else {
-      submitText = id ? 'Update' : 'Create';
-    }
+    const submitText = id ? 'Update' : 'Create';
 
     return (
       <div>

@@ -14,10 +14,10 @@ import {
 import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
 
-import { firebase } from './../../../../firebaseConfig';
-import { snapshotToArray, formattedDate } from './../../../../Utils';
+import { firebase } from '../../../../../firebaseConfig';
+import { snapshotToArray, formattedDate } from '../../../../../Utils';
 
-export default class OrderForm extends React.Component {
+export default class MassUpdateForm extends React.Component {
   constructor(props){
     super(props);
     
@@ -161,7 +161,6 @@ export default class OrderForm extends React.Component {
       urgent,
       assigned_to,
     } = this.state;
-    const { onFormClose, id, massUpdateText } = this.props;
 
     return (
       <div>
@@ -329,6 +328,9 @@ export default class OrderForm extends React.Component {
             }
             label={'Urgent?'}
           />
+
+          <br />
+          <br />
           
             <Button
             fullWidth
