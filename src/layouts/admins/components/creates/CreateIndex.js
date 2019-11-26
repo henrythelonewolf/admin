@@ -45,13 +45,13 @@ export default function CreateIndex(){
           price,
           remarks,
           terms,
-          urgency,
+          urgent,
           assigned_to,
         } = attrs;
 
         // convert boolean value to string
-        urgency.toString();
-        console.log(urgency);
+        urgent.toString();
+        console.log(urgent);
         
 
         return {
@@ -63,7 +63,7 @@ export default function CreateIndex(){
           price,
           remarks,
           terms,
-          urgency,
+          urgent,
           assigned_to,
         }
       }

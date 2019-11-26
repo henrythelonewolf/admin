@@ -11,6 +11,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import OrderForm from './../creates/OrderForm';
+import MassForm from './MassForm';
 
 import {
   FilteringState,
@@ -52,7 +53,7 @@ export default function OrdersIndex(){
       { name: 'remarks', title: 'Remarks' },
       { name: 'terms', title: 'Terms' },
       { name: 'status', title: 'Status' },
-      { name: 'urgency', title: 'Urgency' },
+      { name: 'urgent', title: 'Urgent' },
       { name: 'created_at', title: 'Created at' },
       { name: 'type', title: 'Status Type' },
       { name: 'assigned_to', title: 'Assignee' },
@@ -99,7 +100,7 @@ export default function OrdersIndex(){
             onClick={handleOpenMassUpdate}
             disabled={selection.length === 0}
           >
-            Mass Update
+            Mass Update / CLose
           </Button>
         </div>
 
@@ -114,9 +115,13 @@ export default function OrdersIndex(){
               Fill in the form below for mass updates.
             </DialogContentText>
 
-            <OrderForm 
+            {/* <OrderForm 
               massUpdateText={'Mass Updates'} 
               onFormSubmit={handleMassUpdate} 
+            /> */}
+
+            <MassForm 
+              onFormSubmit={handleMassUpdate}
             />
 
           </DialogContent>

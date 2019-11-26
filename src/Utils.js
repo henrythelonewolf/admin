@@ -36,7 +36,7 @@ export const newOrder = (attrs = {}) => {
     terms: attrs.terms || 'Undefined',
     status: 'Pending',
     created_at: new Date().toString(),
-    urgency: attrs.urgency.toString() || 'false',
+    urgent: attrs.urgent.toString() || 'false',
     histories: [
       {
         id: idGenerator(),
@@ -74,5 +74,5 @@ export function snapshotToArray(snapshot){
 
   var sortedCreatedAt = itemArr.sort((a,b) => (a.created_at < b.created_at) ? 1 : -1);
   // return array and reverse sort so that the latest will be on top
-  return sortedCreatedAt.sort((a,b) => (a.urgency === b.urgency) ? 0 : a.urgency ? -1 : 1);
+  return sortedCreatedAt.sort((a,b) => (a.urgent === b.urgent) ? 0 : a.urgent ? -1 : 1);
 }

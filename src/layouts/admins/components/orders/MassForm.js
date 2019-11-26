@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardContent, Grid, Button } from '@material-ui/core';
+import { Grid, Button } from '@material-ui/core';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
@@ -163,19 +163,11 @@ export default class OrderForm extends React.Component {
     } = this.state;
     const { onFormClose, id, massUpdateText } = this.props;
 
-    let submitText;
-    if (massUpdateText) {
-      submitText = massUpdateText;
-    } else {
-      submitText = id ? 'Update' : 'Create';
-    }
-
     return (
       <div>
-      <Card>
-        <CardContent>
-
-          <FormControl
+        <Grid container spacing={4}>
+            <Grid item lg={4}>
+            <FormControl
           fullWidth
           variant={'outlined'}
           margin={'normal'}
@@ -252,8 +244,10 @@ export default class OrderForm extends React.Component {
             onChange={this.handleChangeInput}
             value={price}
           />
+            </Grid>
 
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <Grid item lg={4}>
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <KeyboardDatePicker
               fullWidth
               required
@@ -319,7 +313,12 @@ export default class OrderForm extends React.Component {
             value={remarks}
           />
 
-          <FormControlLabel
+          
+            </Grid>
+
+            <Grid item lg={4}>
+
+            <FormControlLabel
             control={
               <Switch
                 checked={urgent}
@@ -330,59 +329,24 @@ export default class OrderForm extends React.Component {
             }
             label={'Urgent?'}
           />
-
-          <br />
-
-          {id && (
-            <div>
-            <br />
-              <Grid container spacing={2}>
-                <Grid item xs={6}>
-                  <Button
-                  fullWidth
-                  color={'secondary'}
-                  variant={'contained'}
-                  onClick={this.handleRemovePress}
-                  >
-                  Remove
-                  </Button>
-                </Grid>
-                <Grid item xs={6}>
-                  <Button
-                  fullWidth
-                  variant={'contained'}
-                  onClick={onFormClose}
-                  >
-                  Cancel
-                  </Button>
-                </Grid>
-              </Grid>
-              </div>
-            )}
-
-            <br />
-
+          
             <Button
             fullWidth
             variant={'contained'}
             color={'primary'}
             onClick={this.handleSubmitPress}
-            >{submitText}</Button>
+            >Update</Button>
 
-            {!id && (
-              <div>
+              <br />
               <br />
               <Button
               fullWidth
               variant={'contained'}
               onClick={this.handleClearPress}
               >Clear</Button>
-              </div>
-            )}
 
-        </CardContent>
-      </Card>
-      <br />
+            </Grid>
+        </Grid>
       </div>
     )
   }

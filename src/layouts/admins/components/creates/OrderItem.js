@@ -17,7 +17,7 @@ export default function OrderItem({
   price,
   terms,
   remarks,
-  urgency,
+  urgent,
   assigned_to,
 
   onEditPress,
@@ -54,7 +54,7 @@ export default function OrderItem({
             <Field title={'Date'} value={chosenDeliveryDate} />
             <Field title={'Terms'} value={terms} />
             <Field title={'Remarks'} value={remarks} />
-            <Field title={'Urgent'} value={urgency} />
+            <Field title={'Urgent'} value={urgent} />
             <Field title={'assigned_to'} value={assigned_to} />
           </Grid>
         </Grid>

@@ -13,7 +13,7 @@ export default function EditableOrder({
     price,
     terms,
     remarks,
-    urgency,
+    urgent,
     assigned_to,
   },
   onRemovePress,
@@ -45,7 +45,7 @@ export default function EditableOrder({
       price={price}
       terms={terms}
       remarks={remarks}
-      urgency={urgency}
+      urgent={urgent}
       assigned_to={assigned_to}
       
       onFormClose={handleFormClose}
@@ -62,7 +62,7 @@ export default function EditableOrder({
       price={price}
       terms={terms}
       remarks={remarks}
-      urgency={urgency}
+      urgent={urgent}
       assigned_to={assigned_to}
       
       onEditPress={handleOnEditPress}
