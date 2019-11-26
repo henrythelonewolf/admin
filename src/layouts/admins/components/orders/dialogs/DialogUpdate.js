@@ -109,6 +109,7 @@ export default function DialogUpdate({
     event.preventDefault();
     // firebase update code here
     handleOnClear();
+    onClose();
   }
 
   const handleOnClose = () => {
@@ -129,7 +130,7 @@ export default function DialogUpdate({
           <Grid container spacing={4}>
             <Grid item lg={6}>
               <DialogContentText>
-                  Closing ticket ID:
+                  Updating ticket ID:
                   <br />
                   {selection.map( (id) => (
                     <Chip label={id} style={{ margin: 5 }} />
