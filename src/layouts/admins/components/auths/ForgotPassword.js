@@ -15,19 +15,8 @@ import { useStyles } from './Styles';
 import CheckIcon from '@material-ui/icons/Check';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
-import { firebase } from './../../firebaseConfig';
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      LCP Supplies Sdn. Bhd.
-      {' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import { firebase } from './../../../../firebaseConfig';
+import Copyright from './../shared/Copyright';
 
 export default function ForgotPassword() {
   const classes = useStyles();

@@ -9,8 +9,8 @@ import { firebase } from './firebaseConfig';
 
 // components import
 import Loading from './Loading';
-import SignIn from './layouts/auths/SignIn';
-import ForgotPassword from './layouts/auths/ForgotPassword';
+import SignIn from './layouts/admins/components/auths/SignIn';
+import ForgotPassword from './layouts/admins/components/auths/ForgotPassword';
 // import DashboardContainer from './layouts/admins/components/dashboards/DashboardIndex';
 import OrdersContainer from './layouts/admins/components/orders/OrdersIndex';
 import CreateContainer from './layouts/admins/components/creates/CreateIndex';

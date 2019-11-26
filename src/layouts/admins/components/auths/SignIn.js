@@ -14,19 +14,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { useStyles } from './Styles';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
-import { firebase } from './../../firebaseConfig';
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      LCP Supplies Sdn. Bhd.
-      {' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import { firebase } from './../../../../firebaseConfig';
+import Copyright from './../shared/Copyright';
 
 export default function SignIn() {
   const classes = useStyles();
