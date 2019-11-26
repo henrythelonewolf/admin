@@ -107,7 +107,7 @@ export default function OrdersIndex(){
             variant={'contained'} 
             color={'primary'} 
             onClick={handleOpenUpdate}
-            disabled={selection.length === 0}
+            // disabled={selection.length === 0}
           >
             Mass Update
           </Button>
@@ -118,7 +118,7 @@ export default function OrdersIndex(){
             variant={'contained'} 
             color={'primary'} 
             onClick={handleOpenComplete}
-            disabled={selection.length === 0}
+            // disabled={selection.length === 0}
           >
             Mass Close
           </Button>
