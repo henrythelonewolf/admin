@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { firebase } from './../../../../firebaseConfig';
-import { snapshotToArray } from './../../../../Utils';
 import uuidv4 from 'uuid/v4';
-
 import Paper from '@material-ui/core/Paper';
+
+import { firebase } from './../../firebaseConfig';
+import { snapshotToArray } from './../../Utils';
+
 import {
   IntegratedFiltering,
   IntegratedPaging,
-  // IntegratedSelection,
   IntegratedSorting,
   PagingState,
-  // SelectionState,
   SortingState,
   SearchState,
   EditingState,
@@ -20,7 +19,6 @@ import {
   PagingPanel,
   Table,
   TableHeaderRow,
-  // TableSelection,
   Toolbar,
   SearchPanel,
   TableEditRow,
@@ -30,13 +28,13 @@ import PageContainer from './../shared/PageContainer';
 
 const getRowId = row => row.id;
 
-export default function ProductIndex(){
+export default function AssigneeIndex(){
   const [rowData, setRowData] = useState([]);
 
   async function fetchData(){
-    await firebase.database().ref('products/').on('value', (snapshot) => {
-      const products = snapshotToArray(snapshot);
-      setRowData(products);
+    await firebase.database().ref('assignees/').on('value', (snapshot) => {
+      const assignees = snapshotToArray(snapshot);
+      setRowData(assignees);
     });
   };
 
@@ -48,16 +46,17 @@ export default function ProductIndex(){
     { name: 'name', title: 'Name'},
   ]);
   const [pageSizes] = useState([10, 15, 30]);
+
   const [editingRowIds, setEditingRowIds] = useState([]);
   const [addedRows, setAddedRows] = useState([]);
   const [rowChanges, setRowChanges] = useState({});
 
   const changeAddedRows = (value) => {
     const initialized = value.map(row => (
-      Object.keys(row).length 
-      ? row 
-      : { 
-        id: uuidv4(), 
+      Object.keys(row).length
+      ? row
+      : {
+        id: uuidv4(),
         updated_at: new Date().toString(),
         created_at: new Date().toString(),
       })
@@ -78,12 +77,12 @@ export default function ProductIndex(){
       ];
     }
     if (changed) {
-      changedRows = rowData.map(row => (changed[row.id] 
-        ? { 
-          ...row, 
-          ...changed[row.id], 
-          updated_at: new Date().toString() 
-        } 
+      changedRows = rowData.map(row => (changed[row.id]
+        ? {
+          ...row,
+          ...changed[row.id],
+          updated_at: new Date().toString()
+        }
         : row));
     }
     if (deleted) {
@@ -93,11 +92,11 @@ export default function ProductIndex(){
     setRowData(changedRows);
 
     // save to firebase
-    firebase.database().ref('products/').set(changedRows);
+    firebase.database().ref('assignees/').set(changedRows);
   };
 
   return (
-    <PageContainer name={'Manage Products'}>
+    <PageContainer name={'Manage Assignees'}>
       <Paper>
         <Grid
           rows={rowData}
@@ -106,7 +105,6 @@ export default function ProductIndex(){
         >
           <SearchState defaultValue={''} />
           <SortingState />
-          {/* <SelectionState /> */}
           <PagingState />
           <EditingState
             editingRowIds={editingRowIds}
@@ -114,23 +112,21 @@ export default function ProductIndex(){
 
             rowChanges={rowChanges}
             onRowChangesChange={setRowChanges}
-            
+
             addedRows={addedRows}
             onAddedRowsChange={changeAddedRows}
-            
+
             onCommitChanges={commitChanges}
           />
 
           <IntegratedFiltering />
           <IntegratedSorting />
           <IntegratedPaging />
-          {/* <IntegratedSelection /> */}
 
           <Table />
-          {/* <TableSelection showSelectAll={true} /> */}
           <TableHeaderRow showSortingControls={true} />
           <TableEditRow />
-          <TableEditColumn 
+          <TableEditColumn
             showAddCommand={!addedRows.length}
             showEditCommand
             showDeleteCommand

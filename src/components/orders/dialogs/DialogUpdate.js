@@ -21,8 +21,8 @@ import {
 import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
 
-import { formattedDate, snapshotToArray } from '../../../../../Utils';
-import { firebase } from '../../../../../firebaseConfig';
+import { formattedDate, snapshotToArray } from './../../../Utils';
+import { firebase } from './../../../firebaseConfig';
 
 export default function DialogUpdate({
     selection,
@@ -48,12 +48,14 @@ export default function DialogUpdate({
     await firebase.database().ref('assignees/').on('value', (snapshot) => {
       const assignees = snapshotToArray(snapshot);
       setAssignees(assignees);
-    })
+    });
   }
 
   useEffect( () => {
     initializer();
-  }, [])
+  }, []);
+
+  const statuses = ['Pending', 'Processing', 'Out-For-Delivery', 'On-Hold'];
 
   const [chosenCompany, setChosenCompany] = useState('');
   const [chosenProduct, setChosenProduct] = useState('')
@@ -63,34 +65,40 @@ export default function DialogUpdate({
   const [remarks, setRemarks] = useState('');
   const [quantity, setQuantity] = useState('');
   const [assigned_to, setAssignedTo] = useState('');
-  const [urgent, setUrgent] = useState(false);
+  const [urgent, setUrgent] = useState(null);
+  const [status, setStatus] = useState('');
+
+  const getValue = (event) => event.target.value;
 
   const handleChosenCompany = (event) => {
-    setChosenCompany(event.target.value);
+    setChosenCompany(getValue(event));
   }
   const handleChosenProduct = (event) => {
-    setChosenProduct(event.target.value);
+    setChosenProduct(getValue(event));
   }
   const handleQuantity = (event) => {
-    setQuantity(event.target.value);
+    setQuantity(getValue(event));
   }
   const handlePrice = (event) => {
-    setPrice(event.target.value);
+    setPrice(getValue(event));
   }
   const handleTerms = (event) => {
-    setTerms(event.target.value);
+    setTerms(getValue(event));
   }
   const handleRemarks = (event) => {
-    setRemarks(event.target.value);
+    setRemarks(getValue(event));
   }
   const handleAssignedTo = (event) => {
-    setAssignedTo(event.target.value);
+    setAssignedTo(getValue(event));
   }
   const handleUrgent = (event) => {
     setUrgent(event.target.checked);
   }
   const handleDateChange = (chosenDeliveryDate) => {
     setChosenDeliveryDate(formattedDate(chosenDeliveryDate));
+  }
+  const handleStatus = (event) => {
+    setStatus(getValue(event));
   }
 
   const handleOnClear = () => {
@@ -102,11 +110,16 @@ export default function DialogUpdate({
     setRemarks('');
     setQuantity('');
     setAssignedTo('');
-    setUrgent(false);
+    setUrgent(null);
+    setStatus('');
   }
 
   const handleOnSubmitUpdate = (event) => {
     event.preventDefault();
+    const updates = {
+      chosenCompany,
+    }
+    console.log(updates);
     // firebase update code here
     handleOnClear();
     onClose();
@@ -118,9 +131,9 @@ export default function DialogUpdate({
   }
 
   return (
-      <Dialog 
-        open={open} 
-        onClose={onClose} 
+      <Dialog
+        open={open}
+        onClose={onClose}
         aria-labelledby={'massUpdate'}
         fullWidth={true}
         maxWidth={'md'}
@@ -133,7 +146,7 @@ export default function DialogUpdate({
                   Updating ticket ID:
                   <br />
                   {selection.map( (id) => (
-                    <Chip label={id} style={{ margin: 5 }} />
+                    <Chip key={id} label={id} style={{ margin: 5 }} />
                   ) )}
               </DialogContentText>
             </Grid>
@@ -142,7 +155,6 @@ export default function DialogUpdate({
         fullWidth
         variant={'outlined'}
         margin={'normal'}
-        required
         >
           <InputLabel id={'chosenCompany'}>
             Company
@@ -154,6 +166,13 @@ export default function DialogUpdate({
             onChange={handleChosenCompany}
             labelWidth={60}
           >
+          <MenuItem
+          key={'nullCompany'}
+          value={''}
+          >
+          Please choose company
+          </MenuItem>
+
           {companies.map( (company) => (
             <MenuItem
             key={company.name}
@@ -169,7 +188,6 @@ export default function DialogUpdate({
         fullWidth
         variant={'outlined'}
         margin={'normal'}
-        required
         >
           <InputLabel id={'chosenProduct'}>
             Product
@@ -181,6 +199,13 @@ export default function DialogUpdate({
             onChange={handleChosenProduct}
             labelWidth={60}
           >
+          <MenuItem
+          key={'nullProduct'}
+          value={''}
+          >
+          Please choose product
+          </MenuItem>
+
           {products.map( (product) => (
             <MenuItem
             key={product.name}
@@ -195,7 +220,6 @@ export default function DialogUpdate({
         <TextField
           variant={'outlined'}
           margin={'normal'}
-          required
           fullWidth
           id={'quantity'}
           label={'Quantity'}
@@ -207,12 +231,11 @@ export default function DialogUpdate({
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <KeyboardDatePicker
             fullWidth
-            required
             inputVariant={'outlined'}
             format={'yyyy-MM-dd'}
             margin={'normal'}
             id={'chosenDeliveryDate'}
-            label="Delivery Date"
+            label={'Delivery Date'}
             value={chosenDeliveryDate}
             onChange={handleDateChange}
             KeyboardButtonProps={{
@@ -225,7 +248,6 @@ export default function DialogUpdate({
         fullWidth
         variant={'outlined'}
         margin={'normal'}
-        required
         >
           <InputLabel id={'assigned_to'}>
             Assignee
@@ -237,6 +259,12 @@ export default function DialogUpdate({
             onChange={handleAssignedTo}
             labelWidth={60}
           >
+          <MenuItem
+          key={'nullAssignee'}
+          value={''}
+          >
+          Please choose assignee
+          </MenuItem>
           {assignees.map( (assignee) => (
             <MenuItem
             key={assignee.name}
@@ -251,7 +279,6 @@ export default function DialogUpdate({
         <TextField
           variant={'outlined'}
           margin={'normal'}
-          required
           fullWidth
           id={'price'}
           label={'Price'}
@@ -259,7 +286,7 @@ export default function DialogUpdate({
           onChange={handlePrice}
           value={price}
         />
- 
+
           <TextField
           variant={'outlined'}
           margin={'normal'}
@@ -281,6 +308,38 @@ export default function DialogUpdate({
           onChange={handleRemarks}
           value={remarks}
         />
+
+        <FormControl
+        fullWidth
+        variant={'outlined'}
+        margin={'normal'}
+        >
+          <InputLabel id={'status'}>
+            Status
+          </InputLabel>
+          <Select
+            id={'status'}
+            name={'status'}
+            value={status}
+            onChange={handleStatus}
+            labelWidth={60}
+          >
+          <MenuItem
+          key={'nullStatus'}
+          value={''}
+          >
+          Please choose status
+          </MenuItem>
+          {statuses.map( (status) => (
+            <MenuItem
+            key={status}
+            value={status}
+            >
+            {status}
+            </MenuItem>
+          ) )}
+          </Select>
+        </FormControl>
 
         <FormControlLabel
           control={

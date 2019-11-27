@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { Grid, Card, CardContent, Button } from '@material-ui/core';
-
 import EditableOrder from './EditableOrder';
 import OrderForm from './OrderForm';
-import { newOrder } from './../../../../Utils';
-import { firebase } from './../../../../firebaseConfig';
-
 import PageContainer from './../shared/PageContainer';
+
+import { newOrder } from './../../Utils';
+import { firebase } from './../../firebaseConfig';
 
 export default function CreateIndex(){
 

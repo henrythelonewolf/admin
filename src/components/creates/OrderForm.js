@@ -14,13 +14,13 @@ import {
 import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
 
-import { firebase } from './../../../../firebaseConfig';
-import { snapshotToArray, formattedDate } from './../../../../Utils';
+import { firebase } from './../../firebaseConfig';
+import { snapshotToArray, formattedDate } from './../../Utils';
 
 export default class OrderForm extends React.Component {
   constructor(props){
     super(props);
-    
+
     const {
       id,
       chosenDeliveryDate,

@@ -15,7 +15,7 @@ import { useStyles } from './Styles';
 import CheckIcon from '@material-ui/icons/Check';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
-import { firebase } from './../../../../firebaseConfig';
+import { firebase } from './../../firebaseConfig';
 import Copyright from './../shared/Copyright';
 
 export default function ForgotPassword() {

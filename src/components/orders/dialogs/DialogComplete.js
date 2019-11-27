@@ -35,9 +35,9 @@ export default function DialogComplete({
     }
 
     return (
-        <Dialog 
-            open={open} 
-            onClose={onClose} 
+        <Dialog
+            open={open}
+            onClose={onClose}
             aria-labelledby={'massClose'}
             fullWidth={true}
             maxWidth={'md'}
@@ -50,7 +50,7 @@ export default function DialogComplete({
                             Closing ticket ID:
                             <br />
                             {selection.map( (id) => (
-                                <Chip label={id} style={{ margin: 5 }} />
+                                <Chip key={id} label={id} style={{ margin: 5 }} />
                             ) )}
                         </DialogContentText>
                     </Grid>
@@ -81,7 +81,7 @@ export default function DialogComplete({
                             ) )}
                             </Select>
                         </FormControl>
-                    </Grid>   
+                    </Grid>
                 </Grid>
 
             </DialogContent>

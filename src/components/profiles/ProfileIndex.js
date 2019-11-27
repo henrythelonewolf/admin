@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button';
 
 import PageContainer from './../shared/PageContainer';
 
-import { firebase } from './../../../../firebaseConfig';
+import { firebase } from './../../firebaseConfig';
 
 export default function ProfileIndex() {
   const classes = useStyles();

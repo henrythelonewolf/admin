@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { firebase } from './../../../../firebaseConfig';
-import { snapshotToArray } from './../../../../Utils';
 import PageContainer from './../shared/PageContainer';
 import Paper from '@material-ui/core/Paper';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
+
+import { firebase } from './../../firebaseConfig';
+import { snapshotToArray } from './../../Utils';
 
 import {
   FilteringState,
@@ -103,9 +104,9 @@ export default function OrdersIndex(){
     <PageContainer name={'Order List'}>
       <Paper>
         <div style={{ padding: 10 }}>
-          <Button 
-            variant={'contained'} 
-            color={'primary'} 
+          <Button
+            variant={'contained'}
+            color={'primary'}
             onClick={handleOpenUpdate}
             disabled={selection.length === 0}
           >
@@ -114,9 +115,9 @@ export default function OrdersIndex(){
 
           <span style={{ paddingRight: 10 }} />
 
-          <Button 
-            variant={'contained'} 
-            color={'primary'} 
+          <Button
+            variant={'contained'}
+            color={'primary'}
             onClick={handleOpenComplete}
             disabled={selection.length === 0}
           >
@@ -124,16 +125,16 @@ export default function OrdersIndex(){
           </Button>
         </div>
 
-        <DialogUpdate 
+        <DialogUpdate
           selection={selection}
-          open={openUpdate} 
-          onClose={handleOnCloseUpdate} 
-          onFormSubmit={handleUpdateSubmit} 
+          open={openUpdate}
+          onClose={handleOnCloseUpdate}
+          onFormSubmit={handleUpdateSubmit}
         />
-        <DialogComplete 
+        <DialogComplete
           selection={selection}
-          open={openComplete} 
-          onClose={handleOnCloseComplete} 
+          open={openComplete}
+          onClose={handleOnCloseComplete}
         />
 
         <Divider />
@@ -144,12 +145,12 @@ export default function OrdersIndex(){
         >
           <SearchState defaultValue={''} />
           <FilteringState />
-          <SortingState 
+          <SortingState
             defaultSorting={[
               { columnName: 'urgent', direction: 'desc' }
             ]}
           />
-          <SelectionState 
+          <SelectionState
             selection={selection}
             onSelectionChange={handleSelectionChange}
           />
@@ -160,7 +161,7 @@ export default function OrdersIndex(){
               { columnName: 'status' },
             ]}
             defaultExpandedGroups={[
-              'Open', 
+              'Open',
               'Open|Pending'
             ]}
           />

@@ -9,16 +9,16 @@ import { firebase } from './firebaseConfig';
 
 // components import
 import Loading from './Loading';
-import SignIn from './layouts/admins/components/auths/SignIn';
-import ForgotPassword from './layouts/admins/components/auths/ForgotPassword';
-// import DashboardContainer from './layouts/admins/components/dashboards/DashboardIndex';
-import OrdersContainer from './layouts/admins/components/orders/OrdersIndex';
-import CreateContainer from './layouts/admins/components/creates/CreateIndex';
-import ProfileContainer from './layouts/admins/components/profiles/ProfileIndex';
-// import CalendarContainer from './layouts/admins/components/calendars/CalendarIndex';
-import CompanyContainer from './layouts/admins/components/companies/CompanyIndex';
-import ProductContainer from './layouts/admins/components/products/ProductIndex';
-import AssigneeContainer from './layouts/admins/components/assignees/AssigneeIndex';
+import SignIn from './components/auths/SignIn';
+import ForgotPassword from './components/auths/ForgotPassword';
+// import DashboardContainer from './components/dashboards/DashboardIndex';
+import OrdersContainer from './components/orders/OrdersIndex';
+import CreateContainer from './components/creates/CreateIndex';
+import ProfileContainer from './components/profiles/ProfileIndex';
+// import CalendarContainer from './components/calendars/CalendarIndex';
+import CompanyContainer from './components/companies/CompanyIndex';
+import ProductContainer from './components/products/ProductIndex';
+import AssigneeContainer from './components/assignees/AssigneeIndex';
 
 function PrivateRoute ({component: Component, authed, ...rest}) {
   return (
