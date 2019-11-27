@@ -25,9 +25,10 @@ import { formattedDate, snapshotToArray } from './../../../Utils';
 import { firebase } from './../../../firebaseConfig';
 
 export default function DialogUpdate({
-    selection,
-    open,
-    onClose,
+    selections,
+    openStatus,
+    onSubmit,
+    onCancel,
 }){
   const [companies, setCompanies] = useState([]);
   const [products, setProducts] = useState([]);
@@ -116,24 +117,55 @@ export default function DialogUpdate({
 
   const handleOnSubmitUpdate = (event) => {
     event.preventDefault();
+
+    // const fields = [
+    //   chosenCompany,
+    //   chosenProduct,
+    //   chosenDeliveryDate,
+    //   price,
+    //   terms,
+    //   remarks,
+    //   quantity,
+    //   assigned_to,
+    //   urgent,
+    //   status,
+    // ];
+    //
+    // const updates = fields.reduce(
+    //   (accumulator, field) => {
+    //     if (field !== (null || '')) {
+    //       accumulator.push(field);
+    //     }
+    //     return accumulator;
+    //   },
+    // );
+    // console.log(updates);
+
     const updates = {
-      chosenCompany,
+      status,
+      type: 'Open',
     }
-    console.log(updates);
+    // console.log(updates);
     // firebase update code here
+    selections.map(
+      async (selection) => {
+        return await firebase.database().ref('orders/' + selection).update(updates)
+      }
+    )
+
     handleOnClear();
-    onClose();
+    onSubmit();
   }
 
-  const handleOnClose = () => {
+  const handleOnCancel = () => {
     handleOnClear();
-    onClose();
+    onCancel();
   }
 
   return (
       <Dialog
-        open={open}
-        onClose={onClose}
+        open={openStatus}
+        onClose={handleOnClear}
         aria-labelledby={'massUpdate'}
         fullWidth={true}
         maxWidth={'md'}
@@ -145,7 +177,7 @@ export default function DialogUpdate({
               <DialogContentText>
                   Updating ticket ID:
                   <br />
-                  {selection.map( (id) => (
+                  {selections.map( (id) => (
                     <Chip key={id} label={id} style={{ margin: 5 }} />
                   ) )}
               </DialogContentText>
@@ -363,7 +395,7 @@ export default function DialogUpdate({
           <Button onClick={handleOnClear} color="primary">
             Clear
           </Button>
-          <Button onClick={handleOnClose} color="primary">
+          <Button onClick={handleOnCancel} color="primary">
             Cancel
           </Button>
         </DialogActions>

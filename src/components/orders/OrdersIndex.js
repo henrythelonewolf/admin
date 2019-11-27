@@ -69,35 +69,37 @@ export default function OrdersIndex(){
     fetchData();
   }, []);
 
-  const [pageSizes] = useState([10, 15, 30]);
+  const [pageSizes] = useState([10, 30, 60]);
 
-  const [selection, setSelection] = useState([]);
+  const [selections, setSelections] = useState([]);
 
   const getRowId = row => row.id;
-  const handleSelectionChange = (selection) => {
-    setSelection(selection);
+  const handleSelectionChange = (selections) => {
+    setSelections(selections);
   }
 
   const [openUpdate, setOpenUpdate] = useState(false);
   const [openComplete, setOpenComplete] = useState(false);
 
   const handleOpenUpdate = () => {
-    setOpenUpdate(true)
+    setOpenUpdate(true);
   }
   const handleOpenComplete = () => {
-    setOpenComplete(true)
+    setOpenComplete(true);
   }
 
-  const handleOnCloseUpdate = () => {
-    setOpenUpdate(false)
-  }
-  const handleOnCloseComplete = () => {
-    setOpenComplete(false)
+  const handleCloseDialog = () => {
+    setOpenUpdate(false);
+    setOpenComplete(false);
   }
 
-  const handleUpdateSubmit = () => {
-    alert('updated')
-    setOpenUpdate(false)
+  const handleOnCancel = () => {
+    handleCloseDialog();
+  }
+
+  const handleOnSubmit = () => {
+    setSelections([]);
+    handleCloseDialog();
   }
 
   return (
@@ -108,7 +110,7 @@ export default function OrdersIndex(){
             variant={'contained'}
             color={'primary'}
             onClick={handleOpenUpdate}
-            disabled={selection.length === 0}
+            disabled={selections.length === 0}
           >
             Mass Update
           </Button>
@@ -119,22 +121,23 @@ export default function OrdersIndex(){
             variant={'contained'}
             color={'primary'}
             onClick={handleOpenComplete}
-            disabled={selection.length === 0}
+            disabled={selections.length === 0}
           >
             Mass Close
           </Button>
         </div>
 
         <DialogUpdate
-          selection={selection}
-          open={openUpdate}
-          onClose={handleOnCloseUpdate}
-          onFormSubmit={handleUpdateSubmit}
+          selections={selections}
+          openStatus={openUpdate}
+          onSubmit={handleOnSubmit}
+          onCancel={handleOnCancel}
         />
         <DialogComplete
-          selection={selection}
-          open={openComplete}
-          onClose={handleOnCloseComplete}
+          selections={selections}
+          openStatus={openComplete}
+          onSubmit={handleOnSubmit}
+          onCancel={handleOnCancel}
         />
 
         <Divider />
@@ -151,7 +154,7 @@ export default function OrdersIndex(){
             ]}
           />
           <SelectionState
-            selection={selection}
+            selections={selections}
             onSelectionChange={handleSelectionChange}
           />
 
@@ -170,13 +173,17 @@ export default function OrdersIndex(){
           <IntegratedGrouping />
           <IntegratedFiltering />
           <IntegratedSorting />
-          <IntegratedPaging />
           <IntegratedSelection />
+          <IntegratedPaging />
 
           <DragDropProvider />
           <Table />
           <TableColumnVisibility />
-          <TableSelection showSelectAll={true} />
+          <TableSelection
+            showSelectAll={true}
+            highlightRow={true}
+            selectByRowClick={true}
+          />
           <TableHeaderRow showSortingControls={true} />
           <TableFilterRow showFilterSelector={true} />
           <PagingPanel pageSizes={pageSizes} />

@@ -12,10 +12,13 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Grid from '@material-ui/core/Grid';
 
+import { firebase } from './../../../firebaseConfig';
+
 export default function DialogComplete({
-    selection,
-    open,
-    onClose,
+    selections,
+    openStatus,
+    onSubmit,
+    onCancel,
 }){
     const closesAs = ['Delivered', 'Rejected', 'Canceled'];
     const [closeAs, setCloseAs] = useState('');
@@ -24,20 +27,41 @@ export default function DialogComplete({
         setCloseAs(event.target.value);
     }
 
-    const handleSubmitCloseAs = () => {
+    const clearCloseAs = () => {
+      setCloseAs('');
+    }
+
+    const handleOnSubmitCloseAs = (event) => {
+        event.preventDefault();
+        
         if (!closeAs) {
-            alert('Choose')
+            alert('Please choose!')
         } else {
+            const updates = {
+              status: closeAs,
+              type: 'Closed',
+            }
             // firebase update status here
-            setCloseAs('');
-            onClose();
+            selections.map(
+              async (selection) => {
+                return await firebase.database().ref('orders/' + selection).update(updates)
+              }
+            );
+
+            clearCloseAs();
+            onSubmit();
         }
+    }
+
+    const handleOnCancel = () => {
+      clearCloseAs();
+      onCancel();
     }
 
     return (
         <Dialog
-            open={open}
-            onClose={onClose}
+            open={openStatus}
+            onClose={clearCloseAs}
             aria-labelledby={'massClose'}
             fullWidth={true}
             maxWidth={'md'}
@@ -49,7 +73,7 @@ export default function DialogComplete({
                         <DialogContentText>
                             Closing ticket ID:
                             <br />
-                            {selection.map( (id) => (
+                            {selections.map( (id) => (
                                 <Chip key={id} label={id} style={{ margin: 5 }} />
                             ) )}
                         </DialogContentText>
@@ -86,10 +110,10 @@ export default function DialogComplete({
 
             </DialogContent>
             <DialogActions>
-                <Button onClick={handleSubmitCloseAs} color="primary">
+                <Button onClick={handleOnSubmitCloseAs} color="primary">
                     Finish
                 </Button>
-                <Button onClick={onClose} color="primary">
+                <Button onClick={handleOnCancel} color="primary">
                     Cancel
                 </Button>
             </DialogActions>
