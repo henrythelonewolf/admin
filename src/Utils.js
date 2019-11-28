@@ -24,7 +24,7 @@ export function formattedDate(chosenDeliveryDate){
 
 export const newOrder = (attrs = {}) => {
   const currentUserId = firebase.auth().currentUser.uid;
-  
+
   const order = {
     id: idGenerator(),
     chosenDeliveryDate: attrs.chosenDeliveryDate || formattedDate(new Date()),
@@ -36,7 +36,7 @@ export const newOrder = (attrs = {}) => {
     terms: attrs.terms || 'Undefined',
     status: 'Pending',
     created_at: new Date().toString(),
-    urgent: attrs.urgent || false,
+    urgent: attrs.urgent || 'false',
     histories: [
       {
         id: idGenerator(),
@@ -58,18 +58,15 @@ export const createNewItem = (newItem) => {
     created_at: new Date().toString(),
     updated_at: new Date().toString(),
   }
-
   return item;
 }
 
 export function snapshotToArray(snapshot){
   var itemArr = [];
-
   snapshot.forEach( (child) => {
     var item = child.val();
     item.id = child.key;
     itemArr.push(item);
   })
-
   return itemArr;
 }

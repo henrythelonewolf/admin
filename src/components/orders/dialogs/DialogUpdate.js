@@ -139,6 +139,7 @@ export default function DialogUpdate({
         if (value !== null) {
           if (value !== '') {
             filteredFields[key] = value;
+            filteredFields['type'] = 'Open';
           }
         }
       }

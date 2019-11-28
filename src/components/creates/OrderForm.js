@@ -5,8 +5,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
+
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
@@ -46,7 +45,7 @@ export default class OrderForm extends React.Component {
       price: id ? price : '',
       remarks: id ? remarks : '',
       terms: id ? terms : '',
-      urgent: id ? urgent : false,
+      urgent: id ? urgent : 'false',
       assigned_to: id ? assigned_to : '',
     }
 
@@ -54,7 +53,6 @@ export default class OrderForm extends React.Component {
   }
 
   initializer = async () => {
-
     await firebase.database().ref('companies/').on('value', (snapshot) => {
       const companies = snapshotToArray(snapshot);
       this._isMounted && this.setState({
@@ -74,7 +72,7 @@ export default class OrderForm extends React.Component {
       this._isMounted && this.setState({
         assignees,
       })
-    })
+    });
   }
 
   componentDidMount(){
@@ -88,9 +86,7 @@ export default class OrderForm extends React.Component {
 
   handleChangeInput = (evt) => {
     const name = evt.target.name;
-    const value = (evt.target.type === 'checkbox')
-    ? evt.target.checked
-    : evt.target.value;
+    const value = evt.target.value;
     this.setState({ [name]: value });
   }
 
@@ -143,7 +139,7 @@ export default class OrderForm extends React.Component {
       price: '',
       terms: '',
       remarks: '',
-      urgent: false,
+      urgent: 'false',
       assigned_to: ''
     })
   }
@@ -166,6 +162,7 @@ export default class OrderForm extends React.Component {
     const { onFormClose, id } = this.props;
 
     const submitText = id ? 'Update' : 'Create';
+    const urgencies = ['true', 'false'];
 
     return (
       <div>
@@ -316,17 +313,32 @@ export default class OrderForm extends React.Component {
             value={remarks}
           />
 
-          <FormControlLabel
-            control={
-              <Switch
-                checked={urgent}
-                onChange={this.handleChangeInput}
-                name={'urgent'}
-                color={'primary'}
-              />
-            }
-            label={'Urgent?'}
-          />
+          <FormControl
+          fullWidth
+          variant={'outlined'}
+          margin={'normal'}
+          required
+          >
+            <InputLabel id={'urgent'}>
+              Urgent?
+            </InputLabel>
+            <Select
+              id={'urgent'}
+              name={'urgent'}
+              value={urgent}
+              onChange={this.handleChangeInput}
+              labelWidth={60}
+            >
+            {urgencies.map( (urgency) => (
+              <MenuItem
+              key={urgency}
+              value={urgency}
+              >
+              {urgency}
+              </MenuItem>
+            ) )}
+            </Select>
+          </FormControl>
 
           <br />
 

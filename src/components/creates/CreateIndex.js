@@ -75,14 +75,9 @@ export default function CreateIndex(){
       return;
     }
 
+    // send to firebase
     orders.map( async (order) => {
-      // change urgent boolean value to string
-      const modOrder = {
-        ...order,
-        urgent: order.urgent === true ? 'true' : 'false'
-      }
-      // send to firebase
-      return await firebase.database().ref('orders/' + order.id).set(modOrder);
+      return await firebase.database().ref('orders/' + order.id).set(order);
     });
 
     setOrders([]);
