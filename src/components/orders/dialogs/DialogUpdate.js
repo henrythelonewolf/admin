@@ -12,8 +12,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
+
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
@@ -57,6 +56,7 @@ export default function DialogUpdate({
   }, []);
 
   const statuses = ['Pending', 'Processing', 'Out-For-Delivery', 'On-Hold'];
+  const urgencies = ['true', 'false'];
 
   const [chosenCompany, setChosenCompany] = useState('');
   const [chosenProduct, setChosenProduct] = useState('')
@@ -66,7 +66,7 @@ export default function DialogUpdate({
   const [remarks, setRemarks] = useState('');
   const [quantity, setQuantity] = useState('');
   const [assigned_to, setAssignedTo] = useState('');
-  const [urgent, setUrgent] = useState(null);
+  const [urgent, setUrgent] = useState('');
   const [status, setStatus] = useState('');
 
   const getValue = (event) => event.target.value;
@@ -93,7 +93,7 @@ export default function DialogUpdate({
     setAssignedTo(getValue(event));
   }
   const handleUrgent = (event) => {
-    setUrgent(event.target.checked);
+    setUrgent(getValue(event));
   }
   const handleDateChange = (chosenDeliveryDate) => {
     setChosenDeliveryDate(formattedDate(chosenDeliveryDate));
@@ -111,45 +111,43 @@ export default function DialogUpdate({
     setRemarks('');
     setQuantity('');
     setAssignedTo('');
-    setUrgent(null);
+    setUrgent('');
     setStatus('');
   }
 
   const handleOnSubmitUpdate = (event) => {
     event.preventDefault();
 
-    // const fields = [
-    //   chosenCompany,
-    //   chosenProduct,
-    //   chosenDeliveryDate,
-    //   price,
-    //   terms,
-    //   remarks,
-    //   quantity,
-    //   assigned_to,
-    //   urgent,
-    //   status,
-    // ];
-    //
-    // const updates = fields.reduce(
-    //   (accumulator, field) => {
-    //     if (field !== (null || '')) {
-    //       accumulator.push(field);
-    //     }
-    //     return accumulator;
-    //   },
-    // );
-    // console.log(updates);
-
-    const updates = {
+    // get all the fields
+    const fields = {
+      chosenCompany,
+      chosenProduct,
+      chosenDeliveryDate,
+      price,
+      terms,
+      remarks,
+      quantity,
+      assigned_to,
+      urgent,
       status,
-      type: 'Open',
     }
-    // console.log(updates);
-    // firebase update code here
+
+    // filter only fields with value
+    const filteredFields = {};
+    Object.entries(fields).forEach(
+      ([key, value]) => {
+        if (value !== null) {
+          if (value !== '') {
+            filteredFields[key] = value;
+          }
+        }
+      }
+    )
+
+    // // firebase update code here
     selections.map(
       async (selection) => {
-        return await firebase.database().ref('orders/' + selection).update(updates)
+        return await firebase.database().ref('orders/' + selection).update(filteredFields)
       }
     )
 
@@ -173,7 +171,7 @@ export default function DialogUpdate({
         <DialogTitle id={'massUpdate'}>Mass Update</DialogTitle>
         <DialogContent>
           <Grid container spacing={4}>
-            <Grid item lg={6}>
+            <Grid item lg={4}>
               <DialogContentText>
                   Updating ticket ID:
                   <br />
@@ -182,7 +180,7 @@ export default function DialogUpdate({
                   ) )}
               </DialogContentText>
             </Grid>
-            <Grid item lg={6}>
+            <Grid item lg={4}>
             <FormControl
         fullWidth
         variant={'outlined'}
@@ -253,6 +251,17 @@ export default function DialogUpdate({
           variant={'outlined'}
           margin={'normal'}
           fullWidth
+          id={'price'}
+          label={'Price'}
+          name={'price'}
+          onChange={handlePrice}
+          value={price}
+        />
+
+        <TextField
+          variant={'outlined'}
+          margin={'normal'}
+          fullWidth
           id={'quantity'}
           label={'Quantity'}
           name={'quantity'}
@@ -276,114 +285,127 @@ export default function DialogUpdate({
           />
         </MuiPickersUtilsProvider>
 
-        <FormControl
-        fullWidth
-        variant={'outlined'}
-        margin={'normal'}
-        >
-          <InputLabel id={'assigned_to'}>
-            Assignee
-          </InputLabel>
-          <Select
-            id={'assigned_to'}
-            name={'assigned_to'}
-            value={assigned_to}
-            onChange={handleAssignedTo}
-            labelWidth={60}
-          >
-          <MenuItem
-          key={'nullAssignee'}
-          value={''}
-          >
-          Please choose assignee
-          </MenuItem>
-          {assignees.map( (assignee) => (
-            <MenuItem
-            key={assignee.name}
-            value={assignee.name}
-            >
-            {assignee.name}
-            </MenuItem>
-          ) )}
-          </Select>
-        </FormControl>
+            </Grid>
 
-        <TextField
-          variant={'outlined'}
-          margin={'normal'}
-          fullWidth
-          id={'price'}
-          label={'Price'}
-          name={'price'}
-          onChange={handlePrice}
-          value={price}
-        />
+            <Grid item lg={4}>
+
+            <TextField
+            variant={'outlined'}
+            margin={'normal'}
+            fullWidth
+            id={'terms'}
+            label={'Terms'}
+            name={'terms'}
+            onChange={handleTerms}
+            value={terms}
+          />
 
           <TextField
+            variant={'outlined'}
+            margin={'normal'}
+            fullWidth
+            id={'remarks'}
+            label={'Remarks'}
+            name={'remarks'}
+            onChange={handleRemarks}
+            value={remarks}
+          />
+
+          <FormControl
+          fullWidth
           variant={'outlined'}
           margin={'normal'}
-          fullWidth
-          id={'terms'}
-          label={'Terms'}
-          name={'terms'}
-          onChange={handleTerms}
-          value={terms}
-        />
-
-        <TextField
-          variant={'outlined'}
-          margin={'normal'}
-          fullWidth
-          id={'remarks'}
-          label={'Remarks'}
-          name={'remarks'}
-          onChange={handleRemarks}
-          value={remarks}
-        />
-
-        <FormControl
-        fullWidth
-        variant={'outlined'}
-        margin={'normal'}
-        >
-          <InputLabel id={'status'}>
-            Status
-          </InputLabel>
-          <Select
-            id={'status'}
-            name={'status'}
-            value={status}
-            onChange={handleStatus}
-            labelWidth={60}
           >
-          <MenuItem
-          key={'nullStatus'}
-          value={''}
-          >
-          Please choose status
-          </MenuItem>
-          {statuses.map( (status) => (
-            <MenuItem
-            key={status}
-            value={status}
+            <InputLabel id={'assigned_to'}>
+              Assignee
+            </InputLabel>
+            <Select
+              id={'assigned_to'}
+              name={'assigned_to'}
+              value={assigned_to}
+              onChange={handleAssignedTo}
+              labelWidth={60}
             >
-            {status}
+            <MenuItem
+            key={'nullAssignee'}
+            value={''}
+            >
+            Please choose assignee
             </MenuItem>
-          ) )}
-          </Select>
-        </FormControl>
+            {assignees.map( (assignee) => (
+              <MenuItem
+              key={assignee.name}
+              value={assignee.name}
+              >
+              {assignee.name}
+              </MenuItem>
+            ) )}
+            </Select>
+          </FormControl>
 
-        <FormControlLabel
-          control={
-            <Switch
-              checked={urgent}
-              onChange={handleUrgent}
-              name={'urgent'}
-              color={'primary'}
-            />
-          }
-          label={'Urgent?'}
-        />
+            <FormControl
+            fullWidth
+            variant={'outlined'}
+            margin={'normal'}
+            >
+              <InputLabel id={'status'}>
+                Status
+              </InputLabel>
+              <Select
+                id={'status'}
+                name={'status'}
+                value={status}
+                onChange={handleStatus}
+                labelWidth={60}
+              >
+              <MenuItem
+              key={'nullStatus'}
+              value={''}
+              >
+              Please choose status
+              </MenuItem>
+              {statuses.map( (status) => (
+                <MenuItem
+                key={status}
+                value={status}
+                >
+                {status}
+                </MenuItem>
+              ) )}
+              </Select>
+            </FormControl>
+
+            <FormControl
+            fullWidth
+            variant={'outlined'}
+            margin={'normal'}
+            >
+              <InputLabel id={'urgent'}>
+                Urgent?
+              </InputLabel>
+              <Select
+                id={'urgent'}
+                name={'urgent'}
+                value={urgent}
+                onChange={handleUrgent}
+                labelWidth={60}
+              >
+              <MenuItem
+              key={'nullStatus'}
+              value={''}
+              >
+              Please choose urgency
+              </MenuItem>
+              {urgencies.map( (urgency) => (
+                <MenuItem
+                key={urgency}
+                value={urgency}
+                >
+                {urgency}
+                </MenuItem>
+              ) )}
+              </Select>
+            </FormControl>
             </Grid>
           </Grid>
 

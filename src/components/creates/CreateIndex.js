@@ -71,12 +71,18 @@ export default function CreateIndex(){
 
   const handleSubmitAll = () => {
     if (orders.length === 0) {
-      alert('No entries yet.');
+      alert('Error! No entries.');
       return;
     }
 
-    orders.map( (order) => {
-      return firebase.database().ref('orders/' + order.id).set({...order});
+    orders.map( async (order) => {
+      // change urgent boolean value to string
+      const modOrder = {
+        ...order,
+        urgent: order.urgent === true ? 'true' : 'false'
+      }
+      // send to firebase
+      return await firebase.database().ref('orders/' + order.id).set(modOrder);
     });
 
     setOrders([]);

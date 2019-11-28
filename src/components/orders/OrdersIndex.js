@@ -64,6 +64,7 @@ export default function OrdersIndex(){
       setRows(orders);
     });
   };
+  const [selections, setSelections] = useState([]);
 
   useEffect( () => {
     fetchData();
@@ -71,7 +72,6 @@ export default function OrdersIndex(){
 
   const [pageSizes] = useState([10, 30, 60]);
 
-  const [selections, setSelections] = useState([]);
 
   const getRowId = row => row.id;
   const handleSelectionChange = (selections) => {
@@ -157,7 +157,6 @@ export default function OrdersIndex(){
             selections={selections}
             onSelectionChange={handleSelectionChange}
           />
-
           <GroupingState
             defaultGrouping={[
               { columnName: 'type' },

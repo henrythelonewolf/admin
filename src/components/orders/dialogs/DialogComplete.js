@@ -33,7 +33,7 @@ export default function DialogComplete({
 
     const handleOnSubmitCloseAs = (event) => {
         event.preventDefault();
-        
+
         if (!closeAs) {
             alert('Please choose!')
         } else {
