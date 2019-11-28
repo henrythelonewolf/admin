@@ -14,7 +14,7 @@ export default function EditableOrder({
     terms,
     remarks,
     urgent,
-    assigned_to,
+    assignedTo,
   },
   onRemovePress,
   onFormSubmit,
@@ -46,7 +46,7 @@ export default function EditableOrder({
       terms={terms}
       remarks={remarks}
       urgent={urgent}
-      assigned_to={assigned_to}
+      assignedTo={assignedTo}
       
       onFormClose={handleFormClose}
       onRemovePress={onRemovePress}
@@ -63,7 +63,7 @@ export default function EditableOrder({
       terms={terms}
       remarks={remarks}
       urgent={urgent}
-      assigned_to={assigned_to}
+      assignedTo={assignedTo}
       
       onEditPress={handleOnEditPress}
     />

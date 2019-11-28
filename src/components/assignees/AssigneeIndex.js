@@ -57,8 +57,8 @@ export default function AssigneeIndex(){
       ? row
       : {
         id: uuidv4(),
-        updated_at: new Date().toString(),
-        created_at: new Date().toString(),
+        updatedAt: new Date().toString(),
+        createdAt: new Date().toString(),
       })
     );
     setAddedRows(initialized);
@@ -81,7 +81,7 @@ export default function AssigneeIndex(){
         ? {
           ...row,
           ...changed[row.id],
-          updated_at: new Date().toString()
+          updatedAt: new Date().toString()
         }
         : row));
     }

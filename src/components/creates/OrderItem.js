@@ -18,7 +18,7 @@ export default function OrderItem({
   terms,
   remarks,
   urgent,
-  assigned_to,
+  assignedTo,
 
   onEditPress,
 }){
@@ -27,10 +27,10 @@ export default function OrderItem({
     return (
       <div>
         <Typography color="textSecondary" gutterBottom>
-          {title.toString()}
+          {title}
         </Typography>
         <Typography variant="h5" component="h2">
-          {value.toString()}
+          {value}
         </Typography>
         <br />
       </div>
@@ -55,7 +55,7 @@ export default function OrderItem({
             <Field title={'Terms'} value={terms} />
             <Field title={'Remarks'} value={remarks} />
             <Field title={'Urgent'} value={urgent} />
-            <Field title={'assigned_to'} value={assigned_to} />
+            <Field title={'assignedTo'} value={assignedTo} />
           </Grid>
         </Grid>
 

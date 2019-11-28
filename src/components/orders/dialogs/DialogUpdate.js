@@ -65,7 +65,7 @@ export default function DialogUpdate({
   const [terms, setTerms] = useState('');
   const [remarks, setRemarks] = useState('');
   const [quantity, setQuantity] = useState('');
-  const [assigned_to, setAssignedTo] = useState('');
+  const [assignedTo, setAssignedTo] = useState('');
   const [urgent, setUrgent] = useState('');
   const [status, setStatus] = useState('');
 
@@ -127,7 +127,7 @@ export default function DialogUpdate({
       terms,
       remarks,
       quantity,
-      assigned_to,
+      assignedTo,
       urgent,
       status,
     }
@@ -317,13 +317,13 @@ export default function DialogUpdate({
           variant={'outlined'}
           margin={'normal'}
           >
-            <InputLabel id={'assigned_to'}>
+            <InputLabel id={'assignedTo'}>
               Assignee
             </InputLabel>
             <Select
-              id={'assigned_to'}
-              name={'assigned_to'}
-              value={assigned_to}
+              id={'assignedTo'}
+              name={'assignedTo'}
+              value={assignedTo}
               onChange={handleAssignedTo}
               labelWidth={60}
             >

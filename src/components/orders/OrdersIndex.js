@@ -51,9 +51,9 @@ export default function OrdersIndex(){
       { name: 'terms', title: 'Terms' },
       { name: 'status', title: 'Status' },
       { name: 'urgent', title: 'Urgent' },
-      { name: 'created_at', title: 'Created at' },
+      { name: 'createdAt', title: 'Created at' },
       { name: 'type', title: 'Status Type' },
-      { name: 'assigned_to', title: 'Assignee' },
+      { name: 'assignedTo', title: 'Assignee' },
   ]);
 
   const [rows, setRows] = useState([]);

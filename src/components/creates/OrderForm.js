@@ -30,7 +30,7 @@ export default class OrderForm extends React.Component {
       remarks,
       terms,
       urgent,
-      assigned_to,
+      assignedTo,
     } = props;
 
     this.state = {
@@ -46,7 +46,7 @@ export default class OrderForm extends React.Component {
       remarks: id ? remarks : '',
       terms: id ? terms : '',
       urgent: id ? urgent : 'false',
-      assigned_to: id ? assigned_to : '',
+      assignedTo: id ? assignedTo : '',
     }
 
     this._isMounted = false;
@@ -106,7 +106,7 @@ export default class OrderForm extends React.Component {
       remarks,
       terms,
       urgent,
-      assigned_to,
+      assignedTo,
     } = this.state;
 
     urgent.toString();
@@ -121,7 +121,7 @@ export default class OrderForm extends React.Component {
       remarks,
       terms,
       urgent,
-      assigned_to,
+      assignedTo,
     })
   }
 
@@ -140,7 +140,7 @@ export default class OrderForm extends React.Component {
       terms: '',
       remarks: '',
       urgent: 'false',
-      assigned_to: ''
+      assignedTo: ''
     })
   }
 
@@ -157,7 +157,7 @@ export default class OrderForm extends React.Component {
       terms,
       remarks,
       urgent,
-      assigned_to,
+      assignedTo,
     } = this.state;
     const { onFormClose, id } = this.props;
 
@@ -270,13 +270,13 @@ export default class OrderForm extends React.Component {
           margin={'normal'}
           required
           >
-            <InputLabel id={'assigned_to'}>
+            <InputLabel id={'assignedTo'}>
               Assignee
             </InputLabel>
             <Select
-              id={'assigned_to'}
-              name={'assigned_to'}
-              value={assigned_to}
+              id={'assignedTo'}
+              name={'assignedTo'}
+              value={assignedTo}
               onChange={this.handleChangeInput}
               labelWidth={60}
             >

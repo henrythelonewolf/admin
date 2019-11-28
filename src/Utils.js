@@ -35,18 +35,18 @@ export const newOrder = (attrs = {}) => {
     remarks: attrs.remarks || 'Undefined',
     terms: attrs.terms || 'Undefined',
     status: 'Pending',
-    created_at: new Date().toString(),
+    createdAt: new Date().toString(),
     urgent: attrs.urgent || 'false',
     histories: [
       {
         id: idGenerator(),
         description: 'Order creation',
         updated_by: currentUserId,
-        updated_at: new Date().toString(),
+        updatedAt: new Date().toString(),
       }
     ],
     type: 'Open',
-    assigned_to: attrs.assigned_to || '',
+    assignedTo: attrs.assignedTo || '',
   }
   return order;
 };
@@ -55,8 +55,8 @@ export const createNewItem = (newItem) => {
   const item = {
     id: idGenerator(),
     name: newItem,
-    created_at: new Date().toString(),
-    updated_at: new Date().toString(),
+    createdAt: new Date().toString(),
+    updatedAt: new Date().toString(),
   }
   return item;
 }

@@ -59,8 +59,8 @@ export default function CompanyIndex(){
       ? row
       : {
         id: uuidv4(),
-        updated_at: new Date().toString(),
-        created_at: new Date().toString(),
+        updatedAt: new Date().toString(),
+        createdAt: new Date().toString(),
       })
     );
     setAddedRows(initialized);
@@ -83,7 +83,7 @@ export default function CompanyIndex(){
         ? {
           ...row,
           ...changed[row.id],
-          updated_at: new Date().toString()
+          updatedAt: new Date().toString()
         }
         : row));
     }

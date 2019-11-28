@@ -24,7 +24,7 @@ export default function CreateIndex(){
       !order.chosenDeliveryDate ||
       !order.quantity ||
       !order.price ||
-      !order.assigned_to
+      !order.assignedTo
     ) {
       alert('Error! Please check your form');
     }else {
@@ -45,7 +45,7 @@ export default function CreateIndex(){
           remarks,
           terms,
           urgent,
-          assigned_to,
+          assignedTo,
         } = attrs;
 
         return {
@@ -58,7 +58,7 @@ export default function CreateIndex(){
           remarks,
           terms,
           urgent,
-          assigned_to,
+          assignedTo,
         }
       }
 
