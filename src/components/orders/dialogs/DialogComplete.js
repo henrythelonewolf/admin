@@ -11,6 +11,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Grid from '@material-ui/core/Grid';
+import Divider from '@material-ui/core/Divider';
 
 import { firebase } from './../../../firebaseConfig';
 
@@ -76,6 +77,8 @@ export default function DialogComplete({
                             {selections.map( (id) => (
                                 <Chip key={id} label={id} style={{ margin: 5 }} />
                             ) )}
+                            <Divider />
+                            Total tickets: {selections.length}
                         </DialogContentText>
                     </Grid>
                     <Grid item lg={6}>

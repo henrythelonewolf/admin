@@ -22,6 +22,7 @@ import DateFnsUtils from '@date-io/date-fns';
 
 import { formattedDate, snapshotToArray } from './../../../Utils';
 import { firebase } from './../../../firebaseConfig';
+import { Divider } from '@material-ui/core';
 
 export default function DialogUpdate({
     selections,
@@ -179,6 +180,8 @@ export default function DialogUpdate({
                   {selections.map( (id) => (
                     <Chip key={id} label={id} style={{ margin: 5 }} />
                   ) )}
+                  <Divider />
+                  Total tickets: {selections.length}
               </DialogContentText>
             </Grid>
             <Grid item lg={4}>

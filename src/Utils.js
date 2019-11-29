@@ -1,6 +1,6 @@
-import { firebase } from './firebaseConfig'
+import { firebase } from './firebaseConfig';
 
-const idGenerator = () => {
+export function idGenerator(){
   // generate id: YYYYMMDDhhmmss
   const d = new Date();
   const year = d.getFullYear().toString();

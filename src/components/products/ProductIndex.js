@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { firebase } from './../../firebaseConfig';
-import { snapshotToArray } from './../../Utils';
-import uuidv4 from 'uuid/v4';
+import { snapshotToArray, idGenerator } from './../../Utils';
 
 import Paper from '@material-ui/core/Paper';
 import {
@@ -57,7 +56,7 @@ export default function ProductIndex(){
       Object.keys(row).length
       ? row
       : {
-        id: uuidv4(),
+        id: idGenerator(),
         updatedAt: new Date().toString(),
         createdAt: new Date().toString(),
       })
@@ -93,7 +92,7 @@ export default function ProductIndex(){
     setRowData(changedRows);
 
     // save to firebase
-    firebase.database().ref('products/').set(changedRows);
+    firebase.database().ref('products/').update(changedRows);
   };
 
   return (

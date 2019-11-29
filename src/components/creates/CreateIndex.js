@@ -8,7 +8,6 @@ import { newOrder } from './../../Utils';
 import { firebase } from './../../firebaseConfig';
 
 export default function CreateIndex(){
-
   const [orders, setOrders] = useState([]);
 
   const handleRemovePress = (orderId) => {

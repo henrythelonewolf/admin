@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import uuidv4 from 'uuid/v4';
 import Paper from '@material-ui/core/Paper';
 
 import { firebase } from './../../firebaseConfig';
-import { snapshotToArray } from './../../Utils';
+import { snapshotToArray, idGenerator } from './../../Utils';
 
 import {
   IntegratedFiltering,
@@ -58,7 +57,7 @@ export default function CompanyIndex(){
       Object.keys(row).length
       ? row
       : {
-        id: uuidv4(),
+        id: idGenerator(),
         updatedAt: new Date().toString(),
         createdAt: new Date().toString(),
       })
@@ -94,7 +93,7 @@ export default function CompanyIndex(){
     setRowData(changedRows);
 
     // save to firebase
-    firebase.database().ref('companies/').set(changedRows);
+    firebase.database().ref('companies/').update(changedRows);
   };
 
   return (
