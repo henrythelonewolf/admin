@@ -3,13 +3,17 @@ import customId from 'custom-id';
 
 export function idGenerator(){
 
-    var GenerateID = customId({
-      randomLength: 3,
-      uniqueId: 1218,
-      lowerCase: false,
-    });
+  var tempDate = new Date();
+  tempDate.setHours( tempDate.getHours() + 8);
+  var date = tempDate.getUTCFullYear().toString() +  (tempDate.getUTCMonth()+1).toString()
 
-    return GenerateID;
+  var GenerateID = customId({
+    randomLength: 5,
+    uniqueId: date,
+    lowerCase: false,
+  });
+
+  return GenerateID;
 }
 
 export function formattedDate(chosenDeliveryDate){
