@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -8,6 +8,19 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 // import CalendarIcon from '@material-ui/icons/CalendarToday';
 import AssignmentIcon from '@material-ui/icons/Assignment';
+
+export class ListItemChild extends Component {
+  render() {
+    return (
+      <ListItem button component={'a'} href={this.props.route}>
+        <ListItemIcon>
+          {this.props.children}
+        </ListItemIcon>
+        <ListItemText primary={this.props.title} />
+      </ListItem>
+    );
+  }
+}
 
 export const mainListItems = (
   <div>
@@ -24,47 +37,16 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primary="Calendar" />
     </ListItem> */}
-
-    <ListItem button component={'a'} href={'/orders'}>
-      <ListItemIcon>
-        <ShoppingCartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Order List" />
-    </ListItem>
-
-    <ListItem button component={'a'} href={'/creates'}>
-      <ListItemIcon>
-        <AddBoxIcon />
-      </ListItemIcon>
-      <ListItemText primary="Create Order" />
-    </ListItem>
+    <ListItemChild title='Order List' route='/orders'><ShoppingCartIcon /></ListItemChild>
+    <ListItemChild title='Create Order' route='/creates'><AddBoxIcon /></ListItemChild>
   </div>
 );
 
 export const secondaryListItems = (
   <div>
     <ListSubheader inset>Manage</ListSubheader>
-
-    <ListItem button component={'a'} href={'/companies'}>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Companies" />
-    </ListItem>
-
-    <ListItem button component={'a'} href={'/products'}>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Products" />
-    </ListItem>
-
-    <ListItem button component={'a'} href={'/assignees'}>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Assignees" />
-    </ListItem>
-
+    <ListItemChild title="Companies" route="/companies"><AssignmentIcon /></ListItemChild>
+    <ListItemChild title="Products" route="/products"><AssignmentIcon /></ListItemChild>
+    <ListItemChild title="Assignees" route="/assignees"><AssignmentIcon /></ListItemChild>
   </div>
 );
