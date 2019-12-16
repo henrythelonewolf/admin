@@ -38,8 +38,11 @@ import {
 
 import DialogUpdate from './dialogs/DialogUpdate';
 import DialogComplete from './dialogs/DialogComplete';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 export default function OrdersIndex(){
+  const [loading, setLoading] = useState(false);
+
   const [columns] = useState([
       { name: 'id', title: 'ID' },
       { name: 'chosenCompany', title: 'Company' },
@@ -59,9 +62,11 @@ export default function OrdersIndex(){
   const [rows, setRows] = useState([]);
 
   async function fetchData(){
+    setLoading(true);
     await firebase.database().ref('orders/').on('value', (snapshot) => {
       const orders = snapshotToArray(snapshot);
       setRows(orders);
+      setLoading(false);
     });
   };
   const [selections, setSelections] = useState([]);
@@ -141,57 +146,67 @@ export default function OrdersIndex(){
         />
 
         <Divider />
-        <Grid
-          rows={rows}
-          columns={columns}
-          getRowId={getRowId}
-        >
-          <SearchState defaultValue={''} />
-          <FilteringState />
-          <SortingState
-            defaultSorting={[
-              { columnName: 'urgent', direction: 'desc' }
-            ]}
-          />
-          <SelectionState
-            selections={selections}
-            onSelectionChange={handleSelectionChange}
-          />
-          <GroupingState
-            defaultGrouping={[
-              { columnName: 'type' },
-              { columnName: 'status' },
-            ]}
-            defaultExpandedGroups={[
-              'Open',
-              'Open|Pending'
-            ]}
-          />
-          <PagingState />
 
-          <IntegratedGrouping />
-          <IntegratedFiltering />
-          <IntegratedSorting />
-          <IntegratedSelection />
-          <IntegratedPaging />
+        {loading && (
+          <div style={{ height: 200, paddingLeft: '50%', paddingTop: 100 }}>
+            <CircularProgress />
+          </div>
+        )}
 
-          <DragDropProvider />
-          <Table />
-          <TableColumnVisibility />
-          <TableSelection
-            showSelectAll={true}
-            highlightRow={true}
-            selectByRowClick={true}
-          />
-          <TableHeaderRow showSortingControls={true} />
-          <TableFilterRow showFilterSelector={true} />
-          <PagingPanel pageSizes={pageSizes} />
-          <TableGroupRow />
-          <Toolbar />
-          <SearchPanel />
-          <ColumnChooser />
-          <GroupingPanel showSortingControls={true} />
-        </Grid>
+        {!loading && (
+          <Grid
+            rows={rows}
+            columns={columns}
+            getRowId={getRowId}
+          >
+            <SearchState defaultValue={''} />
+            <FilteringState />
+            <SortingState
+              defaultSorting={[
+                { columnName: 'urgent', direction: 'desc' }
+              ]}
+            />
+            <SelectionState
+              selections={selections}
+              onSelectionChange={handleSelectionChange}
+            />
+            <GroupingState
+              defaultGrouping={[
+                { columnName: 'type' },
+                { columnName: 'status' },
+              ]}
+              defaultExpandedGroups={[
+                'Open',
+                'Open|Pending'
+              ]}
+            />
+            <PagingState />
+
+            <IntegratedGrouping />
+            <IntegratedFiltering />
+            <IntegratedSorting />
+            <IntegratedSelection />
+            <IntegratedPaging />
+
+            <DragDropProvider />
+            <Table />
+            <TableColumnVisibility />
+            <TableSelection
+              showSelectAll={true}
+              highlightRow={true}
+              selectByRowClick={true}
+            />
+            <TableHeaderRow showSortingControls={true} />
+            <TableFilterRow showFilterSelector={true} />
+            <PagingPanel pageSizes={pageSizes} />
+            <TableGroupRow />
+            <Toolbar />
+            <SearchPanel />
+            <ColumnChooser />
+            <GroupingPanel showSortingControls={true} />
+          </Grid>
+        )}
+
       </Paper>
     </PageContainer>
   );

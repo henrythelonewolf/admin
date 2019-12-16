@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
-    BrowserRouter,
-    Redirect,
-    Route,
-    Switch,
-  } from 'react-router-dom';
+  BrowserRouter,
+  Redirect,
+  Route,
+  Switch,
+} from 'react-router-dom';
 import { firebase } from './firebaseConfig';
 
 // components import
@@ -20,71 +20,73 @@ import CompanyContainer from './components/companies/CompanyIndex';
 import ProductContainer from './components/products/ProductIndex';
 import AssigneeContainer from './components/assignees/AssigneeIndex';
 
-function PrivateRoute ({component: Component, authed, ...rest}) {
-  return (
-    <Route
-      {...rest}
-      render={(props) => authed === true
-        ? <Component {...props} />
-        : <Redirect to={{pathname: '/auth/signin', state: {from: props.location}}} />}
-    />
-  )
-}
+export default function AppContainer(){
+  const [loading, setLoading] = useState(true);
+  const [authed, setAuthed] = useState(false);
 
-function PublicRoute ({component: Component, authed, ...rest}) {
-  return (
-    <Route
-      {...rest}
-      render={(props) => authed === false
-        ? <Component {...props} />
-        : <Redirect to='/' />}
-    />
-  )
-}
-
-export default class AppContainer extends Component {
-  state = {
-    authed: false,
-    loading: true,
+  const PrivateRoute = ({component: Component, authed, ...rest}) => {
+    return (
+      <Route
+        {...rest}
+        render={(props) => authed === true
+          ? <Component {...props} />
+          : <Redirect to={{pathname: '/auth/signin', state: {from: props.location}}} />}
+      />
+    )
   }
-  componentDidMount () {
-    this.removeListener = firebase.auth().onAuthStateChanged((user) => {
+
+  const PublicRoute = ({component: Component, authed, ...rest}) => {
+    return (
+      <Route
+        {...rest}
+        render={(props) => authed === false
+          ? <Component {...props} />
+          : <Redirect to='/' />}
+      />
+    )
+  }
+
+  const checkLoggedIn = async () => {
+    setLoading(true);
+    await firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        this.setState({
-          authed: true,
-          loading: false,
-        })
+        setAuthed(true);
+        setLoading(false);
       } else {
-        this.setState({
-          authed: false,
-          loading: false
-        })
+        setAuthed(false);
+        setLoading(false);
       }
     })
   }
-  componentWillUnmount () {
-    this.removeListener()
-  }
-  render() {
-    return this.state.loading === true ? <Loading /> : (
+
+  useEffect( () => {
+    checkLoggedIn();
+  }, []);
+
+  if (loading) {
+    return (
+      <Loading />
+    )
+  } else {
+    return (
       <BrowserRouter>
         <Switch>
-          <PublicRoute authed={this.state.authed} exact path='/auth/signin' component={SignIn} />
-          <PublicRoute authed={this.state.authed} exact path='/auth/forgotPassword' component={ForgotPassword} />
+          <PublicRoute authed={authed} exact path='/auth/signin' component={SignIn} />
+          <PublicRoute authed={authed} exact path='/auth/forgotPassword' component={ForgotPassword} />
 
-          <PrivateRoute authed={this.state.authed} exact path='/' component={OrdersContainer} />
-          <PrivateRoute authed={this.state.authed} exact path='/orders' component={OrdersContainer} />
-          <PrivateRoute authed={this.state.authed} exact path='/creates' component={CreateContainer} />
-          <PrivateRoute authed={this.state.authed} exact path='/profiles' component={ProfileContainer} />
-          {/* <PrivateRoute authed={this.state.authed} exact path='/calendars' component={CalendarContainer} /> */}
+          <PrivateRoute authed={authed} exact path='/' component={OrdersContainer} />
+          <PrivateRoute authed={authed} exact path='/orders' component={OrdersContainer} />
+          <PrivateRoute authed={authed} exact path='/creates' component={CreateContainer} />
+          <PrivateRoute authed={authed} exact path='/profiles' component={ProfileContainer} />
+          {/* <PrivateRoute authed={authed} exact path='/calendars' component={CalendarContainer} /> */}
 
-          <PrivateRoute authed={this.state.authed} exact path='/companies' component={CompanyContainer} />
-          <PrivateRoute authed={this.state.authed} exact path='/products' component={ProductContainer} />
-          <PrivateRoute authed={this.state.authed} exact path='/assignees' component={AssigneeContainer} />
+          <PrivateRoute authed={authed} exact path='/companies' component={CompanyContainer} />
+          <PrivateRoute authed={authed} exact path='/products' component={ProductContainer} />
+          <PrivateRoute authed={authed} exact path='/assignees' component={AssigneeContainer} />
 
           <Route render={() => <h3>No Match</h3>} />
         </Switch>
       </BrowserRouter>
-    );
+    )
   }
 }
