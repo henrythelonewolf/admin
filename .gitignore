@@ -25,3 +25,6 @@ yarn-error.log*
 
 # firebase configuration
 /src/firebaseConfig.js
+
+# ide
+.vscode
