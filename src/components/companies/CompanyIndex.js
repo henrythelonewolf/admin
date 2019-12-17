@@ -9,10 +9,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import {
   IntegratedFiltering,
   IntegratedPaging,
-  // IntegratedSelection,
   IntegratedSorting,
   PagingState,
-  // SelectionState,
   SortingState,
   SearchState,
   EditingState,
@@ -22,7 +20,6 @@ import {
   PagingPanel,
   Table,
   TableHeaderRow,
-  // TableSelection,
   Toolbar,
   SearchPanel,
   TableEditRow,
@@ -37,9 +34,11 @@ export default function CompanyIndex(){
   const [loading, setLoading] = useState(false);
 
   async function fetchData(){
+    setLoading(true);
     await firebase.database().ref('companies/').on('value', (snapshot) => {
       const companies = snapshotToArray(snapshot);
       setRowData(companies);
+      setLoading(false);
     });
   };
 
@@ -103,7 +102,9 @@ export default function CompanyIndex(){
     <PageContainer name={'Manage Companies'}>
       <Paper>
       {loading && (
-        <CircularProgress />
+        <div style={{ height: 200, paddingLeft: '50%', paddingTop: 100 }}>
+          <CircularProgress />
+        </div>
       )}
 
       {!loading && (
@@ -114,7 +115,6 @@ export default function CompanyIndex(){
         >
           <SearchState defaultValue={''} />
           <SortingState />
-          {/* <SelectionState /> */}
           <PagingState />
           <EditingState
             editingRowIds={editingRowIds}
@@ -132,10 +132,8 @@ export default function CompanyIndex(){
           <IntegratedFiltering />
           <IntegratedSorting />
           <IntegratedPaging />
-          {/* <IntegratedSelection /> */}
 
           <Table />
-          {/* <TableSelection showSelectAll={true} /> */}
           <TableHeaderRow showSortingControls={true} />
           <TableEditRow />
           <TableEditColumn
