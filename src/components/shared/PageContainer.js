@@ -29,7 +29,7 @@ import Copyright from './Copyright';
 
 export default function PageContainer({ children, name }) {
   const classes = useStyles();
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   const [anchorNotificationEl, setAnchorNotificationEl] = useState(null);
   const [anchorProfileEl, setAnchorProfileEl] = useState(null);
