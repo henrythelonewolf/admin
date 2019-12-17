@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Paper from '@material-ui/core/Paper';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { firebase } from './../../firebaseConfig';
 import { snapshotToArray, idGenerator } from './../../Utils';
@@ -29,11 +30,14 @@ const getRowId = row => row.id;
 
 export default function AssigneeIndex(){
   const [rowData, setRowData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   async function fetchData(){
+    setLoading(true);
     await firebase.database().ref('assignees/').on('value', (snapshot) => {
       const assignees = snapshotToArray(snapshot);
       setRowData(assignees);
+      setLoading(false);
     });
   };
 
@@ -101,7 +105,14 @@ export default function AssigneeIndex(){
   return (
     <PageContainer name={'Manage Assignees'}>
       <Paper>
-        <Grid
+        {loading && (
+          <div style={{ height: 200, paddingLeft: '50%', paddingTop: 100 }}>
+            <CircularProgress />
+          </div>
+        )}
+
+        {!loading && (
+          <Grid
           rows={rowData}
           columns={columns}
           getRowId={getRowId}
@@ -139,6 +150,8 @@ export default function AssigneeIndex(){
           <SearchPanel />
 
         </Grid>
+        )}
+        
       </Paper>
     </PageContainer>
   )

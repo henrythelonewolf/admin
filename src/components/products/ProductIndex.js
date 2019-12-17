@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { firebase } from './../../firebaseConfig';
 import { snapshotToArray, idGenerator } from './../../Utils';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import Paper from '@material-ui/core/Paper';
 import {
   IntegratedFiltering,
   IntegratedPaging,
-  // IntegratedSelection,
   IntegratedSorting,
   PagingState,
-  // SelectionState,
   SortingState,
   SearchState,
   EditingState,
@@ -19,7 +18,6 @@ import {
   PagingPanel,
   Table,
   TableHeaderRow,
-  // TableSelection,
   Toolbar,
   SearchPanel,
   TableEditRow,
@@ -31,11 +29,14 @@ const getRowId = row => row.id;
 
 export default function ProductIndex(){
   const [rowData, setRowData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   async function fetchData(){
+    setLoading(true);
     await firebase.database().ref('products/').on('value', (snapshot) => {
       const products = snapshotToArray(snapshot);
       setRowData(products);
+      setLoading(false);
     });
   };
 
@@ -98,14 +99,20 @@ export default function ProductIndex(){
   return (
     <PageContainer name={'Manage Products'}>
       <Paper>
-        <Grid
+        {loading && (
+          <div style={{ height: 200, paddingLeft: '50%', paddingTop: 100 }}>
+            <CircularProgress />
+          </div>
+        )}
+
+        {!loading && (
+          <Grid
           rows={rowData}
           columns={columns}
           getRowId={getRowId}
         >
           <SearchState defaultValue={''} />
           <SortingState />
-          {/* <SelectionState /> */}
           <PagingState />
           <EditingState
             editingRowIds={editingRowIds}
@@ -123,10 +130,8 @@ export default function ProductIndex(){
           <IntegratedFiltering />
           <IntegratedSorting />
           <IntegratedPaging />
-          {/* <IntegratedSelection /> */}
 
           <Table />
-          {/* <TableSelection showSelectAll={true} /> */}
           <TableHeaderRow showSortingControls={true} />
           <TableEditRow />
           <TableEditColumn
@@ -139,6 +144,8 @@ export default function ProductIndex(){
           <SearchPanel />
 
         </Grid>
+        )}
+        
       </Paper>
     </PageContainer>
   )
