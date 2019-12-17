@@ -10,6 +10,7 @@ import {
   Select,
   TextField,
 } from '@material-ui/core';
+
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
@@ -136,27 +137,16 @@ export default class OrderForm extends React.Component {
 
   handleClearPress = () => {
     this.setState({
-      chosenCompany: 'LCP',
-      chosenProduct: 'Product One',
-      chosenDeliveryDate: '2019-12-29',
-      quantity: '12',
-      price: '23',
+      chosenCompany: '',
+      chosenProduct: '',
+      chosenDeliveryDate: null,
+      quantity: '',
+      price: '',
       terms: '',
       remarks: '',
       urgent: 'false',
-      assignedTo: 'Ken'
+      assignedTo: ''
     })
-    // this.setState({
-    //   chosenCompany: '',
-    //   chosenProduct: '',
-    //   chosenDeliveryDate: null,
-    //   quantity: '',
-    //   price: '',
-    //   terms: '',
-    //   remarks: '',
-    //   urgent: 'false',
-    //   assignedTo: ''
-    // })
   }
 
   render(){
