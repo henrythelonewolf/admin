@@ -1,11 +1,36 @@
-import uuidv4 from 'uuid/v4';
-import store from './store';
 import { firebase } from './firebaseConfig';
+import customId from 'custom-id';
+
+export function idGenerator(){
+
+  var tempDate = new Date();
+  tempDate.setHours( tempDate.getHours() + 8);
+  var date = tempDate.getUTCFullYear().toString() +  (tempDate.getUTCMonth()+1).toString()
+
+  var GenerateID = customId({
+    randomLength: 5,
+    uniqueId: date,
+    lowerCase: false,
+  });
+
+  return GenerateID;
+}
+
+export function formattedDate(chosenDeliveryDate){
+  const d = new Date(chosenDeliveryDate);
+  const year = d.getFullYear().toString();
+  const month = (d.getMonth() + 1).toString().padStart(2, '0');
+  const date = d.getDate().toString().padStart(2, '0');
+
+  return year + '-' + month + '-' + date;
+}
 
 export const newOrder = (attrs = {}) => {
+  const currentUserId = firebase.auth().currentUser.uid;
+
   const order = {
-    id: uuidv4(),
-    chosenDate: attrs.chosenDate || 'Undefined',
+    id: idGenerator(),
+    chosenDeliveryDate: attrs.chosenDeliveryDate || formattedDate(new Date()),
     chosenCompany: attrs.chosenCompany || 'Undefined',
     chosenProduct: attrs.chosenProduct || 'Undefined',
     quantity: attrs.quantity || 'Undefined',
@@ -13,64 +38,116 @@ export const newOrder = (attrs = {}) => {
     remarks: attrs.remarks || 'Undefined',
     terms: attrs.terms || 'Undefined',
     status: 'Pending',
-    created_at: new Date().toString(),
-    updated_at: new Date().toString(),
-    urgent: attrs.urgent || false,
+    createdAt: new Date().toString(),
+    urgent: attrs.urgent || 'false',
+    histories: [
+      {
+        id: idGenerator(),
+        description: 'Order creation',
+        updated_by: currentUserId,
+        updatedAt: new Date().toString(),
+      }
+    ],
+    type: 'Open',
+    assignedTo: attrs.assignedTo || '',
   }
-
   return order;
 };
 
 export const createNewItem = (newItem) => {
   const item = {
-    id: uuidv4(),
-    title: newItem,
-    created_at: new Date().toString(),
-    updated_at: new Date().toString(),
+    id: idGenerator(),
+    name: newItem,
+    createdAt: new Date().toString(),
+    updatedAt: new Date().toString(),
   }
-
   return item;
 }
 
-export function validateEmail(email){
-  if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)){
-    return true;
-  }
-  return false;
+export function snapshotToArrayWithoutID(snapshot){
+  var itemArr = [];
+  snapshot.forEach( (child) => {
+    var item = child.val();
+    itemArr.push(item);
+  })
+  return itemArr;
 }
 
-export function getCurrentUser(){
-  if (Object.entries(store.getState().currentUser).length === 0) {
-    const currentUser = firebase.auth().currentUser;
-    store.setState({ currentUser });
-    console.log('fetched user');
-    console.log(currentUser);
-  }
+export function snapshotToArrayID(snapshot){
+  var itemArr = [];
+  snapshot.forEach(function(childSnapshot){
+    var item = childSnapshot.key;
+    itemArr.push(item);
+  })
+  return itemArr;
 }
 
 export function snapshotToArray(snapshot){
   var itemArr = [];
-
   snapshot.forEach( (child) => {
     var item = child.val();
     item.id = child.key;
-
     itemArr.push(item);
   })
-
-  var sortedCreatedAt = itemArr.sort((a,b) => (a.created_at < b.created_at) ? 1 : -1);
-  // return array and reverse sort so that the latest will be on top
-  return sortedCreatedAt.sort((a,b) => (a.urgent === b.urgent) ? 0 : a.urgent ? -1 : 1);
+  return itemArr;
 }
 
-export const badgeStatusColor = (status) => {
-  if (status === 'Pending') {
-    return 'orange';
-  }else if (status === 'Processed') {
-    return '#5cb85c';
-  }else if (status === 'Out For Delivery') {
-    return 'darkgrey';
-  }else if (status === 'On Hold') {
-    return 'black';
-  }
-}
+//Ignore below
+
+// export async function createOrderID() {
+
+//   var orderID = '000';
+
+//   var previousID = await getLastOrderID();
+//   var monthFirebase = await getCurrentMonthFromFirebase();
+//   var monthLocal = getCurrentMonthFromLocal();
+
+//   if (previousID == orderID) {
+//     orderID = previousID + 1;
+//   }
+//   else if (monthFirebase == monthLocal) {
+//     orderID = previousID + 1;
+//   }
+//   else {
+//     orderID = '000';
+//     await firebase.database().ref('orderCounter/currentMonth').set(monthLocal);
+//   }
+
+//   var tempDate = new Date();
+//   tempDate.setHours( tempDate.getHours() + 8);
+  
+//   return tempDate.getUTCFullYear().toString().substr(-2) + monthLocal + orderID;
+// }
+
+// async function getLastOrderID(){
+//   //var database = firebase.database();
+//   const test = await firebase.database().ref('orders').limitToLast(1).once('value').then (function(snapshot) {
+//     return snapshotToArrayID(snapshot);
+//   }, function(error) {
+//     // The Promise was rejected.
+//     console.error(error);
+//   });
+
+//   const lastID = test.toString();
+//   var IDnum = parseInt(lastID.substr(lastID.length - 3));
+//   return IDnum;
+// }
+
+// async function getCurrentMonthFromFirebase(){
+//   const test = await firebase.database().ref('orderCounter/').once('value').then (result => {
+//     return result;
+//   }, function(error) {
+//     // The Promise was rejected.
+//     console.error(error);
+//   });
+
+//   return snapshotToArrayWithoutID(test)[0];
+// }
+
+// export function getCurrentMonthFromLocal(){
+//   var tempDate = new Date();
+//   tempDate.setHours( tempDate.getHours() + 8);
+//   // console.log('MYT Datetime = ' + tempDate.getUTCFullYear() + '-' + tempDate.getUTCMonth() + '-' + tempDate.getUTCDate() +' '+ tempDate.getUTCHours()+':'+ tempDate.getUTCMinutes()+':'+ tempDate.getUTCSeconds());
+//   return (tempDate.getUTCMonth() + 1);
+// }
+

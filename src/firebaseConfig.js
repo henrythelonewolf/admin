@@ -1,13 +1,14 @@
 import * as Firebase from 'firebase';
 
 let firebaseConfig = {
-    apiKey: "AIzaSyBicTthRDfbinpsrKvOAys6_FeKCjI6zS8",
-    authDomain: "order-493f5.firebaseapp.com",
-    databaseURL: "https://order-493f5.firebaseio.com",
-    projectId: "order-493f5",
-    storageBucket: "gs://order-493f5.appspot.com/",
-    messagingSenderId: "874290960759",
-    appId: "1:874290960759:web:63d916f9927de386"
-};
+    apiKey: "AIzaSyClMBrR-LF1qs-zmMbBIFLAaj6jQcTFMjY",
+    authDomain: "lcp-portal.firebaseapp.com",
+    databaseURL: "https://lcp-portal.firebaseio.com",
+    projectId: "lcp-portal",
+    storageBucket: "lcp-portal.appspot.com",
+    messagingSenderId: "175218264087",
+    appId: "1:175218264087:web:25d4d0b28cab7ac662b452",
+    measurementId: "G-ZECX8G9CWG"
+  };
 
 export const firebase = Firebase.initializeApp(firebaseConfig);
