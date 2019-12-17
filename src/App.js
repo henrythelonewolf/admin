@@ -11,14 +11,15 @@ import { firebase } from './firebaseConfig';
 import Loading from './Loading';
 import SignIn from './components/auths/SignIn';
 import ForgotPassword from './components/auths/ForgotPassword';
-// import DashboardContainer from './components/dashboards/DashboardIndex';
 import OrdersContainer from './components/orders/OrdersIndex';
 import CreateContainer from './components/creates/CreateIndex';
 import ProfileContainer from './components/profiles/ProfileIndex';
-// import CalendarContainer from './components/calendars/CalendarIndex';
 import CompanyContainer from './components/companies/CompanyIndex';
 import ProductContainer from './components/products/ProductIndex';
 import AssigneeContainer from './components/assignees/AssigneeIndex';
+
+// import DashboardContainer from './components/dashboards/DashboardIndex';
+// import CalendarContainer from './components/calendars/CalendarIndex';
 
 export default function AppContainer(){
   const [loading, setLoading] = useState(true);

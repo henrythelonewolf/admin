@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import Paper from '@material-ui/core/Paper';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import {
+  Paper,
+  CircularProgress,
+} from '@material-ui/core';
 
 import { firebase } from './../../firebaseConfig';
 import { snapshotToArray, idGenerator } from './../../Utils';
@@ -26,11 +28,14 @@ import {
 } from '@devexpress/dx-react-grid-material-ui';
 import PageContainer from './../shared/PageContainer';
 
-const getRowId = row => row.id;
 
 export default function AssigneeIndex(){
   const [rowData, setRowData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [pageSizes] = useState([10, 15, 30]);
+  const [editingRowIds, setEditingRowIds] = useState([]);
+  const [addedRows, setAddedRows] = useState([]);
+  const [rowChanges, setRowChanges] = useState({});
 
   async function fetchData(){
     setLoading(true);
@@ -40,11 +45,13 @@ export default function AssigneeIndex(){
       setLoading(false);
     });
   };
-
+  
   useEffect( () => {
     fetchData();
   }, [])
-
+  
+  const getRowId = row => row.id;
+  
   const [columns] = useState([
     { name: 'name', title: 'Name' },
     { name: 'email', title: 'Email' },
@@ -52,11 +59,6 @@ export default function AssigneeIndex(){
     { name: 'createdAt', title: 'Created At' },
     { name: 'updatedAt', title: 'Updated At' },
   ]);
-  const [pageSizes] = useState([10, 15, 30]);
-
-  const [editingRowIds, setEditingRowIds] = useState([]);
-  const [addedRows, setAddedRows] = useState([]);
-  const [rowChanges, setRowChanges] = useState({});
 
   const changeAddedRows = (value) => {
     const initialized = value.map(row => (

@@ -1,22 +1,29 @@
 import React, { useState } from 'react';
 import clsx from 'clsx';
-import Drawer from '@material-ui/core/Drawer';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
-import Badge from '@material-ui/core/Badge';
-import Container from '@material-ui/core/Container';
+import {
+  Drawer,
+  AppBar,
+  Toolbar,
+  List,
+  Typography,
+  Divider,
+  IconButton,
+  MenuItem,
+  Menu,
+  Badge,
+  Container,
+} from '@material-ui/core';
+
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import { mainListItems } from './listItems';
-import { secondaryListItems } from './listItems';
+
+import { 
+  mainListItems,
+  secondaryListItems,
+} from './listItems';
+
 import { useStyles } from './Styles';
 import Copyright from './Copyright';
 
@@ -59,7 +66,9 @@ export default function PageContainer({ children, name }) {
   const handleNotificationMenuOpen = event => {
     setAnchorNotificationEl(event.currentTarget);
   };
+
   const menuNotificationId = 'notification-menu';
+  
   const renderNotificationMenu = (
     <Menu
       anchorEl={anchorNotificationEl}

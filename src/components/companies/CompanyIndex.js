@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import Paper from '@material-ui/core/Paper';
+import {
+  Paper,
+  CircularProgress,
+} from '@material-ui/core';
 
 import { firebase } from './../../firebaseConfig';
 import { snapshotToArray, idGenerator } from './../../Utils';
-
-import CircularProgress from '@material-ui/core/CircularProgress';
 
 import {
   IntegratedFiltering,
@@ -27,12 +28,11 @@ import {
 } from '@devexpress/dx-react-grid-material-ui';
 import PageContainer from './../shared/PageContainer';
 
-const getRowId = row => row.id;
 
 export default function CompanyIndex(){
   const [rowData, setRowData] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  
   async function fetchData(){
     setLoading(true);
     await firebase.database().ref('companies/').on('value', (snapshot) => {
@@ -41,11 +41,13 @@ export default function CompanyIndex(){
       setLoading(false);
     });
   };
-
+  
   useEffect( () => {
     fetchData();
   }, [])
-
+  
+  const getRowId = row => row.id;
+  
   const [columns] = useState([
     { name: 'name', title: 'Name'},
   ]);

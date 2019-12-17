@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import Chip from '@material-ui/core/Chip';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
-import MenuItem from '@material-ui/core/MenuItem';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import TextField from '@material-ui/core/TextField';
+import {
+  Chip,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Button,
+  Grid,
+  MenuItem,
+  InputLabel,
+  FormControl,
+  Select,
+  TextField,
+  Divider,
+} from '@material-ui/core';
 
 import {
   MuiPickersUtilsProvider,
@@ -22,7 +25,6 @@ import DateFnsUtils from '@date-io/date-fns';
 
 import { formattedDate, snapshotToArray } from './../../../Utils';
 import { firebase } from './../../../firebaseConfig';
-import { Divider } from '@material-ui/core';
 
 export default function DialogUpdate({
     selections,

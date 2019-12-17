@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { firebase } from './../../firebaseConfig';
 import { snapshotToArray, idGenerator } from './../../Utils';
-import CircularProgress from '@material-ui/core/CircularProgress';
-
-import Paper from '@material-ui/core/Paper';
+import {
+  Paper,
+  CircularProgress,
+} from '@material-ui/core';
 import {
   IntegratedFiltering,
   IntegratedPaging,
@@ -25,12 +26,15 @@ import {
 } from '@devexpress/dx-react-grid-material-ui';
 import PageContainer from './../shared/PageContainer';
 
-const getRowId = row => row.id;
 
 export default function ProductIndex(){
   const [rowData, setRowData] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  const [pageSizes] = useState([10, 15, 30]);
+  const [editingRowIds, setEditingRowIds] = useState([]);
+  const [addedRows, setAddedRows] = useState([]);
+  const [rowChanges, setRowChanges] = useState({});
+  
   async function fetchData(){
     setLoading(true);
     await firebase.database().ref('products/').on('value', (snapshot) => {
@@ -39,18 +43,17 @@ export default function ProductIndex(){
       setLoading(false);
     });
   };
-
+  
   useEffect( () => {
     fetchData();
   }, [])
+  
+  const getRowId = row => row.id;
 
   const [columns] = useState([
     { name: 'name', title: 'Name'},
   ]);
-  const [pageSizes] = useState([10, 15, 30]);
-  const [editingRowIds, setEditingRowIds] = useState([]);
-  const [addedRows, setAddedRows] = useState([]);
-  const [rowChanges, setRowChanges] = useState({});
+  
 
   const changeAddedRows = (value) => {
     const initialized = value.map(row => (

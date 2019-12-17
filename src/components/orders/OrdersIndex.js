@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import PageContainer from './../shared/PageContainer';
-import Paper from '@material-ui/core/Paper';
-import Divider from '@material-ui/core/Divider';
-import Button from '@material-ui/core/Button';
+import {
+  Paper,
+  Divider,
+  Button,
+  CircularProgress,
+} from '@material-ui/core';
 
 import { firebase } from './../../firebaseConfig';
 import { snapshotToArray } from './../../Utils';
@@ -38,10 +41,14 @@ import {
 
 import DialogUpdate from './dialogs/DialogUpdate';
 import DialogComplete from './dialogs/DialogComplete';
-import CircularProgress from '@material-ui/core/CircularProgress';
 
 export default function OrdersIndex(){
   const [loading, setLoading] = useState(false);
+  const [rows, setRows] = useState([]);
+  const [selections, setSelections] = useState([]);
+  const [pageSizes] = useState([10, 30, 60]);
+  const [openUpdate, setOpenUpdate] = useState(false);
+  const [openComplete, setOpenComplete] = useState(false);
 
   const [columns] = useState([
       { name: 'id', title: 'ID' },
@@ -59,8 +66,6 @@ export default function OrdersIndex(){
       { name: 'assignedTo', title: 'Assignee' },
   ]);
 
-  const [rows, setRows] = useState([]);
-
   async function fetchData(){
     setLoading(true);
     await firebase.database().ref('orders/').on('value', (snapshot) => {
@@ -69,22 +74,16 @@ export default function OrdersIndex(){
       setLoading(false);
     });
   };
-  const [selections, setSelections] = useState([]);
 
   useEffect( () => {
     fetchData();
   }, []);
 
-  const [pageSizes] = useState([10, 30, 60]);
-
-
   const getRowId = row => row.id;
+
   const handleSelectionChange = (selections) => {
     setSelections(selections);
   }
-
-  const [openUpdate, setOpenUpdate] = useState(false);
-  const [openComplete, setOpenComplete] = useState(false);
 
   const handleOpenUpdate = () => {
     setOpenUpdate(true);
