@@ -5,6 +5,7 @@ import {
   Divider,
   Button,
   CircularProgress,
+  Link,
 } from '@material-ui/core';
 
 import { firebase } from './../../firebaseConfig';
@@ -41,6 +42,7 @@ import {
 
 import DialogUpdate from './dialogs/DialogUpdate';
 import DialogComplete from './dialogs/DialogComplete';
+import DialogInfo from './dialogs/DialogInfo';
 
 export default function OrdersIndex(){
   const [loading, setLoading] = useState(false);
@@ -49,6 +51,8 @@ export default function OrdersIndex(){
   const [pageSizes] = useState([10, 30, 60]);
   const [openUpdate, setOpenUpdate] = useState(false);
   const [openComplete, setOpenComplete] = useState(false);
+  const [openInfo, setOpenInfo] = useState(false);
+  const [infoData, setInfoData] = useState({});
 
   const [columns] = useState([
       { name: 'id', title: 'ID' },
@@ -95,6 +99,7 @@ export default function OrdersIndex(){
   const handleCloseDialog = () => {
     setOpenUpdate(false);
     setOpenComplete(false);
+    setOpenInfo(false);
   }
 
   const handleOnCancel = () => {
@@ -104,6 +109,28 @@ export default function OrdersIndex(){
   const handleOnSubmit = () => {
     setSelections([]);
     handleCloseDialog();
+  }
+
+  const handleOnClickId = (clickedId) => {
+    const data = rows.find( (row) => row.id === clickedId )
+    setInfoData(data);
+    setOpenInfo(true);
+  }
+
+  const LinkCell = ({ value, style, ...restProps }) => {
+    return (
+      <Table.Cell {...restProps} style={{ ...style }}>
+        <Link onClick={ () => { handleOnClickId(value) }}>{value}</Link>
+      </Table.Cell>
+    )
+  }
+
+  const NameCell = (props) => {
+    const { column } = props;
+    if (column.name === 'id') {
+      return <LinkCell {...props} />
+    }
+    return <Table.Cell {...props} />
   }
 
   return (
@@ -142,6 +169,11 @@ export default function OrdersIndex(){
           openStatus={openComplete}
           onSubmit={handleOnSubmit}
           onCancel={handleOnCancel}
+        />
+        <DialogInfo
+          data={infoData}
+          openStatus={openInfo}
+          onClose={handleOnCancel}
         />
 
         <Divider />
@@ -188,12 +220,12 @@ export default function OrdersIndex(){
             <IntegratedPaging />
 
             <DragDropProvider />
-            <Table />
+            <Table cellComponent={NameCell} />
             <TableColumnVisibility />
             <TableSelection
               showSelectAll={true}
               highlightRow={true}
-              selectByRowClick={true}
+              selectByRowClick={false}
             />
             <TableHeaderRow showSortingControls={true} />
             <TableFilterRow showFilterSelector={true} />
