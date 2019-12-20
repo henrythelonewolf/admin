@@ -1,17 +1,6 @@
 import { firebase } from './firebaseConfig';
-import customId from 'custom-id';
 
 export function idGenerator(){
-
-  // var tempDate = new Date();
-  // tempDate.setHours( tempDate.getHours() + 8);
-  // var date = tempDate.getUTCFullYear().toString() +  (tempDate.getUTCMonth()+1).toString()
-
-  // var GenerateID = customId({
-  //   randomLength: 5,
-  //   uniqueId: date,
-  //   lowerCase: false,
-  // });
   const uuid = require('uuid/v4');
 
   return uuid();
@@ -93,7 +82,7 @@ export function snapshotToArray(snapshot){
   return itemArr;
 }
 
-//Ignore below
+//____Ignore below____
 
 // export async function createOrderID() {
 
