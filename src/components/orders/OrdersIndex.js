@@ -55,8 +55,9 @@ export default function OrdersIndex(){
   const [infoData, setInfoData] = useState({});
 
   const [columns] = useState([
-      { name: 'id', title: 'ID' },
+      // { name: 'id', title: 'ID' },
       { name: 'chosenCompany', title: 'Company' },
+      { name: 'id', title: 'ID' },
       { name: 'chosenProduct', title: 'Product' },
       { name: 'chosenDeliveryDate', title: 'Delivery Date' },
       { name: 'price', title: 'Price' },
@@ -111,8 +112,14 @@ export default function OrdersIndex(){
     handleCloseDialog();
   }
 
-  const handleOnClickId = (clickedId) => {
-    const data = rows.find( (row) => row.id === clickedId )
+  // const handleOnClickId = (clickedId) => {
+  //   const data = rows.find( (row) => row.id === clickedId )
+  //   setInfoData(data);
+  //   setOpenInfo(true);
+  // }
+
+  const handleOnClickCompany = (clickedCompany) => {
+    const data = rows.find( (row) => row.chosenCompany === clickedCompany )
     setInfoData(data);
     setOpenInfo(true);
   }
@@ -120,14 +127,15 @@ export default function OrdersIndex(){
   const LinkCell = ({ value, style, ...restProps }) => {
     return (
       <Table.Cell {...restProps} style={{ ...style }}>
-        <Link onClick={ () => { handleOnClickId(value) }}>{value}</Link>
+        <Link onClick={ () => { handleOnClickCompany(value) }}>{value}</Link>
       </Table.Cell>
     )
   }
 
   const NameCell = (props) => {
     const { column } = props;
-    if (column.name === 'id') {
+    //Change from 'id' to 'chosenCompany'
+    if (column.name === 'chosenCompany') {
       return <LinkCell {...props} />
     }
     return <Table.Cell {...props} />
@@ -221,7 +229,7 @@ export default function OrdersIndex(){
 
             <DragDropProvider />
             <Table cellComponent={NameCell} />
-            <TableColumnVisibility />
+            <TableColumnVisibility defaultHiddenColumnNames={['id']}/>
             <TableSelection
               showSelectAll={true}
               highlightRow={true}

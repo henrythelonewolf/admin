@@ -2,6 +2,9 @@ import { firebase } from './firebaseConfig';
 
 export function idGenerator(){
   const uuid = require('uuid/v4');
+  // var data = Promise.race(getCurrentMonthFromFirebase());
+  // var data = getCurrentMonthFromFirebase();
+  // console.log(getValueFromPromise(data));
 
   return uuid();
 }
@@ -82,7 +85,17 @@ export function snapshotToArray(snapshot){
   return itemArr;
 }
 
+
 //____Ignore below____
+
+// export function getValueFromPromise(promise){
+//   var value;
+//   Promise.allSettled([promise]).then(function(result) {
+//     value = result[0].value;
+//     console.log('Value = ' + value);
+//   });
+//   return value;
+// }
 
 // export async function createOrderID() {
 
@@ -124,14 +137,15 @@ export function snapshotToArray(snapshot){
 // }
 
 // async function getCurrentMonthFromFirebase(){
-//   const test = await firebase.database().ref('orderCounter/').once('value').then (result => {
+//   var test;
+//   return test = snapshotToArrayWithoutID(await firebase.database().ref('orderCounter/').once('value').then (result => {
 //     return result;
 //   }, function(error) {
 //     // The Promise was rejected.
 //     console.error(error);
-//   });
+//   }))[1];
 
-//   return snapshotToArrayWithoutID(test)[0];
+//   // return snapshotToArrayWithoutID(test)[0];
 // }
 
 // export function getCurrentMonthFromLocal(){

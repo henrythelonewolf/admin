@@ -9,7 +9,7 @@ import {
 } from '@material-ui/core';
 
 export default function OrderItem({
-  id,
+  // id,
   chosenCompany,
   chosenProduct,
   chosenDeliveryDate,
@@ -19,6 +19,7 @@ export default function OrderItem({
   remarks,
   urgent,
   assignedTo,
+  totalPrice = price*quantity,
 
   onEditPress,
 }){
@@ -44,18 +45,19 @@ export default function OrderItem({
       <CardContent>
         <Grid container spacing={2}>
           <Grid item xs={6}>
-            <Field title={'ID'} value={id} />
+            {/* <Field title={'ID'} value={id} /> */}
+            <Field title={'AssignedTo'} value={assignedTo} />
             <Field title={'Company'} value={chosenCompany} />
             <Field title={'Product'} value={chosenProduct} />
             <Field title={'Quantity'} value={quantity} />
-            <Field title={'Unit price'} value={price} />
+            <Field title={'Unit Price'} value={price} />
           </Grid>
           <Grid item xs={6}>
             <Field title={'Date'} value={chosenDeliveryDate} />
             <Field title={'Terms'} value={terms} />
             <Field title={'Remarks'} value={remarks} />
             <Field title={'Urgent'} value={urgent} />
-            <Field title={'assignedTo'} value={assignedTo} />
+            <Field title={'Total Price'} value={'RM ' + totalPrice} />
           </Grid>
         </Grid>
 
