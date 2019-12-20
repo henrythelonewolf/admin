@@ -2,7 +2,6 @@
 
 # dependencies
 /node_modules
-!/node_modules/custom-id/*
 /.pnp
 .pnp.js
 

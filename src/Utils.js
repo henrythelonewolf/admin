@@ -3,17 +3,18 @@ import customId from 'custom-id';
 
 export function idGenerator(){
 
-  var tempDate = new Date();
-  tempDate.setHours( tempDate.getHours() + 8);
-  var date = tempDate.getUTCFullYear().toString() +  (tempDate.getUTCMonth()+1).toString()
+  // var tempDate = new Date();
+  // tempDate.setHours( tempDate.getHours() + 8);
+  // var date = tempDate.getUTCFullYear().toString() +  (tempDate.getUTCMonth()+1).toString()
 
-  var GenerateID = customId({
-    randomLength: 5,
-    uniqueId: date,
-    lowerCase: false,
-  });
+  // var GenerateID = customId({
+  //   randomLength: 5,
+  //   uniqueId: date,
+  //   lowerCase: false,
+  // });
+  const uuid = require('uuid/v4');
 
-  return GenerateID;
+  return uuid();
 }
 
 export function formattedDate(chosenDeliveryDate){
